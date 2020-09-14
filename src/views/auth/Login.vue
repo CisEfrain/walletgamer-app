@@ -1,29 +1,66 @@
 <template>
-  <v-container class="mt-16 pt-16">
-    <v-row align="center" justify="center">
-      <h1 class="">
-        Ingreso a tu cuenta gamer
-      </h1>
+  <v-container class="mt-16">
+    <v-row class="mt-16" align="center" justify="center">
+      <h3 class="mt-16">
+        Ingreso a tu cuenta Gamer
+      </h3>
     </v-row>
 
-    <hr class="custom-divider" />
+    <hr class="custom-divider mt-4 mb-4" />
     <v-row align="center" justify="center">
-      <v-col cols="6" md="4">
-        <v-text-field placeholder="email" solo color="success"></v-text-field>
-        <v-text-field placeholder="email" solo color="success"></v-text-field>
+      <v-col cols="6" md="4" align="center">
+        <v-text-field
+            placeholder="Email"
+            rounded
+            color="rgba(184,12,70,.6)"
+            background-color="white"
+            outlined
+            dense
+          ></v-text-field>
+          <v-text-field
+            placeholder="Contraseña"
+            rounded
+            color="rgba(184,12,70,.6)"
+            background-color="white"
+            outlined
+            dense
+          ></v-text-field>
+        <base-button label="Entrar" />
+        <v-row align="center" justify="center">
+          <v-col>
+            <small class="register-text">
+              ¿No tienes una cuenta?
+              <p>Registrate aquí</p>
+            </small>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
   </v-container>
 </template>
 <style scoped>
-.v-input {
-  border-radius: 20px;
+h3{
+  color: rgb(97, 81, 81);
+}
+.register-text{
+  color: rgba(184,12,70,1);
+  font-weight: 600;
+  cursor: pointer;
+}
+v-input{
+  height: 8px;
 }
 </style>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
+import BaseButton from "@/components/BaseButton.vue";
 
-@Component
+
+@Component({
+  components:{
+    BaseButton
+  }
+})
 export default class Login extends Vue {}
 </script>

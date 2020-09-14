@@ -4,83 +4,103 @@
   </button>
 </template>
 
-<script>
-export default {
-  name: "BaseButton",
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
 
-  props: {
-    label: {
-      type: String,
-      required: true
-    },
-    primary: {
-      type: Boolean,
-      default: false
-    },
-    size: {
-      type: String,
-      default: "medium",
-      validator: function(value) {
-        return ["small", "medium", "large"].indexOf(value) !== -1;
-      }
-    },
-    backgroundColor: {
-      type: String
-    }
-  },
+@Component
+export default class BaseButton extends Vue {
+  //Props
+  @Prop({ required: true, type: String }) readonly label!: string
+  @Prop({ required: true, type: String, default:"primary",
+          validator(value){
+            return ["primary", "secondary", "dark", "light"].indexOf(value) !== -1;
+          } }) readonly color!: string
+  @Prop({ required: true, type: String, default:"medium",
+          validator(value){
+            return ["small", "medium", "full"].indexOf(value) !== -1;
+          } }) readonly size!: string
+  @Prop({ type: String }) readonly backgroundColor!: string
 
-  computed: {
-    classes() {
-      return {
-        "storybook-button": true,
-        "storybook-button--primary": this.primary,
-        "storybook-button--secondary": !this.primary,
-        [`storybook-button--${this.size}`]: true
-      };
-    },
-    style() {
-      return {
-        backgroundColor: this.backgroundColor
-      };
-    }
-  },
+  //Computed
+  get classes(): any {
+    return {
+      "button":true,
+      // "button--primary": this.primary,
+      // "button--secondary": !this.primary,
+      [`button--${this.color}`]: true,
+      [`button--${this.size}`]: true
+    };
+}
 
-  methods: {
-    onClick() {
-      this.$emit("onClick");
+  get style(): any {
+    return {
+      backgroundColor: this.backgroundColor
     }
   }
-};
+
+  //Methods
+  public onClick(): void {
+    this.$emit("onClick")
+  }
+}
 </script>
+
 <style scoped>
-.storybook-button {
+.button {
   font-family: "Nunito Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 700;
+  font-weight: 800;
   border: 0;
   border-radius: 3em;
   cursor: pointer;
   display: inline-block;
-  line-height: 1;
+  padding: 8px;
+  font-size: 16px!important;
+  line-height: .6;
+  min-width: 140px;
+  color: rgb(71, 69, 69);
+  -webkit-box-shadow: 0px 5px 18px -12px rgba(223,83,83,1);
+  -moz-box-shadow: 0px 5px 18px -12px rgba(223,83,83,1);
+  box-shadow: 0px 5px 18px -12px rgba(223,83,83,1);
 }
-.storybook-button--primary {
-  color: white;
-  background-color: #1ea7fd;
+
+.button--primary {
+  color: rgb(252, 248, 248);
+  background: rgb(223,83,83);
+  background: linear-gradient(90deg, rgba(223,83,83,1) 0%, rgba(184,12,70,1) 84%);
 }
-.storybook-button--secondary {
-  color: #333;
+
+.button--secondary {
+  color: rgba(184,12,70,1);
   background-color: transparent;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;
+  box-shadow: rgba(184,12,70,1) 0px 0px 0px 1.5px inset;
 }
-.storybook-button--small {
+
+.button--dark {
+  color: white;
+  background: rgb(54,53,53);
+  background: linear-gradient(90deg, rgba(54,53,53,1) 0%, rgba(41,38,38,1) 91%);
+}
+
+.button--light {
+  color: rgb(71, 69, 69);
+  background: rgb(226,217,217);
+  background: linear-gradient(90deg, rgba(226,217,217,1) 0%, rgba(233,189,204,1) 84%);
+}
+
+.button--small {
   font-size: 12px;
-  padding: 10px 16px;
+  padding: 8px;
+  min-width: 100px;
 }
-.storybook-button--medium {
+
+.button--medium {
   font-size: 14px;
-  padding: 11px 20px;
+  padding: 12px 20px;
 }
-.storybook-button--large {
-  font-size: 16px;
+
+.button--full {
+  width: 100%;
+  text-align: center;
   padding: 12px 24px;
 }
 </style>
