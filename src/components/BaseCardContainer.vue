@@ -14,14 +14,14 @@ export default class BaseCardContainer extends Vue {
   @Prop({ type: String }) readonly backgroundColor!: string;
 
   //Computed
-  get classes(): Object {
+  get classes(): any {
     return {
       "card-container": true,
       [`card-container--dark`]: this.dark,
     };
   }
 
-  get style(): Object {
+  get style(): any {
     return {
       backgroundColor: this.backgroundColor,
     };

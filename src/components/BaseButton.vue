@@ -22,7 +22,7 @@ export default class BaseButton extends Vue {
   @Prop({ type: String }) readonly backgroundColor!: string
 
   //Computed
-  get classes(): Object {
+  get classes(): any {
     return {
       "button":true,
       // "button--primary": this.primary,
@@ -32,7 +32,7 @@ export default class BaseButton extends Vue {
     };
 }
 
-  get style(): Object {
+  get style(): any {
     return {
       backgroundColor: this.backgroundColor
     }
@@ -48,16 +48,19 @@ export default class BaseButton extends Vue {
 <style scoped>
 .button {
   font-family: "Nunito Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 600;
+  font-weight: 800;
   border: 0;
   border-radius: 3em;
   cursor: pointer;
   display: inline-block;
-  padding: 4px;
-  font-size: 14px;
+  padding: 8px;
+  font-size: 16px!important;
   line-height: .6;
   min-width: 140px;
   color: rgb(71, 69, 69);
+  -webkit-box-shadow: 0px 5px 18px -12px rgba(223,83,83,1);
+  -moz-box-shadow: 0px 5px 18px -12px rgba(223,83,83,1);
+  box-shadow: 0px 5px 18px -12px rgba(223,83,83,1);
 }
 
 .button--primary {
