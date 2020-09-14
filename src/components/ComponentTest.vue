@@ -50,7 +50,7 @@ export default class ComponentTest extends Vue {
 }
 </script>
 
-<style>
+<style scoped>
 h2 {
   color: blueviolet;
 }

@@ -5,7 +5,8 @@ export default {
   component: BaseButton,
   argTypes: {
     backgroundColor: { control: "color" },
-    size: { control: { type: "select", options: ["small", "medium", "large"] } }
+    size: { control: { type: "select", options: ["small", "medium", "full"] } },
+    color: { control: { type: "select", options: ["primary", "secondary", "dark", "light"] } }
   }
 };
 
@@ -15,25 +16,38 @@ const Template = (args, { argTypes }) => ({
   template: '<BaseButton @onClick="onClick" v-bind="$props" />'
 });
 
-export const Main = Template.bind({});
-Main.args = {
-  primary: true,
-  label: "Button"
+export const Primary = Template.bind({});
+Primary.args = {
+  color: "primary",
+  label: "Primary button"
 };
 
-export const Second = Template.bind({});
-Second.args = {
-  label: "Button"
+export const Secondary = Template.bind({});
+Secondary.args = {
+  color: "secondary",
+  label: "Secondary button"
 };
 
-export const L = Template.bind({});
-L.args = {
-  size: "large",
-  label: "Button"
+export const Dark = Template.bind({});
+Dark.args = {
+  color: "dark",
+  label: "Dark button"
 };
 
-export const Sm = Template.bind({});
-Sm.args = {
+export const Light = Template.bind({});
+Light.args = {
+  color: "light",
+  label: "Light button"
+};
+
+export const Full = Template.bind({});
+Full.args = {
+  size: "full",
+  label: "Full width button"
+};
+
+export const Small = Template.bind({});
+Small.args = {
   size: "small",
-  label: "Button"
+  label: "small button"
 };
