@@ -1,5 +1,8 @@
 <template>
+<v-container>
   <h2>Transactions page view</h2>
+</v-container>
+  
 </template>
 
 <script lang="ts">
