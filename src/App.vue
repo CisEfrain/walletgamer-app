@@ -1,9 +1,9 @@
 <template>
   <v-app>
-<!--     <v-app-bar app color="primary" dark>
+    <!--     <v-app-bar app color="primary" dark>
       <v-spacer></v-spacer>
    
-    </v-app-bar> -->
+    </v-app-bar>-->
 
     <v-main>
       <layout />
@@ -27,3 +27,12 @@ export default Vue.extend({
   })
 });
 </script>
+ <style lang="sass">
+@import './scss/variables.scss'
+.title
+  color: $title
+.links
+  color: $card-link
+.theme-button
+  background: $button-gradient
+</style>
