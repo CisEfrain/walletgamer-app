@@ -37,7 +37,6 @@
   </v-container>
 </template>
 <style lang='sass' scoped>
- 
 
 .register-text
   font-weight: 600

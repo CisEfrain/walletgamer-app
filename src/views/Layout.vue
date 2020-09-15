@@ -18,10 +18,11 @@ export default class Home extends Vue {}
   font-family: "Nunito Sans", sans-serif;
 }
 .custom-divider {
-  height: 2.6px;
-  max-width: 40%;
-  background-color: #c7c4c4e3;
+  height: 2.4px;
+  max-width: 48%;
+  background-color: #c7c5c59a;
   margin: auto;
+  border: none;
 }
 @media (max-width: 768px) {
   .custom-divider {
