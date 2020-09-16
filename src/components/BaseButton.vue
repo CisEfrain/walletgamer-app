@@ -10,12 +10,12 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 @Component
 export default class BaseButton extends Vue {
   //Props
-  @Prop({ required: true, type: String }) readonly label!: string
-  @Prop({ required: true, type: String, default:"primary",
+  @Prop({ required: false, type: String }) readonly label!: string
+  @Prop({ required: false, type: String, default:"primary",
           validator(value){
             return ["primary", "secondary", "dark", "light"].indexOf(value) !== -1;
           } }) readonly color!: string
-  @Prop({ required: true, type: String, default:"medium",
+  @Prop({ required: false, type: String, default:"medium",
           validator(value){
             return ["small", "medium", "full"].indexOf(value) !== -1;
           } }) readonly size!: string

@@ -39,10 +39,10 @@ export default Vue.extend({
   color: $title
 
 .v-container
-  background-color: #f3f3f3
+  background-color: $background
 
 .links
-  color: $card-link
+  color: $card-link !important
 
 .theme-button
   background: $button-gradient

@@ -17,7 +17,7 @@
           dense
         ></v-text-field>
         <v-text-field
-        class="text-field mt-6"
+          class="text-field mt-6"
           placeholder="Contraseña"
           rounded
           color="rgba(184,12,70,.6)"
@@ -26,7 +26,7 @@
           dense
         ></v-text-field>
         <v-text-field
-        class="text-field mt-6"
+          class="text-field mt-6"
           placeholder="Email"
           rounded
           color="rgba(184,12,70,.6)"
@@ -67,26 +67,27 @@
       </v-col>
     </v-row>
     <v-row align="center" justify="center">
-          <v-col align="center">
-            <base-button label="Registrarme" />
-            <div class="mt-2">
-              <small class="register-text links">
+      <v-col align="center">
+        <base-button label="Registrarme" />
+        <div class="mt-2">
+          <router-link class="register-text links" to="Login">
+            <small class="register-text links">
               <p>Ya tengo cuenta</p>
             </small>
-            </div>
-          </v-col>
-        </v-row>
+          </router-link>
+        </div>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 <style lang="sass" scoped>
-
 .register-text
   font-weight: 600
   cursor: pointer
 
 .text-field
   border: .8px solid #c7c5c5
-  height: 42px 
+  height: 42px
   font-size: 14px
   width: 270px
 </style>
@@ -94,11 +95,13 @@
 import { Component, Vue } from "vue-property-decorator";
 
 import BaseButton from "@/components/BaseButton.vue";
-
+ 
 @Component({
   components: {
     BaseButton
   }
 })
-export default class Register extends Vue {}
+export default class Register extends Vue {
+ 
+}
 </script>

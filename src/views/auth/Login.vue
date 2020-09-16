@@ -23,12 +23,14 @@
           outlined
           dense
         ></v-text-field>
-        <base-button   label="Entrar" />
-        <v-row align="center" justify="center">
+        <base-button label="Entrar" @click="login()" />
+        <v-row align="center" justify="center"  >
           <v-col>
-            <small class="register-text links">
-              ¿No tienes una cuenta?
-              <p>Registrate aquí</p>
+            <small>
+              <router-link class="register-text links" to="Register">
+                ¿No tienes una cuenta?
+                <p>Registrate aquí</p>
+              </router-link>
             </small>
           </v-col>
         </v-row>
@@ -37,7 +39,6 @@
   </v-container>
 </template>
 <style lang='sass' scoped>
-
 .register-text
   font-weight: 600
   cursor: pointer
@@ -49,11 +50,17 @@ v-input
 import { Component, Vue } from "vue-property-decorator";
 
 import BaseButton from "@/components/BaseButton.vue";
-
+import { Login } from "@/services/auth.service";
 @Component({
   components: {
     BaseButton
   }
 })
-export default class Login extends Vue {}
+export default class LoginPage extends Vue {
+  login() {
+    console.log("a")
+    const response = Login("admin", "equis");
+    alert(response);
+  }
+}
 </script>
