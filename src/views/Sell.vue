@@ -3,8 +3,8 @@
     <h2 class="custom-class">Sell page view</h2>
     <v-row>
       <v-col cols="12">
-        <v-stepper v-model="e1">
-          <v-stepper-header>
+        <v-stepper v-model="e1" class="elevation-0">
+          <v-stepper-header class="elevation-0">
             <v-stepper-step :complete="e1 > 1" step="1"></v-stepper-step>
 
             <v-divider></v-divider>
