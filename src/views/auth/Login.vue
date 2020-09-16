@@ -13,6 +13,7 @@
           color="rgba(184,12,70,.6)"
           background-color="white"
           outlined
+          class="text-field"
           dense
         ></v-text-field>
         <v-text-field
@@ -21,6 +22,7 @@
           color="rgba(184,12,70,.6)"
           background-color="white"
           outlined
+          class="text-field"
           dense
         ></v-text-field>
         <base-button label="Entrar" @click="login()" />
@@ -43,8 +45,11 @@
   font-weight: 600
   cursor: pointer
 
-v-input
-  height: 8px
+.text-field
+  border: .8px solid #c7c5c5
+  height: 42px
+  font-size: 14px
+  width: 270px
 </style>
 <script lang='ts'>
 import { Component, Vue } from "vue-property-decorator";

@@ -11,3 +11,9 @@ $success:#3FB279;
 $warning:#F8B734;
 $danger:#E4445B;
 $button-gradient:transparent linear-gradient(90deg, #E4445B 0%, #C12755 100%) 0% 0% no-repeat padding-box;
+
+$font-weight-title: 800;
+
+.title{
+  color: $title;
+}

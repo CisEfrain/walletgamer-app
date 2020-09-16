@@ -37,6 +37,7 @@ export default Vue.extend({
 
 .title
   color: $title
+  font-weight: 600
 
 .v-container
   background-color: $background
