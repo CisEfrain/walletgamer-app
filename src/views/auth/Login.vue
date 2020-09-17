@@ -46,7 +46,6 @@
   cursor: pointer
 
 .text-field
-  border: .8px solid #c7c5c5
   height: 42px
   font-size: 14px
   width: 270px

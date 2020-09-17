@@ -117,7 +117,7 @@ export default class Panel extends Vue {}
 .bg-grey{
   background-color: #f3f3f3;
   border: none;
-  height: 100vh;
+  height: 100%;
 }
 .custom-divider {
   height: 2.4px;
