@@ -50,8 +50,8 @@ export default class ComponentTest extends Vue {
 }
 </script>
 
-<style scoped>
-h2 {
-  color: blueviolet;
-}
+<style lang="sass" scoped>
+h2
+  color: blueviolet
+
 </style>
