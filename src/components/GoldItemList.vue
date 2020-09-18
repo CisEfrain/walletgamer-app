@@ -1,24 +1,24 @@
 <template>
   <v-row class="d-flex justify-center">
-    <v-col cols="11">
+    <v-col cols="10">
       <BaseCardContainer>
         <v-row class="px-4" align="center" justify="center">
           <v-col>
             <h4 class="title">{{user}}</h4>
             <small>Rango {{rank}}</small>
           </v-col>
-          <v-col class="mt-2">
+          <v-col>
             <div>Reino {{kingdom}}</div>
             <v-chip>
               {{faction}}
             </v-chip>
           </v-col>
           <v-col>
-            <h4>{{price}} por cada {{product}} de gold</h4>
+            <h5>{{price}}$ por cada {{product}} de gold</h5>
             <small>Disponible: {{available}}</small>
           </v-col>
           <v-col class="d-flex justify-center align-center">
-            <div class="my-2">
+            <div>
               <v-btn text large color="error"><b>Comprar</b></v-btn>
             </div>
           </v-col>

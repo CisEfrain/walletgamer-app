@@ -1,67 +1,23 @@
 <template>
-<v-container class="mt-12">
+<v-container >
   
-    <v-row class="mt-12" align="center" justify="center">
+    <v-row align="center" justify="center">
       <h3 class="mt-12 mb-4 title">¿Qué te interesa comprar?</h3>
     </v-row>
+
     <v-row class="d-flex justify-center">
-      <ProductCard productTitle="Gold"/>
-      <ProductCard productTitle="Personajes"/>
-      <ProductCard productTitle="Items"/>
+        <ProductCard 
+          v-for="(product,$index) in productListNotEmpty" 
+          :key="$index"
+          :productTitle="product" 
+          @selected="selectProduct(product)"
+        />
     </v-row>
-    <v-row align="center" justify="center" class="mt-6">
-      <v-col class="d-flex" cols="3" sm="3">
-        <v-select
-          :items="realm"
-          label="Reino"
-          outlined
-          rounded
-          color="rgba(184,12,70,.6)"
-          dense
-          class="select-field"
-        ></v-select>
-      </v-col>
-      <v-col class="d-flex" cols="3" sm="3">
-        <v-select
-          :items="factions"
-          label="Facción"
-          outlined
-          rounded
-          color="rgba(184,12,70,.6)"
-          dense
-          class="select-field"
-        ></v-select>
-      </v-col>
-    </v-row>
+    <keep-alive>
+      <component :is="productListSelected"></component>
+    </keep-alive>
 
-  <GoldItemList
-    user="Diosdado Garcia"
-    rank="Elite"
-    kingdom="Psuv"
-    faction="Horda"
-    price="20"
-    product="10.000"
-    available="1.000.000"
-  />
-  <CharactersItemList
-    user="Manuel Perez"
-    rank="Newbie"
-    kingdom="AD"
-    faction="Horda"
-    characterClass="Magician"
-    price="100"
-    level="60"
-  />
-  <ItemsItemList
-    user="Mariana Lyn"
-    rank="Asesinos"
-    faction="Horda"
-    price="10"
-    item="Toddy"
-    available="200"
-  />
-
-  <BaseModal />
+  <!-- <BaseModal /> -->
 
 
 </v-container>
@@ -71,42 +27,53 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 
 import ProductCard from "@/components/ProductCard.vue"
-import GoldItemList from "@/components/ItemsItemList.vue"
-import CharactersItemList from "@/components/CharactersItemList.vue"
-import ItemsItemList from "@/components/ItemsItemList.vue"
-import BaseModal from "@/components/BaseModal.vue"
+// import GoldItemList from "@/components/ItemsItemList.vue"
+// import CharactersItemList from "@/components/CharactersItemList.vue"
+// import ItemsItemList from "@/components/ItemsItemList.vue"
+//import BaseModal from "@/components/BaseModal.vue"
+import BuyGoldList from "@/components/BuyGoldList.vue"
+import BuyPersonajeList from "@/components/BuyCharacterList.vue"
+import BuyItemsList from "@/components/BuyItemList.vue"
 
 
 @Component({
   components:{
     ProductCard,
-    GoldItemList,
-    CharactersItemList,
-    ItemsItemList,
-    BaseModal
+    BuyGoldList,
+    BuyPersonajeList,
+    BuyItemsList,
+    // GoldItemList,
+    // CharactersItemList,
+    // ItemsItemList,
+    //BaseModal
   }
 })
 export default class Buy extends Vue {
-    private realm: Array<string> = [
-      "Aegwynn",
-      "Aerie Peak",
-      "Aggramar",
-      "Akama",
-      "Altar of Storms"
+  public productList: Array<string> = [
+    "Gold", "Personaje", "Items", ""
   ]
-  private factions: Array<string> = [
-      "Horde",
-      "Alliance",
-      "Horde Force",
-      "Steamwheedle Cartel"
-  ]
+  public currentProduct: Array<string> = [""]
+
+  public selectProduct(tab:any):void {
+    console.info(tab)
+    this.currentProduct = tab
+
+  }
+
+  get productListNotEmpty(): any{
+    return this.productList.filter(product => product.length > 0)
+  }
+
+  get productListSelected(): any{
+    console.info(`Buy${this.currentProduct}List`)
+    return `Buy${this.currentProduct}List`
+  }
 }
 </script>
 
-<style lang="sass" scoped>
-.select-field
-  height: 42px
-  font-size: 14px
-  width: 270px
-
+<style lang="scss" scoped>
+.v-list-item--active{
+  background: #ca3b3b!important;
+}
+  
 </style>
