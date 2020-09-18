@@ -1,12 +1,12 @@
 <template>
   <v-card
-    active-class="active-card"
+    :class="$store.state.activeProduct === productTitle ? 'active-card': ''"
     class="mx-3 d-flex flex-column align-center pb-4 card-radius"
     width="240"
-    :color="!active ? 'red lighten-2':'grey lighten-1'"
     elevation="4"
-    @click="$emit('selected')"
+    @click="setProduct()"
   >
+    
     <v-card-title class="product-title">{{ productTitle }}</v-card-title>
     <v-img class="align-center" width="140px" height="60px" src="../assets/wow-logo.png"></v-img>
   </v-card>
@@ -20,11 +20,13 @@ export default class ProductCard extends Vue {
   //Props
   @Prop({ required: true, type: String }) readonly productTitle!: string;
 
-  get active(): any {
-    console.info(this.productTitle);
-    return {
-      [`active--${this.productTitle}`]: true
-    };
+  active = false;
+  setProduct() {
+    this.$emit("selected");
+    this.$store.commit({
+      type: "setProduct",
+      name: this.productTitle
+    });
   }
 }
 </script>
@@ -51,5 +53,5 @@ export default class ProductCard extends Vue {
   background: #ca3b3b!important
 
 .active-card
-  background: #ca3b3b!important
+  background: #ca3b3b !important
 </style>

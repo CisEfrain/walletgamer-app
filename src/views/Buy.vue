@@ -21,6 +21,8 @@
 </template>
 
 <script lang="ts">
+ 
+
 import { Component, Vue, Prop } from "vue-property-decorator";
 
 import ProductCard from "@/components/ProductCard.vue";

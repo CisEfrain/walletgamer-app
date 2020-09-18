@@ -52,4 +52,7 @@ a
   text-decoration: none
 .v-stepper,.v-stepper__header,.v-stepper__items
   background: transparent !important
+
+.buy-stepper .v-stepper__step--active > .v-stepper__step__step
+  background: $danger !important
 </style>
