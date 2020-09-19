@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer width="200px" v-model="drawer" app>
+    <v-navigation-drawer width="200px" app>
       <v-list>
         <v-list-item>
           <v-list-item-content class="mb-16">
@@ -58,12 +58,12 @@
           </v-list-item>
         </router-link>
         <router-link to="/help">
-          <v-list-item link>
+          <v-list-item link >
             <!-- <v-list-item-action>
               <v-icon>mdi-cog</v-icon>
             </v-list-item-action>-->
             <v-list-item-content>
-              <v-list-item-title>Ayuda</v-list-item-title>
+              <v-list-item-title >Ayuda</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </router-link>
@@ -92,18 +92,11 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-// import About from "@/views/About.vue"
-// import Account from "@/views/Account.vue"
-// import Buy from "@/views/Buy.vue"
-// import Help from "@/views/Help.vue"
-// import Sell from "@/views/Sell.vue"
-// import Transactions from "@/views/Transactions.vue"
-// import Wallet from "@/views/Wallet.vue"
-
 @Component({
   components: {}
 })
-export default class Panel extends Vue {}
+export default class Panel extends Vue {
+}
 </script>
 
 <style lang="sass">
@@ -122,4 +115,5 @@ export default class Panel extends Vue {}
 @media (max-width: 768px)
   .custom-divider
     max-width: 80%
+
 </style>

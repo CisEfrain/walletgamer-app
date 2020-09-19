@@ -6,30 +6,27 @@
 
     <v-row class="d-flex justify-center">
       <ProductCard
-        v-for="(product,$index) in productListNotEmpty"
+        v-for="(product,$index) in productList"
         :key="$index"
         :productTitle="product"
         @selected="selectProduct(product)"
       />
     </v-row>
-    <keep-alive>
-      <component :is="productListSelected"></component>
+    <transition name="slide-fade">
+      <keep-alive>
+      <component :key="productListSelected" :is="productListSelected"></component>
     </keep-alive>
+    </transition>
+    
 
-    <!-- <BaseModal /> -->
   </v-container>
 </template>
 
 <script lang="ts">
- 
 
 import { Component, Vue, Prop } from "vue-property-decorator";
 
 import ProductCard from "@/components/ProductCard.vue";
-// import GoldItemList from "@/components/ItemsItemList.vue"
-// import CharactersItemList from "@/components/CharactersItemList.vue"
-// import ItemsItemList from "@/components/ItemsItemList.vue"
-//import BaseModal from "@/components/BaseModal.vue"
 import BuyGoldList from "@/components/BuyGoldList.vue";
 import BuyPersonajeList from "@/components/BuyCharacterList.vue";
 import BuyItemsList from "@/components/BuyItemList.vue";
@@ -40,33 +37,31 @@ import BuyItemsList from "@/components/BuyItemList.vue";
     BuyGoldList,
     BuyPersonajeList,
     BuyItemsList
-    // GoldItemList,
-    // CharactersItemList,
-    // ItemsItemList,
-    //BaseModal
   }
 })
 export default class Buy extends Vue {
-  public productList: Array<string> = ["Gold", "Personaje", "Items", ""];
+  public productList: Array<string> = ["Gold", "Personaje", "Items"];
   public currentProduct: Array<string> = [""];
 
   public selectProduct(tab: any): void {
-    console.info(tab);
     this.currentProduct = tab;
   }
 
-  get productListNotEmpty(): any {
-    return this.productList.filter(product => product.length > 0);
-  }
-
   get productListSelected(): any {
-    console.info(`Buy${this.currentProduct}List`);
     return `Buy${this.currentProduct}List`;
   }
 }
 </script>
 
 <style lang="sass" scoped>
-.v-list-item--active
-  background: #ca3b3b!important
+.slide-fade-enter-active 
+  transition: all .3s ease-in
+
+.slide-fade-leave-active 
+  transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0)
+
+.slide-fade-enter, .slide-fade-leave-to
+  transform: translateX(10px)
+  transition: all .2s ease-out
+  opacity: .4
 </style>
