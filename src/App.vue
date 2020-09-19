@@ -55,4 +55,6 @@ a
 
 .buy-stepper .v-stepper__step--active > .v-stepper__step__step
   background: $danger !important
+
+  
 </style>
