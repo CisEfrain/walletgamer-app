@@ -10,7 +10,7 @@ const routes: Array<RouteConfig> = [
     path: "/",
     name: "Panel",
     component: Panel,
-    children:[
+    children: [
       {
         path: "/about",
         name: "About",
@@ -34,6 +34,14 @@ const routes: Array<RouteConfig> = [
         // this generates a separate chunk (buy.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () => import("../views/Buy.vue")
+      },
+      {
+        path: "/payment",
+        name: "Payment",
+        // route level code-splitting
+        // this generates a separate chunk (buy.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import("../views/Payment.vue")
       },
       {
         path: "/help",
