@@ -31,10 +31,10 @@ export default class BaseCardContainer extends Vue {
 
 <style lang="sass" scoped>
 .card-container
-  font-family: "Nunito Sans", "Helvetica Neue", Helvetica, Arial,sans-serif
+  font-family: "Nunito Sans", "Helvetica Neue", Helvetica, Arial
   border-radius: 2em
   padding: 4px 16px
-  min-width: 400px
+  min-width: 320px
   min-height: 80px
   color: rgb(71, 69, 69)
   background: rgb(255, 255, 255)
