@@ -1,6 +1,5 @@
 <template>
-  <v-row class="d-flex">
-    <v-col>
+  <v-row class="d-flex justify-center">
       <BaseCardContainer>
         <v-row class="px-6 pt-4 mb-less" align="center">
           <h3 class="title">Saldo Disponible</h3>
@@ -23,7 +22,6 @@
           </v-col>
         </v-row>
       </BaseCardContainer>
-    </v-col>
   </v-row>
 </template>
 

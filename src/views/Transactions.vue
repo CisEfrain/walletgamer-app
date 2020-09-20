@@ -1,23 +1,23 @@
 <template>
 <v-container>
-  <v-row justify="space-between">
-    <v-col cols="4">
+  <v-row class="px-8" justify="space-around" align="center">
+    <v-col cols="12" sm="12" md="4">
       <BalanceCard balance="50"/>
     </v-col>
-    <v-col cols="8">
+    <v-col cols="12" sm="12" md="8">
       <NotificationsCard />
     </v-col>
   </v-row>
 
-  <v-row align="center" justify="space-between">
-    <v-col cols="3">
+  <v-row class="px-8" align="center" justify="space-between">
+    <v-col cols="12" sm="12" md="6">
       <h3 class="title">Mis Transacciones</h3>
     </v-col>
-    <v-col cols="5">
+    <v-col cols="12" sm="12" md="6">
       <v-row align="center" justify="center" class="mt-6">
       <v-col class="d-flex" cols="6" sm="6">
         <v-select
-          :items="realm"
+          :items="[]"
           label="Tipo"
           outlined
           rounded
@@ -28,7 +28,7 @@
       </v-col>
       <v-col class="d-flex" cols="6" sm="6">
         <v-select
-          :items="factions"
+          :items="[]"
           label="Estado"
           outlined
           rounded
@@ -41,8 +41,37 @@
     </v-col>
 
   </v-row>
+
+  <v-row class="px-8" justify="center">
+    <v-col cols="12">
+      <v-expansion-panels
+      v-model="panel"
+      multiple
+      flat
+    >
+      <TransactionItemList
+        product="Gold World of Warcraft"
+        date_transaction="10/12/2020"
+        cost="20"
+        quantity="500"
+        status="Completa"
+        realm="Faerlina"
+        faction="Horda"
+      />
+      <TransactionItemList
+        product="Gold World of Warcraft"
+        date_transaction="10/12/2020"
+        cost="20"
+        quantity="500"
+        status="Esperando mi confirmación"
+        realm="Faerlina"
+        faction="Horda"
+      />
+
+    </v-expansion-panels>
+    </v-col>
+  </v-row>
 </v-container>
-  
 </template>
 
 <script lang="ts">
@@ -50,14 +79,18 @@ import { Component, Vue } from "vue-property-decorator";
 
 import BalanceCard from "@/components/BalanceCard.vue"
 import NotificationsCard from "@/components/NotificationsCard.vue"
+import TransactionItemList from "@/components/TransactionItemList.vue"
 
 @Component({
   components:{
     BalanceCard,
-    NotificationsCard
+    NotificationsCard,
+    TransactionItemList
   }
 })
-export default class Transactions extends Vue {}
+export default class Transactions extends Vue {
+  private panel: Array<number> = [0]
+}
 </script>
 
 <style>

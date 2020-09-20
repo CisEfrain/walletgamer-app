@@ -1,6 +1,6 @@
 <template>
   <v-row class="d-flex justify-center">
-    <v-col cols="10">
+    <v-col>
       <BaseCardContainer>
         <v-row class="px-4" align="center" justify="center">
           <v-col>
