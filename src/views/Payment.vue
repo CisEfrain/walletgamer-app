@@ -111,25 +111,7 @@
                   <p class="text-center">No te preocupes, ya fue notificado de la operación</p>
                 </v-col>
               </v-row>
-              <v-row>
-                <v-col cols="12">
-                  <h3 class="title">Historial de la operación</h3>
-                </v-col>
-              </v-row>
-              <v-row justify="center">
-                <v-col md="12" class="d-flex justify-center">
-                  <GoldItemList
-                    class="mx-auto"
-                    :user="item.user"
-                    :rank="item.rank"
-                    :kingdom="item.kingdom"
-                    :faction="item.faction"
-                    :price="item.price"
-                    :product="item.product"
-                    :available="item.available"
-                  />
-                </v-col>
-              </v-row>
+
               <v-btn color="primary" @click="e1 = 3">Continue</v-btn>
 
               <v-btn text>Cancel</v-btn>
@@ -153,6 +135,21 @@
         </v-stepper>
       </v-col>
     </v-row>
+    <v-row>
+      <v-col cols="12 mb-0 pb-0">
+        <h3 class="title">Historial de la operación</h3>
+      </v-col>
+    </v-row>
+    <v-row justify="start" class="mt-0 pt-0">
+      <v-col v-for="item in history" :key="item.id" md="8" class="mt-0 pt-0">
+        <OperationHistoryCard
+          class="mx-auto"
+          :date="item.date"
+          :type="item.type"
+          :description="item.description"
+        />
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -161,10 +158,12 @@ import { Component, Provide, Vue } from "vue-property-decorator";
 import ProductCard from "@/components/ProductCard.vue";
 import { ItemBuyI } from "@/interfaces/product.interface";
 import GoldItemList from "@/components/GoldItemList.vue";
+import OperationHistoryCard from "@/components/payment/OperationHistoryCard.vue";
 @Component({
   components: {
     ProductCard,
-    GoldItemList
+    GoldItemList,
+    OperationHistoryCard
   }
 })
 export default class Payment extends Vue {
@@ -179,6 +178,14 @@ export default class Payment extends Vue {
     product: "10.000",
     available: "1.000.000"
   };
+  history = [
+    {
+      id: 1,
+      date: "10/12/2020",
+      type: "Pago completo",
+      description: "Haz pagado 20$ por tarjeta de crédito mediante stripe"
+    }
+  ];
 }
 </script>
 
