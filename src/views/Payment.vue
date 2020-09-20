@@ -47,7 +47,7 @@
                     required
                     outlined
                     rounded
-                    v-model="quantity"
+                    v-model="$v.quantity.$model"
                     :error-messages="quantityErrors"
                     @input="$v.quantity.$touch()"
                     @blur="$v.quantity.$touch()"
