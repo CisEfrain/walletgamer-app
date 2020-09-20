@@ -96,6 +96,9 @@ import { Component, Vue } from "vue-property-decorator";
   components: {}
 })
 export default class Panel extends Vue {
+  logout(){
+    this.$router.push('/login')
+  }
 }
 </script>
 

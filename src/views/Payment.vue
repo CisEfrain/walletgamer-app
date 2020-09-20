@@ -25,34 +25,44 @@
               <h3
                 class="mb-4 title text-center"
               >Ingresa los detalles de tu compra de {{$store.state.activeProduct}} World Warcraft Classic</h3>
-              <v-row class="d-flex justify-center">
-                <GoldItemList
-                  :user="item.user"
-                  :rank="item.rank"
-                  :kingdom="item.kingdom"
-                  :faction="item.faction"
-                  :price="item.price"
-                  :product="item.product"
-                  :available="item.available"
-                />
-              </v-row>
+              <form novalidate>
+                <v-row class="d-flex justify-center">
+                  <v-col cols="10">
+                    <GoldItemList
+                      :user="item.user"
+                      :rank="item.rank"
+                      :kingdom="item.kingdom"
+                      :faction="item.faction"
+                      :price="item.price"
+                      :product="item.product"
+                      :available="item.available"
+                    />
+                  </v-col>
+                </v-row>
+              </form>
               <v-row align="center" justify="center" class="mt-6">
                 <v-col class="d-flex" cols="12" md="3">
                   <v-text-field
                     label="Cantidad"
                     outlined
                     rounded
+                    v-model.lazy="$v.quantity.$model"
+                    :error-messages="quantityErrors"
+                    @input="$v.quantity.$touch()"
+                    @blur="$v.quantity.$touch()"
                     type="number"
                     color="rgba(184,12,70,.6)"
                     dense
                     class="select-field"
                   ></v-text-field>
+                  {{this.$v.quantity.required}}
                 </v-col>
                 <v-col class="d-flex" cols="12" md="3">
                   <v-text-field
                     label="Personaje receptor (PJ)"
                     outlined
                     rounded
+                    v-model="pj"
                     color="rgba(184,12,70,.6)"
                     dense
                     class="select-field"
@@ -63,6 +73,7 @@
                     :items="payment_methods"
                     label="Medio de pago"
                     outlined
+                    v-model="method"
                     rounded
                     color="rgba(184,12,70,.6)"
                     dense
@@ -77,7 +88,7 @@
                 <button
                   type="button"
                   class="button button--primary button--medium"
-                  @click="e1 = 2"
+                  @click="checkout()"
                 >Continuar</button>
 
                 <v-btn text>Cancel</v-btn>
@@ -159,6 +170,10 @@ import ProductCard from "@/components/ProductCard.vue";
 import { ItemBuyI } from "@/interfaces/product.interface";
 import GoldItemList from "@/components/GoldItemList.vue";
 import OperationHistoryCard from "@/components/payment/OperationHistoryCard.vue";
+import { Validate } from "vuelidate-property-decorators";
+
+import { required, minLength, between } from "vuelidate/lib/validators";
+
 @Component({
   components: {
     ProductCard,
@@ -167,8 +182,49 @@ import OperationHistoryCard from "@/components/payment/OperationHistoryCard.vue"
   }
 })
 export default class Payment extends Vue {
-  e1 = 2;
+  e1 = 1;
+  @Validate({ required })
+  quantity!: number;
+  @Validate({ minLength: minLength(4) })
+  pj = "";
+  @Validate({ required })
+  method = "";
   payment_methods = ["paypal", "stripe"];
+  /*  validations = {
+    quantity: {
+      required,
+      minLength: minLength(4)
+      //between: between(20, 30)
+    },
+    pj: {
+      required,
+      minLength: minLength(4)
+    },
+    method: {
+      required,
+      minLength: minLength(4)
+    }
+  }; */
+  get quantityErrors(): any {
+    const errors: any = [];
+    if (!this.$v.quantity.$dirty) return errors;
+    // !this.$v.quantity.minLength && errors.push("Minimo de caracteres 4");
+    !this.$v.quantity.required && errors.push("El campo es requerido");
+    return errors;
+  }
+
+  get form() {
+    return {
+      quantity: this.$v.quantity,
+      pj: this.$v.pj,
+      method: this.$v.method
+    };
+  }
+  checkout() {
+    console.log(this.form);
+    console.log(this.$v);
+  }
+
   item: ItemBuyI = {
     user: "Diosdado Garcia",
     rank: "Elite",
