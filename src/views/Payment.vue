@@ -44,9 +44,10 @@
                 <v-col class="d-flex" cols="12" md="3">
                   <v-text-field
                     label="Cantidad"
+                    required
                     outlined
                     rounded
-                    v-model.lazy="$v.quantity.$model"
+                    v-model="quantity"
                     :error-messages="quantityErrors"
                     @input="$v.quantity.$touch()"
                     @blur="$v.quantity.$touch()"
@@ -55,14 +56,18 @@
                     dense
                     class="select-field"
                   ></v-text-field>
-                  {{this.$v.quantity.required}}
+                  
                 </v-col>
                 <v-col class="d-flex" cols="12" md="3">
                   <v-text-field
                     label="Personaje receptor (PJ)"
                     outlined
+                    required
                     rounded
-                    v-model="pj"
+                    v-model="$v.pj.$model"
+                    :error-messages="pjErrors"
+                    @input="$v.pj.$touch()"
+                    @blur="$v.pj.$touch()"
                     color="rgba(184,12,70,.6)"
                     dense
                     class="select-field"
@@ -73,8 +78,12 @@
                     :items="payment_methods"
                     label="Medio de pago"
                     outlined
-                    v-model="method"
+                    v-model="$v.payMethod.$model"
+                    :error-messages="payMethodErrors"
+                    @input="$v.payMethod.$touch()"
+                    @blur="$v.payMethod.$touch()"
                     rounded
+                    required
                     color="rgba(184,12,70,.6)"
                     dense
                     class="select-field"
@@ -82,16 +91,19 @@
                 </v-col>
               </v-row>
               <v-row justify="center">
-                <h3>Total a pagar: 10$</h3>
+                <h4>Total a pagar: 10$</h4>
               </v-row>
               <v-row justify="center">
-                <button
+                  <v-btn
                   type="button"
-                  class="button button--primary button--medium"
-                  @click="checkout()"
-                >Continuar</button>
-
-                <v-btn text>Cancel</v-btn>
+                  rounded
+                  color="btn-gradient"
+                  :disabled="isStepOneDisabled"
+                  class="button button--primary button--medium mt-4 px-6"
+                  @click="checkout()">
+                    Confirmar
+                  </v-btn>
+                <!-- <v-btn text>Cancel</v-btn> -->
               </v-row>
             </v-stepper-content>
 
@@ -135,6 +147,7 @@
 
               <v-btn text>Cancel</v-btn>
             </v-stepper-content>
+
             <v-stepper-content step="4">
               <v-card class="mb-12" color="grey lighten-1" height="200px"></v-card>
 
@@ -165,7 +178,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Provide, Vue } from "vue-property-decorator";
+import { Component, Provide, Vue, Mixins } from "vue-property-decorator";
 import ProductCard from "@/components/ProductCard.vue";
 import { ItemBuyI } from "@/interfaces/product.interface";
 import GoldItemList from "@/components/GoldItemList.vue";
@@ -181,30 +194,15 @@ import { required, minLength, between } from "vuelidate/lib/validators";
     OperationHistoryCard
   }
 })
+
 export default class Payment extends Vue {
-  e1 = 1;
-  @Validate({ required })
-  quantity!: number;
-  @Validate({ minLength: minLength(4) })
-  pj = "";
-  @Validate({ required })
-  method = "";
-  payment_methods = ["paypal", "stripe"];
-  /*  validations = {
-    quantity: {
-      required,
-      minLength: minLength(4)
-      //between: between(20, 30)
-    },
-    pj: {
-      required,
-      minLength: minLength(4)
-    },
-    method: {
-      required,
-      minLength: minLength(4)
-    }
-  }; */
+  private e1 = 1;
+
+  @Validate({ required }) quantity = null
+  @Validate({ required, minLength: minLength(4) }) pj = null
+  @Validate({ required }) payMethod = null
+  private payment_methods: Array<string> = ["paypal", "stripe"];
+
   get quantityErrors(): any {
     const errors: any = [];
     if (!this.$v.quantity.$dirty) return errors;
@@ -212,17 +210,37 @@ export default class Payment extends Vue {
     !this.$v.quantity.required && errors.push("El campo es requerido");
     return errors;
   }
+  get pjErrors(): any {
+    const errors: any = [];
+    if (!this.$v.pj.$dirty) return errors;
+    !this.$v.pj.minLength && errors.push("Minimo de caracteres 4");
+    !this.$v.pj.required && errors.push("El campo es requerido");
+    return errors;
+  }
+  get payMethodErrors(): any {
+    const errors: any = [];
+    if (!this.$v.payMethod.$dirty) return errors;
+    // !this.$v.payMethod.minLength && errors.push("Minimo de caracteres 4");
+    !this.$v.payMethod.required && errors.push("El campo es requerido");
+    return errors;
+  }
+
+  get isStepOneDisabled(): any {
+    return (!this.quantity || !this.pj || !this.payMethod) ? true : false
+  }
+
 
   get form() {
     return {
-      quantity: this.$v.quantity,
-      pj: this.$v.pj,
-      method: this.$v.method
+      quantity: this.quantity,
+      pj: this.pj,
+      payMethod: this.payMethod
     };
   }
   checkout() {
     console.log(this.form);
     console.log(this.$v);
+    this.e1++
   }
 
   item: ItemBuyI = {
@@ -246,4 +264,7 @@ export default class Payment extends Vue {
 </script>
 
 <style lang="sass">
+.btn-gradient
+  background: $button-gradient
+  color: $background!important
 </style>
