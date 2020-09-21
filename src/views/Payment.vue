@@ -4,13 +4,13 @@
     <v-row>
       <v-col cols="12">
         <br />
-        <v-stepper v-model="e1" class="elevation-0 buy-stepper">
+        <v-stepper v-model="current_step" class="elevation-0 buy-stepper">
           <v-stepper-header class="elevation-0">
-            <v-stepper-step :complete="e1 > 1" step="1"></v-stepper-step>
+            <v-stepper-step :complete="current_step > 1" step="1"></v-stepper-step>
 
             <v-divider></v-divider>
 
-            <v-stepper-step :complete="e1 > 2" step="2"></v-stepper-step>
+            <v-stepper-step :complete="current_step > 2" step="2"></v-stepper-step>
 
             <v-divider></v-divider>
 
@@ -135,7 +135,7 @@
                 </v-col>
               </v-row>
 
-              <v-btn color="primary" @click="e1 = 3">Continue</v-btn>
+              <v-btn color="primary" @click="current_step = 3">Continue</v-btn>
 
               <v-btn text>Cancel</v-btn>
             </v-stepper-content>
@@ -143,7 +143,7 @@
             <v-stepper-content step="3">
               <v-card class="mb-12" color="grey lighten-1" height="200px"></v-card>
 
-              <v-btn color="primary" @click="e1 = 4">Continue</v-btn>
+              <v-btn color="primary" @click="current_step = 4">Continue</v-btn>
 
               <v-btn text>Cancel</v-btn>
             </v-stepper-content>
@@ -151,7 +151,7 @@
             <v-stepper-content step="4">
               <v-card class="mb-12" color="grey lighten-1" height="200px"></v-card>
 
-              <v-btn color="primary" @click="e1 = 1">Continue</v-btn>
+              <v-btn color="primary" @click="current_step = 1">Continue</v-btn>
 
               <v-btn text>Cancel</v-btn>
             </v-stepper-content>
@@ -196,7 +196,7 @@ import { required, minLength, between } from "vuelidate/lib/validators";
 })
 
 export default class Payment extends Vue {
-  private e1 = 1;
+  private current_step = 1;
 
   @Validate({ required }) quantity = null
   @Validate({ required, minLength: minLength(4) }) pj = null
@@ -240,7 +240,7 @@ export default class Payment extends Vue {
   checkout() {
     console.log(this.form);
     console.log(this.$v);
-    this.e1++
+    this.current_step++
   }
 
   item: ItemBuyI = {
