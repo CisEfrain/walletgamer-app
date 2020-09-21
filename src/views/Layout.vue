@@ -19,9 +19,9 @@ export default class Home extends Vue {}
 
 .custom-divider
   height: 2.4px
-  max-width: 48%
+  max-width: 100%
   background-color: #c7c5c59a
-  margin: auto
+
   border: none
 
 @media (max-width: 768px)

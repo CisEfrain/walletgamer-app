@@ -1,8 +1,8 @@
 <template>
-<v-container>
+<v-container class="px-8">
   <v-row class="px-8" justify="space-around" align="center">
     <v-col cols="12" sm="12" md="4">
-      <BalanceCard balance="50"/>
+      <BalanceCard balance="50" actions/>
     </v-col>
     <v-col cols="12" sm="12" md="8">
       <NotificationsCard />
@@ -78,8 +78,8 @@
 import { Component, Vue } from "vue-property-decorator";
 
 import BalanceCard from "@/components/BalanceCard.vue"
-import NotificationsCard from "@/components/NotificationsCard.vue"
-import TransactionItemList from "@/components/TransactionItemList.vue"
+import NotificationsCard from "@/components/transactions/NotificationsCard.vue"
+import TransactionItemList from "@/components/transactions/TransactionItemList.vue"
 
 @Component({
   components:{

@@ -10,11 +10,16 @@ $box-shadows:#00000029;
 $success:#3FB279;
 $warning:#F8B734;
 $danger:#E4445B;
-$bg-product-card: #9e9b9c;
+$bg-product-card: #B0BEC5;
 $button-gradient:transparent linear-gradient(90deg, #E4445B 0%, #C12755 100%) 0% 0% no-repeat padding-box;
 
 $font-weight-title: 800;
 
 .title{
   color: $title;
+}
+
+.btn-gradient{
+  background: $button-gradient;
+  color: $background!important;
 }

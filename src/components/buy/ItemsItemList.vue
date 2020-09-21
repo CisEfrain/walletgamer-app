@@ -7,20 +7,15 @@
             <h4 class="title">{{user}}</h4>
             <small>Rango {{rank}}</small>
           </v-col>
-          <v-col class="text-center">
-            <div>Reino {{kingdom}}</div>
+          <v-col class="">
+            <div>Ítems {{item}}</div>
             <v-chip>
               {{faction}}
             </v-chip>
           </v-col>
-          <v-col class="text-center">
-            <div>Clase {{characterClass}}</div>
-            <v-chip width="" >
-              Nivel: {{level}}
-            </v-chip>
-          </v-col>
-          <v-col class="d-flex justify-end">
+          <v-col class="d-flex flex-column align-end">
             <h4>{{price}}$</h4>
+            <small>Disponible: {{available}}</small>
           </v-col>
           <v-col class="d-flex justify-center align-center">
             <div class="">
@@ -36,25 +31,22 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-import BaseCardContainer from "@/components/BaseCardContainer.vue";
+import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
 
 @Component({
   components: {
     BaseCardContainer,
   },
 })
-export default class CharactersItemList extends Vue {
+export default class ItemsItemList extends Vue {
   @Prop({ required: true, type: String }) readonly user!: string
   @Prop({ required: true, type: String }) readonly rank!: string
-  @Prop({ required: true, type: String }) readonly kingdom!: string
-  @Prop({ required: true, type: String }) readonly characterClass!: string
-  @Prop({ required: true, type: String }) readonly level!: string
+  @Prop({ type: String }) readonly item!: string
   @Prop({ required: true, type: String }) readonly price!: string
+  @Prop({ required: true, type: String }) readonly available!: string
   @Prop({ required: true, type: String }) readonly faction!: string
 
 }
 </script>
 
-<style lang="sass" scoped>
-
-</style>
+<style lang="sass" scoped></style>

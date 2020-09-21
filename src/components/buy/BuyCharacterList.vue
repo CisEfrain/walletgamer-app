@@ -91,7 +91,7 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 
 import ProductCard from "@/components/ProductCard.vue"
-import CharactersItemList from "@/components/CharactersItemList.vue"
+import CharactersItemList from "@/components/buy/CharactersItemList.vue"
 
 @Component({
   components:{

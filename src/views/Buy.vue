@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="px-8">
     <v-row align="center" justify="center">
       <h3 class="mt-12 mb-4 title">¿Qué te interesa comprar?</h3>
     </v-row>
@@ -27,9 +27,9 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 
 import ProductCard from "@/components/ProductCard.vue";
-import BuyGoldList from "@/components/BuyGoldList.vue";
-import BuyPersonajeList from "@/components/BuyCharacterList.vue";
-import BuyItemsList from "@/components/BuyItemList.vue";
+import BuyGoldList from "@/components/buy/BuyGoldList.vue";
+import BuyPersonajeList from "@/components/buy/BuyCharacterList.vue";
+import BuyItemsList from "@/components/buy/BuyItemList.vue";
 
 @Component({
   components: {

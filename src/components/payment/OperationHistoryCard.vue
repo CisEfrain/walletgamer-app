@@ -24,7 +24,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-import BaseCardContainer from "@/components/BaseCardContainer.vue";
+import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
 
 @Component({
   components: {

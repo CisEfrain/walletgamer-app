@@ -1,13 +1,32 @@
 <template>
-  <h2>Account page view</h2>
+  <v-container class="px-8">
+    <v-row>
+      <UserInfo />
+    </v-row>
+
+    <v-row>
+      <UserExpenditure />
+    </v-row>
+  </v-container>
+
+
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
+import UserInfo from "@/components/account/UserInfo.vue"
+import UserExpenditure from "@/components/account/UserExpenditure.vue"
 
-@Component
-export default class Account extends Vue {}
+
+@Component({
+  components: {
+    UserInfo,
+    UserExpenditure
+  }
+})
+export default class Account extends Vue {
+}
 </script>
 
 <style>

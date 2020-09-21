@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="px-8">
     <h2 class="custom-class">Payment page view</h2>
     <v-row>
       <v-col cols="12">
@@ -181,7 +181,7 @@
 import { Component, Provide, Vue, Mixins } from "vue-property-decorator";
 import ProductCard from "@/components/ProductCard.vue";
 import { ItemBuyI } from "@/interfaces/product.interface";
-import GoldItemList from "@/components/GoldItemList.vue";
+import GoldItemList from "@/components/buy/GoldItemList.vue";
 import OperationHistoryCard from "@/components/payment/OperationHistoryCard.vue";
 import { Validate } from "vuelidate-property-decorators";
 

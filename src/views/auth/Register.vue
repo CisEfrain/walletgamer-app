@@ -1,10 +1,13 @@
 <template>
-  <v-container class="mt-16">
-    <v-row class="mt-16" align="center" justify="center">
-      <h3 class="mt-16 title">Registro de Gamers</h3>
+  <v-container>
+    <v-row class="mt-4">
+      <img class="logo" src="../../assets/logo.png" alt="Logo Admin" />
+    </v-row>
+    <v-row class="mt-12" align="center" justify="center">
+      <h3 class="mt-12 title">Registro de Gamers</h3>
     </v-row>
 
-    <hr class="custom-divider mt-1 mb-4" />
+    <div class="custom-divider mt-1 mb-4"></div>
     <v-row class="d-flex justify-center">
       <v-col cols="6" md="4" class="d-flex align-end flex-column">
         <v-text-field
@@ -68,7 +71,15 @@
     </v-row>
     <v-row align="center" justify="center">
       <v-col align="center">
-        <base-button label="Registrarme" />
+        <v-btn
+          rounded
+          @click="login()"
+          color="btn-gradient"
+          class="button button--primary button--medium px-8 mt-6"
+          ><b>
+            Registrarme
+          </b>
+        </v-btn>
         <div class="mt-2">
           <router-link class="register-text links" to="Login">
             <small class="register-text links">
@@ -86,22 +97,30 @@
   cursor: pointer
 
 .text-field
-  border: .8px solid #c7c5c5
   height: 42px
   font-size: 14px
-  width: 270px
+  width: 300px
+
+.custom-divider
+  height: 2.4px
+  max-width: 60%
+  background-color: #c7c5c59a
+
+.btn-gradient
+  background: $button-gradient
+  color: $background!important
 </style>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-import BaseButton from "@/components/BaseButton.vue";
- 
+import BaseButton from "@/components/base/BaseButton.vue";
+
 @Component({
   components: {
     BaseButton
   }
 })
 export default class Register extends Vue {
- 
+
 }
 </script>

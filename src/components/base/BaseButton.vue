@@ -48,7 +48,7 @@ export default class BaseButton extends Vue {
 
   //Methods
   public onClick(): void {
-    this.$emit("onClick");
+    this.$emit("click");
   }
 }
 </script>
