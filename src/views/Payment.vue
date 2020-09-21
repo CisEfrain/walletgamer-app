@@ -231,16 +231,17 @@ export default class Payment extends Vue {
 
   get form(): any {
     return {
-      quantity: this.quantity,
-      pj: this.pj,
-      payMethod: this.payMethod
+      quantity: this.$v.quantity.$model,
+      pj: this.$v.pj.$model,
+      payMethod: this.$v.payMethod.$model
     };
   }
   checkout(): void {
     console.log(this.form);
-    console.log(this.$v.$data);
-    if (!this.isStepOneDisabled) {
-    }
+
+    if (!this.isStepOneDisabled) return;
+
+    this.$store.dispatch("setActiveBuy", this.form);
     this.current_step++;
   }
 
