@@ -56,7 +56,6 @@
                     dense
                     class="select-field"
                   ></v-text-field>
-                  
                 </v-col>
                 <v-col class="d-flex" cols="12" md="3">
                   <v-text-field
@@ -94,15 +93,14 @@
                 <h4>Total a pagar: 10$</h4>
               </v-row>
               <v-row justify="center">
-                  <v-btn
+                <v-btn
                   type="button"
                   rounded
                   color="btn-gradient"
                   :disabled="isStepOneDisabled"
                   class="button button--primary button--medium mt-4 px-6"
-                  @click="checkout()">
-                    Confirmar
-                  </v-btn>
+                  @click="checkout()"
+                >Confirmar</v-btn>
                 <!-- <v-btn text>Cancel</v-btn> -->
               </v-row>
             </v-stepper-content>
@@ -174,6 +172,7 @@
         />
       </v-col>
     </v-row>
+    <PaymentModal :dialog="true"></PaymentModal>
   </v-container>
 </template>
 
@@ -183,6 +182,7 @@ import ProductCard from "@/components/ProductCard.vue";
 import { ItemBuyI } from "@/interfaces/product.interface";
 import GoldItemList from "@/components/buy/GoldItemList.vue";
 import OperationHistoryCard from "@/components/payment/OperationHistoryCard.vue";
+import PaymentModal from "@/components/payment/PaymentModal.vue";
 import { Validate } from "vuelidate-property-decorators";
 
 import { required, minLength, between } from "vuelidate/lib/validators";
@@ -191,56 +191,57 @@ import { required, minLength, between } from "vuelidate/lib/validators";
   components: {
     ProductCard,
     GoldItemList,
+    PaymentModal,
     OperationHistoryCard
   }
 })
-
 export default class Payment extends Vue {
   private current_step = 1;
 
-  @Validate({ required }) quantity = null
-  @Validate({ required, minLength: minLength(4) }) pj = null
-  @Validate({ required }) payMethod = null
+  @Validate({ required }) quantity = null;
+  @Validate({ required, minLength: minLength(4) }) pj = null;
+  @Validate({ required }) payMethod = null;
   private payment_methods: Array<string> = ["paypal", "stripe"];
 
-  get quantityErrors(): any {
-    const errors: any = [];
+  get quantityErrors(): Array<string> {
+    const errors: Array<string> = [];
     if (!this.$v.quantity.$dirty) return errors;
     // !this.$v.quantity.minLength && errors.push("Minimo de caracteres 4");
     !this.$v.quantity.required && errors.push("El campo es requerido");
     return errors;
   }
-  get pjErrors(): any {
-    const errors: any = [];
+  get pjErrors(): Array<string> {
+    const errors: Array<string> = [];
     if (!this.$v.pj.$dirty) return errors;
     !this.$v.pj.minLength && errors.push("Minimo de caracteres 4");
     !this.$v.pj.required && errors.push("El campo es requerido");
     return errors;
   }
-  get payMethodErrors(): any {
-    const errors: any = [];
+  get payMethodErrors(): Array<string> {
+    const errors: Array<string> = [];
     if (!this.$v.payMethod.$dirty) return errors;
     // !this.$v.payMethod.minLength && errors.push("Minimo de caracteres 4");
     !this.$v.payMethod.required && errors.push("El campo es requerido");
     return errors;
   }
 
-  get isStepOneDisabled(): any {
-    return (!this.quantity || !this.pj || !this.payMethod) ? true : false
+  get isStepOneDisabled(): boolean {
+    return !this.quantity || !this.pj || !this.payMethod ? true : false;
   }
 
-
-  get form() {
+  get form(): any {
     return {
       quantity: this.quantity,
       pj: this.pj,
       payMethod: this.payMethod
     };
   }
-  checkout() {
+  checkout(): void {
     console.log(this.form);
-    console.log(this.$v);
-    this.current_step++
+    console.log(this.$v.$data);
+    if (!this.isStepOneDisabled) {
+    }
+    this.current_step++;
   }
 
   item: ItemBuyI = {
