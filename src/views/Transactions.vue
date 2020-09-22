@@ -4,7 +4,7 @@
     <v-col cols="12" sm="12" md="4">
       <BalanceCard balance="50" actions/>
     </v-col>
-    <v-col cols="12" sm="12" md="8">
+    <v-col cols="12" sm="12" md="7">
       <NotificationsCard />
     </v-col>
   </v-row>
