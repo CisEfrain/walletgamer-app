@@ -85,7 +85,7 @@ private clearForm(): void {
       : false;
   }
 
-  get receiveErrors(): Array<string> {
+  get withdrawErrors(): Array<string> {
     const errors: Array<string> = [];
     if (!this.$v.withdraw.$dirty) return errors;
     !this.$v.withdraw.required && errors.push("El campo es requerido");
