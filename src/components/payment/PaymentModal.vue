@@ -1,5 +1,9 @@
 <template>
-  <v-dialog v-model="dialog" width="400" overlay-color="blue-grey lighten-5">
+  <v-dialog
+    v-model="$store.state.paymentState.PayModal"
+    width="400"
+    overlay-color="blue-grey lighten-5"
+  >
     <BaseCardContainer>
       <v-spacer></v-spacer>
       <v-row justify="center">
@@ -71,7 +75,6 @@
         </v-col>
       </v-row>
       <v-row align="center" justify="center">
-        {{$store.state.paymentState.stripeData}}
         <v-btn
           type="button"
           rounded
@@ -102,8 +105,6 @@ import {
   }
 })
 export default class PaymentModal extends Vue {
-  @Prop({ type: Boolean, default: true }) dialog!: boolean;
-  //   date = new Date().toISOString().substr(0, 10);
   menu = false;
   modal = false;
 
@@ -111,10 +112,20 @@ export default class PaymentModal extends Vue {
   @Validate({ required, minLength: minLength(3), maxLength: maxLength(3) })
   cvc = "";
   @Validate({ required }) date = "";
+
+  /*   @Watch("current_step")
+  onStepChange(val: string, oldVal: string) {
+
+  } */
   Pay() {
     console.log(this.form);
-
+    if (this.$v.$invalid) {
+      this.$v.$touch;
+      return;
+    }
     this.$store.dispatch("setStripeData", this.form);
+    this.$store.dispatch("nextStep");
+    this.$store.dispatch("openPayModal");
   }
   get form() {
     const cardNumber = this.$v.cardNumber.$model;
@@ -148,21 +159,17 @@ export default class PaymentModal extends Vue {
     !this.$v.date.required && errors.push("El campo es requerido");
     return errors;
   }
-
-  hasDialog() {
-    this.dialog = !this.dialog;
-  }
 }
 </script>
 
 <style lang="sass">
 #app > div.v-dialog__content.v-dialog__content--active > div.v-dialog.v-dialog--active
-    border-radius: 34px!important
-    -webkit-box-shadow: 0px 5px 18px -12px rgba(0, 0, 0, 0.8)
-    -moz-box-shadow: 0px 5px 18px -12px rgba(0, 0, 0, 0.8)
-    box-shadow: 0px 5px 18px -12px rgba(0, 0, 0, 0.8)
+  border-radius: 34px!important
+  -webkit-box-shadow: 0px 5px 18px -12px rgba(0, 0, 0, 0.8)
+  -moz-box-shadow: 0px 5px 18px -12px rgba(0, 0, 0, 0.8)
+  box-shadow: 0px 5px 18px -12px rgba(0, 0, 0, 0.8)
 </style>
 <style lang="sass" scoped>
 .card-container
-    padding-bottom: 3rem
+  padding-bottom: 3rem
 </style>

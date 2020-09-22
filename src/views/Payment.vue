@@ -4,13 +4,13 @@
     <v-row>
       <v-col cols="12">
         <br />
-        <v-stepper v-model="current_step" class="elevation-0 buy-stepper">
+        <v-stepper v-model="$store.state.paymentState.currentStep" class="elevation-0 buy-stepper">
           <v-stepper-header class="elevation-0">
-            <v-stepper-step :complete="current_step > 1" step="1"></v-stepper-step>
+            <v-stepper-step :complete="$store.state.paymentState.currentStep > 1" step="1"></v-stepper-step>
 
             <v-divider></v-divider>
 
-            <v-stepper-step :complete="current_step > 2" step="2"></v-stepper-step>
+            <v-stepper-step :complete="$store.state.paymentState.currentStep > 2" step="2"></v-stepper-step>
 
             <v-divider></v-divider>
 
@@ -172,7 +172,7 @@
         />
       </v-col>
     </v-row>
-    <PaymentModal :dialog="true"></PaymentModal>
+    <PaymentModal></PaymentModal>
   </v-container>
 </template>
 
@@ -196,13 +196,12 @@ import { required, minLength, between } from "vuelidate/lib/validators";
   }
 })
 export default class Payment extends Vue {
-  private current_step = 1;
+  // private current_step = this.$store.state.paymentState.currentStep;
 
   @Validate({ required }) quantity = null;
   @Validate({ required, minLength: minLength(4) }) pj = null;
   @Validate({ required }) payMethod = null;
   private payment_methods: Array<string> = ["paypal", "stripe"];
-
   get quantityErrors(): Array<string> {
     const errors: Array<string> = [];
     if (!this.$v.quantity.$dirty) return errors;
@@ -226,7 +225,8 @@ export default class Payment extends Vue {
   }
 
   get isStepOneDisabled(): boolean {
-    return !this.quantity || !this.pj || !this.payMethod ? true : false;
+    console.log("this.$v.$invalid; ", this.$v.$invalid);
+    return this.$v.$invalid;
   }
 
   get form(): any {
@@ -238,11 +238,11 @@ export default class Payment extends Vue {
   }
   checkout(): void {
     console.log(this.form);
-
-    if (!this.isStepOneDisabled) return;
+    if (this.isStepOneDisabled) return;
 
     this.$store.dispatch("setActiveBuy", this.form);
-    this.current_step++;
+
+    this.$store.dispatch("openPayModal");
   }
 
   item: ItemBuyI = {
@@ -265,8 +265,9 @@ export default class Payment extends Vue {
 }
 </script>
 
-<style lang="sass">
-.btn-gradient
-  background: $button-gradient
-  color: $background!important
+<style lang="scss">
+.btn-gradient {
+  background: $button-gradient;
+  color: $background !important;
+}
 </style>

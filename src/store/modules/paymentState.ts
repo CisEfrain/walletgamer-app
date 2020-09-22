@@ -1,7 +1,8 @@
-import { Payload } from 'vuex';
 
 const paymentState = {
     state: () => ({
+        PayModal: false,
+        currentStep: 1,
         activeBuy: {},
         stripeData: {}
     }),
@@ -16,6 +17,12 @@ const paymentState = {
         },
         setActiveBuy(state: any, payload: any): void {
             state.activeBuy = payload;
+        },
+        nextStep(state: any): void {
+            state.currentStep++
+        },
+        openPayModal(state: any): void {
+            state.PayModal = !state.PayModal;
         }
     },
     actions: {
@@ -25,6 +32,13 @@ const paymentState = {
         setActiveBuy({ commit }: any, payload: any): void {
 
             commit('setActiveBuy', payload)
+        },
+        nextStep({ commit }: any): void {
+            commit('nextStep')
+        },
+        openPayModal({ commit }: any): void {
+            commit('openPayModal')
+
         }
     }
     // getters: { ... }
