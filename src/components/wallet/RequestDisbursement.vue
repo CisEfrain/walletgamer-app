@@ -12,16 +12,26 @@
           rounded
           color="rgba(184,12,70,.6)"
           outlined
+          v-model="$v.withdraw.$model"
+          :error-messages="withdrawErrors"
+          @input="$v.withdraw.$touch()"
+          @blur="$v.withdraw.$touch()"
+          required
           class="text-field"
           dense
         ></v-text-field>
       </v-col>
       <v-col class="d-flex" cols="6" sm="6" md="5">
         <v-select
-          :items="[]"
+          :items="walletFund"
           placeholder="¿Donde lo quieres recibir?"
           outlined
           rounded
+          v-model="$v.receive.$model"
+          :error-messages="receiveErrors"
+          @input="$v.receive.$touch()"
+          @blur="$v.receive.$touch()"
+          required
           color="rgba(184,12,70,.6)"
           dense
           class="select-field"
@@ -32,6 +42,8 @@
           rounded
           color="btn-gradient"
           class="button button--primary button--medium mt-4 px-6"
+          @click="RequestDisbursement"
+          :disabled="isDisabled"
         ><b>
           Solicitar
           </b>
@@ -43,10 +55,50 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { Validate } from "vuelidate-property-decorators";
+import { required } from "vuelidate/lib/validators";
 
 @Component
 export default class RequestDisbursement extends Vue {
-  private panel: Array<number> = [0];
+  @Validate({ required }) withdraw = null
+  @Validate({ required }) receive = null
+  private walletFund: Array<string> = ["Paypal", "Stripe", "BTC"];
+
+private RequestDisbursement(): void {
+  const RequestDisbursement = {
+    typeExpenditure : this.withdraw,
+    emailReceptor : this.receive,
+  }
+  console.log(RequestDisbursement)
+  this.clearForm()
+}
+
+private clearForm(): void {
+  this.$v.$reset()
+  this.withdraw = null
+  this.receive = null
+}
+
+  get isDisabled(): boolean {
+    return !this.withdraw || !this.receive
+      ? true
+      : false;
+  }
+
+  get receiveErrors(): Array<string> {
+    const errors: Array<string> = [];
+    if (!this.$v.withdraw.$dirty) return errors;
+    !this.$v.withdraw.required && errors.push("El campo es requerido");
+    return errors;
+  }
+  get emailReceptorErrors(): Array<string> {
+    const errors: Array<string> = [];
+    if (!this.$v.receive.$dirty) return errors;
+    !this.$v.receive.required && errors.push("El campo es requerido");
+    return errors;
+  }
+
+
 }
 </script>
 

@@ -12,7 +12,12 @@
       <v-col cols="6" md="4" class="d-flex align-end flex-column">
         <v-text-field
           class="text-field"
-          placeholder="Nombre y apellido"
+          label="Nombre y apellido"
+          v-model="$v.fullName.$model"
+          :error-messages="fullNameErrors"
+          @input="$v.fullName.$touch()"
+          @blur="$v.fullName.$touch()"
+          required
           rounded
           color="rgba(184,12,70,.6)"
           background-color="white"
@@ -20,36 +25,56 @@
           dense
         ></v-text-field>
         <v-text-field
+          v-model="$v.password.$model"
+          :error-messages="passwordErrors"
+          @input="$v.password.$touch()"
+          @blur="$v.password.$touch()"
+          required
           class="text-field mt-6"
-          placeholder="Contraseña"
+          label="Contraseña"
           rounded
           color="rgba(184,12,70,.6)"
           background-color="white"
           outlined
           dense
+          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+          :type="showPassword ? 'text' : 'password'"
+          @click:append="showPass = !showPass"
+          counter
         ></v-text-field>
-        <v-text-field
-          class="text-field mt-6"
-          placeholder="Email"
-          rounded
-          color="rgba(184,12,70,.6)"
-          background-color="white"
-          outlined
-          dense
-        ></v-text-field>
+        
       </v-col>
 
       <v-col cols="6" md="4" class="d-flex align-start flex-column">
         <v-text-field
           class="text-field"
-          placeholder="Teléfono movil"
+          label="Teléfono movil"
           rounded
+          v-model="$v.phoneNumber.$model"
+          :error-messages="phoneNumberErrors"
+          @input="$v.phoneNumber.$touch()"
+          @blur="$v.phoneNumber.$touch()"
+          required
           color="rgba(184,12,70,.6)"
           background-color="white"
           outlined
           dense
         ></v-text-field>
         <v-text-field
+          class="text-field mt-6"
+          label="Email"
+          rounded
+          v-model="$v.email.$model"
+          :error-messages="emailErrors"
+          @input="$v.email.$touch()"
+          @blur="$v.email.$touch()"
+          required
+          color="rgba(184,12,70,.6)"
+          background-color="white"
+          outlined
+          dense
+        ></v-text-field>
+        <!-- <v-text-field
           class="text-field mt-6"
           placeholder="Confirmar la contraseña"
           rounded
@@ -57,23 +82,29 @@
           background-color="white"
           outlined
           dense
-        ></v-text-field>
-        <v-text-field
+        ></v-text-field> -->
+        <!-- <v-text-field
           class="text-field mt-6"
           placeholder="Confirma el email"
           rounded
+          v-model="$v.email.$model"
+          :error-messages="emailErrors"
+          @input="$v.email.$touch()"
+          @blur="$v.email.$touch()"
+          required
           color="rgba(184,12,70,.6)"
           background-color="white"
           outlined
           dense
-        ></v-text-field>
+        ></v-text-field> -->
       </v-col>
     </v-row>
     <v-row align="center" justify="center">
       <v-col align="center">
         <v-btn
           rounded
-          @click="login()"
+          @click="register"
+          :disabled="isDisabled"
           color="btn-gradient"
           class="button button--primary button--medium px-8 mt-6"
           ><b>
@@ -112,15 +143,76 @@
 </style>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { Validate } from "vuelidate-property-decorators";
+import { required, email, minLength } from "vuelidate/lib/validators";
 
-import BaseButton from "@/components/base/BaseButton.vue";
-
-@Component({
-  components: {
-    BaseButton
-  }
-})
+@Component
 export default class Register extends Vue {
+  @Validate({ required, minLength: minLength(5) }) fullName = null;
+  @Validate({ required, minLength: minLength(5) }) phoneNumber = null;
+  @Validate({ required, email }) email = null;
+  @Validate({ required, minLength: minLength(8) }) password = null;
+  public showPass = false
 
+  private register(): void {
+    const registerData = {
+      fullName: this.fullName,
+      email: this.email,
+      phoneNumber: this.phoneNumber,
+      password: this.password,
+    };
+    console.log(registerData);
+    this.clearForm();
+  }
+
+  private clearForm(): void {
+    this.$v.$reset();
+    this.email = null;
+    this.password = null;
+    this.phoneNumber = null;
+    this.fullName = null;
+  }
+
+  get showPassword(): any {
+    return this.showPass ? true : false
+  }
+
+  get isDisabled(): boolean {
+    return !this.fullName || !this.password || !this.phoneNumber || !this.email
+      ? true
+      : false;
+  }
+
+  get fullNameErrors(): Array<string> {
+    const errors: Array<string> = [];
+    if (!this.$v.fullName.$dirty) return errors;
+    !this.$v.fullName.required && errors.push("El campo es requerido");
+    !this.$v.fullName.minLength &&
+      errors.push("Debe contener minimo 5 digitos");
+    return errors;
+  }
+  get phoneNumberErrors(): Array<string> {
+    const errors: Array<string> = [];
+    if (!this.$v.phoneNumber.$dirty) return errors;
+    !this.$v.phoneNumber.required && errors.push("El campo es requerido");
+    !this.$v.phoneNumber.minLength &&
+      errors.push("Debe contener minimo 5 digitos");
+    return errors;
+  }
+  get emailErrors(): Array<string> {
+    const errors: Array<string> = [];
+    if (!this.$v.email.$dirty) return errors;
+    !this.$v.email.required && errors.push("El campo es requerido");
+    !this.$v.email.email && errors.push("El email debe ser valido");
+    return errors;
+  }
+  get passwordErrors(): Array<string> {
+    const errors: Array<string> = [];
+    if (!this.$v.password.$dirty) return errors;
+    !this.$v.password.required && errors.push("El campo es requerido");
+    !this.$v.password.minLength &&
+      errors.push("Debe contener minimo 8 digitos");
+    return errors;
+  }
 }
 </script>

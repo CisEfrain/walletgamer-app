@@ -11,8 +11,13 @@
     <v-row align="center" justify="center">
       <v-col cols="6" md="6" align="center">
         <v-text-field
-          placeholder="Email"
+          label="Email"
           rounded
+          v-model="$v.email.$model"
+          :error-messages="emailErrors"
+          @input="$v.email.$touch()"
+          @blur="$v.email.$touch()"
+          required
           color="rgba(184,12,70,.6)"
           background-color="white"
           outlined
@@ -20,17 +25,27 @@
           dense
         ></v-text-field>
         <v-text-field
-          placeholder="Contraseña"
+          v-model="$v.password.$model"
+          :error-messages="passwordErrors"
+          @input="$v.password.$touch()"
+          @blur="$v.password.$touch()"
+          required
+          class="text-field mt-6"
+          label="Contraseña"
           rounded
           color="rgba(184,12,70,.6)"
           background-color="white"
           outlined
-          class="text-field mt-6"
           dense
+          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+          :type="showPassword ? 'text' : 'password'"
+          @click:append="showPass = !showPass"
+          counter
         ></v-text-field>
         <v-btn
           rounded
-          @click="login()"
+          @click="login"
+          :disabled="isDisabled"
           color="btn-gradient"
           class="button button--primary button--medium px-8 mt-6"
           ><b>
@@ -68,19 +83,58 @@
 </style>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-
-import BaseButton from "@/components/base/BaseButton.vue";
 import { Login } from "@/services/auth.service";
-@Component({
-  components: {
-    BaseButton,
-  },
-})
+import { Validate } from "vuelidate-property-decorators";
+import { required, email, minLength } from "vuelidate/lib/validators";
+
+@Component
 export default class LoginPage extends Vue {
-  login() {
-    console.log("a");
+  @Validate({ required, email }) email = null
+  @Validate({ required, minLength: minLength(8) }) password = null
+  public showPass = false
+
+
+private login(): void {
+  const loginData = {
+    email : this.email,
+    password : this.password,
+  }
+  console.log(loginData)
+  
     const response = Login("admin", "equis");
     alert(response);
+    this.clearForm()
+  }
+
+get showPassword(): any {
+    return this.showPass ? true : false
+  }
+
+private clearForm(): void {
+  this.$v.$reset()
+  this.email = null
+  this.password = null
+}
+
+  get isDisabled(): boolean {
+    return !this.email || !this.password
+      ? true
+      : false;
+  }
+
+  get emailErrors(): Array<string> {
+    const errors: Array<string> = [];
+    if (!this.$v.email.$dirty) return errors;
+    !this.$v.email.required && errors.push("El campo es requerido");
+    !this.$v.email.email && errors.push("El email debe ser valido");
+    return errors;
+  }
+  get passwordErrors(): Array<string> {
+    const errors: Array<string> = [];
+    if (!this.$v.password.$dirty) return errors;
+    !this.$v.password.required && errors.push("El campo es requerido");
+    !this.$v.password.minLength && errors.push("Debe contener minimo 8 digitos");
+    return errors;
   }
 }
 </script>
