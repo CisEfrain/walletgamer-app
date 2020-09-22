@@ -14,10 +14,10 @@
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="3"></v-stepper-step>
+            <v-stepper-step :complete="$store.state.paymentState.currentStep > 3" step="3"></v-stepper-step>
             <v-divider></v-divider>
 
-            <v-stepper-step step="4"></v-stepper-step>
+            <v-stepper-step :complete="$store.state.paymentState.currentStep > 4" step="4"></v-stepper-step>
           </v-stepper-header>
 
           <v-stepper-items>
@@ -133,17 +133,54 @@
                 </v-col>
               </v-row>
 
-              <v-btn color="primary" @click="current_step = 3">Continue</v-btn>
-
-              <v-btn text>Cancel</v-btn>
+              <v-btn
+                type="button"
+                rounded
+                color="btn-gradient"
+                class="button button--primary button--medium mt-4 px-6"
+                @click="$store.dispatch('nextStep')"
+              >Confirmar</v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="3">
-              <v-card class="mb-12" color="grey lighten-1" height="200px"></v-card>
+              <v-row justify="center">
+                <v-col md="12" class="d-flex justify-center">
+                  <GoldItemList
+                    class="mx-auto"
+                    :user="item.user"
+                    :rank="item.rank"
+                    :kingdom="item.kingdom"
+                    :faction="item.faction"
+                    :price="item.price"
+                    :product="item.product"
+                    :available="item.available"
+                  />
+                </v-col>
+              </v-row>
+              <v-row justify="center">
+                <v-col cols="12">
+                  <h3 class="title text-center">
+                    <b>Carlos Gomez</b> ha notificado la transferencia de 500 de Oro a tu cuenta
+                  </h3>
+                </v-col>
 
-              <v-btn color="primary" @click="current_step = 4">Continue</v-btn>
+                <v-col cols="12">
+                  <p
+                    class="text-center"
+                  >Realiza los siguientes pasos para confirmar la transferencia:</p>
+                </v-col>
+                <v-col cols="12" md="8">
+                  <v-textarea outlined rounded dense clearable clear-icon="cancel"></v-textarea>
+                </v-col>
+              </v-row>
 
-              <v-btn text>Cancel</v-btn>
+              <v-btn
+                type="button"
+                rounded
+                color="btn-gradient"
+                class="button button--primary button--medium mt-4 px-6"
+                @click="$store.dispatch('nextStep')"
+              >Confirmar</v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="4">
@@ -239,9 +276,7 @@ export default class Payment extends Vue {
   checkout(): void {
     console.log(this.form);
     if (this.isStepOneDisabled) return;
-
     this.$store.dispatch("setActiveBuy", this.form);
-
     this.$store.dispatch("openPayModal");
   }
 
