@@ -69,6 +69,7 @@ private RequestDisbursement(): void {
     typeExpenditure : this.withdraw,
     emailReceptor : this.receive,
   }
+  this.$store.dispatch("setNewRequestDisbursementData", RequestDisbursement)
   console.log(RequestDisbursement)
   this.clearForm()
 }
