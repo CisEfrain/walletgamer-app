@@ -8,6 +8,10 @@ import "vuetify/dist/vuetify.min.css"
 import Vuelidate from "vuelidate"
 
 
+// import VueStripeCheckout from "vue-stripe-checkout";
+
+// Vue.use(VueStripeCheckout, "pk_test_51HUYgHFLYR3KSOT0qrJ9jtjLOZNaGWgNBmxSghB5PXmedAiaGNoyQSJrjUcAYAWBrf9ytsEMoQyMjgo9fFSPmsWn00Jpt950Fx");
+
 
 Vue.use(Vuetify)
 Vue.use(Vuelidate)
