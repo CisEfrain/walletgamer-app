@@ -161,6 +161,7 @@ export default class Register extends Vue {
       phoneNumber: this.phoneNumber,
       password: this.password,
     };
+  this.$store.dispatch("setRegister", registerData)
     console.log(registerData);
     this.clearForm();
   }

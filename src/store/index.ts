@@ -6,6 +6,7 @@ import AppStates from "@/store/modules/appStateStore";
 import paymentState from "@/store/modules/paymentState";
 import accountState from "@/store/modules/accountState";
 import walletState from "@/store/modules/walletState";
+import authState from "@/store/modules/authState";
 
 Vue.use(Vuex);
 
@@ -15,8 +16,9 @@ export default new Vuex.Store({
   actions: {},
   modules: {
     AppStates,
+    authState,
     paymentState,
     accountState,
-    walletState
+    walletState,
   }
 });

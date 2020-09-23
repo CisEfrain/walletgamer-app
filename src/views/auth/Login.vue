@@ -100,6 +100,7 @@ private login(): void {
     password : this.password,
   }
   console.log(loginData)
+  this.$store.dispatch("setLogin", loginData)
   
     const response = Login("admin", "equis");
     alert(response);
