@@ -1,7 +1,7 @@
 <template>
   <v-container class="mt-8 px-12">
     <v-row class="px-4">
-      <h2 class="title">Mis datos</h2>
+      <h2 class="title">Medios de desembolso</h2>
     </v-row>
     <v-row align="center" justify="center" class="mt-6">
       <v-col class="d-flex" cols="6" sm="6" md="3">
@@ -103,6 +103,7 @@ private addExpenditure(): void {
     emailReceptor : this.emailReceptor,
     aliasId : this.aliasId
   }
+  this.$store.dispatch("setNewExpenditureData", newExpenditure)
   console.log(newExpenditure)
   this.clearForm()
 }

@@ -77,7 +77,7 @@ private clearForm(): void {
   this.$v.$reset()
   this.withdraw = null
   this.receive = null
-}
+  }
 
   get isDisabled(): boolean {
     return !this.withdraw || !this.receive
