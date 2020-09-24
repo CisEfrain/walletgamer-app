@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 // Modules
-import AppStates from "@/store/modules/appStateStore";
+import AppState from "@/store/modules/appState";
 import paymentState from "@/store/modules/paymentState";
 import accountState from "@/store/modules/accountState";
 import walletState from "@/store/modules/walletState";
@@ -15,7 +15,7 @@ export default new Vuex.Store({
   mutations: {},
   actions: {},
   modules: {
-    AppStates,
+    AppState,
     authState,
     paymentState,
     accountState,

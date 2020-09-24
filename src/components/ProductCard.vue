@@ -21,7 +21,7 @@ export default class ProductCard extends Vue {
   @Prop({ required: true, type: String }) readonly productTitle!: string;
 
   get isActive(){
-    return this.$store.state.AppStates.activeProduct === this.productTitle ? 'active-card': null
+    return this.$store.state.AppState.activeProduct === this.productTitle ? 'active-card': null
   }
 
   @Emit("selected")

@@ -8,7 +8,7 @@
           </v-list-item-content>
         </v-list-item>
         <router-link to="/">
-          <v-list-item link>
+          <v-list-item link @click="resetProduct">
             <!-- <v-list-item-action>
               <v-icon>mdi-account-details</v-icon>
             </v-list-item-action>-->
@@ -18,7 +18,7 @@
           </v-list-item>
         </router-link>
         <router-link to="/sell">
-          <v-list-item link>
+          <v-list-item link @click="resetProduct">
             <!-- <v-list-item-action>
               <v-icon>mdi-shopping</v-icon>
             </v-list-item-action>-->
@@ -28,7 +28,7 @@
           </v-list-item>
         </router-link>
         <router-link to="/buy">
-          <v-list-item link>
+          <v-list-item link @click="resetProduct">
             <!-- <v-list-item-action>
               <v-icon>mdi-account-check</v-icon>
             </v-list-item-action>-->
@@ -38,7 +38,7 @@
           </v-list-item>
         </router-link>
         <router-link to="/wallet">
-          <v-list-item link>
+          <v-list-item link @click="resetProduct">
             <!-- <v-list-item-action>
               <v-icon>mdi-store</v-icon>
             </v-list-item-action>-->
@@ -47,8 +47,8 @@
             </v-list-item-content>
           </v-list-item>
         </router-link>
-        <router-link to="/account">
-          <v-list-item link>
+        <router-link to="/account" >
+          <v-list-item link @click="resetProduct">
             <!-- <v-list-item-action>
               <v-icon>mdi-cog</v-icon>
             </v-list-item-action>-->
@@ -57,8 +57,8 @@
             </v-list-item-content>
           </v-list-item>
         </router-link>
-        <router-link to="/help">
-          <v-list-item link >
+        <router-link to="/help" >
+          <v-list-item link @click="resetProduct">
             <!-- <v-list-item-action>
               <v-icon>mdi-cog</v-icon>
             </v-list-item-action>-->
@@ -92,12 +92,13 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-@Component({
-  components: {}
-})
+@Component
 export default class Panel extends Vue {
-  logout(){
+  private logout(): void{
     this.$router.push('/login')
+  }
+  private resetProduct(): void{
+    this.$store.commit("resetProduct")
   }
 }
 </script>
