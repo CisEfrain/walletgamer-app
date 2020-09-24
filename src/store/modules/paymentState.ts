@@ -4,7 +4,8 @@ const paymentState = {
         PayModal: false,
         currentStep: 1,
         activeBuy: {},
-        stripeData: {}
+        stripeData: {},
+        errorReported: false,
     }),
     mutations: {
         /**
@@ -18,8 +19,14 @@ const paymentState = {
         setActiveBuy(state: any, payload: any): void {
             state.activeBuy = payload;
         },
-        nextStep(state: any): void {
-            state.currentStep++
+        nextStep(state: any, payload?: any): void {
+            if (!payload) {
+                state.currentStep++
+
+            } else {
+                state.currentStep++
+                state.errorReported = true;
+            }
         },
         openPayModal(state: any): void {
             state.PayModal = !state.PayModal;
@@ -33,8 +40,13 @@ const paymentState = {
 
             commit('setActiveBuy', payload)
         },
-        nextStep({ commit }: any): void {
-            commit('nextStep')
+        nextStep({ commit }: any, payload?: any): void {
+            if (!payload) {
+                commit('nextStep')
+
+            } else {
+                commit('nextStep', true)
+            }
         },
         openPayModal({ commit }: any): void {
             commit('openPayModal')

@@ -136,7 +136,6 @@
               <v-btn
                 type="button"
                 rounded
-                color="btn-gradient"
                 class="button button--primary button--medium mt-4 px-6"
                 @click="$store.dispatch('nextStep')"
               >Confirmar</v-btn>
@@ -172,23 +171,61 @@
                 <v-col cols="12" md="8">
                   <v-textarea outlined rounded dense clearable clear-icon="cancel"></v-textarea>
                 </v-col>
+                <v-col cols="12">
+                  <p class="text-center">Haz clic en el siguiente botón para confirmar la recepción</p>
+                </v-col>
               </v-row>
 
-              <v-btn
-                type="button"
-                rounded
-                color="btn-gradient"
-                class="button button--primary button--medium mt-4 px-6"
-                @click="$store.dispatch('nextStep')"
-              >Confirmar</v-btn>
+              <v-row justify="center">
+                <v-btn
+                  type="button"
+                  rounded
+                  color="btn-gradient"
+                  class="button button--primary button--medium mt-4 px-6"
+                  @click="$store.dispatch('nextStep')"
+                >Confirmar</v-btn>
+
+                <v-btn
+                  type="button"
+                  rounded
+                  color="btn-gradient"
+                  class="button button--dark ml-3 button--medium mt-4 px-6"
+                  @click="$store.dispatch('nextStep','error')"
+                >Tengo un problema</v-btn>
+              </v-row>
             </v-stepper-content>
 
             <v-stepper-content step="4">
-              <v-card class="mb-12" color="grey lighten-1" height="200px"></v-card>
+              <v-row justify="center">
+                <v-col md="12" class="d-flex justify-center">
+                  <GoldItemList
+                    class="mx-auto"
+                    :user="item.user"
+                    :rank="item.rank"
+                    :kingdom="item.kingdom"
+                    :faction="item.faction"
+                    :price="item.price"
+                    :product="item.product"
+                    :available="item.available"
+                  />
+                </v-col>
+              </v-row>
+              <v-row justify="center">
+                <v-col cols="12">
+                  <h3
+                    v-if="!$store.state.paymentState.errorReported"
+                    class="title text-center"
+                  >Perfecto..!!! hemos terminado la operación</h3>
+                  <h3
+                    v-if="$store.state.paymentState.errorReported"
+                    class="title text-center"
+                  >Tu operación está en mediación</h3>
+                </v-col>
 
-              <v-btn color="primary" @click="current_step = 1">Continue</v-btn>
-
-              <v-btn text>Cancel</v-btn>
+                <v-col cols="12" v-if="$store.state.paymentState.errorReported">
+                  <p class="text-center">Estamos revisando tu caso, en breve te contactaremos</p>
+                </v-col>
+               </v-row>
             </v-stepper-content>
           </v-stepper-items>
         </v-stepper>
