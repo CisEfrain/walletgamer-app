@@ -83,12 +83,11 @@
     </v-row>
 
     <v-row class="mt-4" justify="center">
-          <v-col class="commission_info text-center px-4 py-4" cols="4">
-            <p>Comision: 5%</p>
-            <h5>Por cada 100 unidades vendidas recibiras: 0</h5>
-          </v-col>
+      <v-col class="commission_info text-center px-4 py-4" cols="4">
+        <p>Comision: 5%</p>
+        <h5>Por cada 100 unidades vendidas recibiras: 0</h5>
+      </v-col>
     </v-row>
-
   </v-container>
 </template>
 
@@ -108,13 +107,13 @@ export default class GoldForm extends Vue {
     "Aerie Peak",
     "Aggramar",
     "Akama",
-    "Altar of Storms",
+    "Altar of Storms"
   ];
   private factionList: Array<string> = [
     "Horde",
     "Alliance",
     "Horde Force",
-    "Steamwheedle Cartel",
+    "Steamwheedle Cartel"
   ];
 
   private addGoldPost(): void {
@@ -122,7 +121,7 @@ export default class GoldForm extends Vue {
       realm: this.realm,
       faction: this.faction,
       quantity: this.quantity,
-      price: this.price,
+      price: this.price
     };
     //this.$store.dispatch("setNewExpenditureData", newExpenditure)
     console.log(newGoldPost);
