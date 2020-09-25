@@ -103,7 +103,7 @@ export default class Sell extends Vue {
   transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0)
 
 .slide-fade-enter, .slide-fade-leave-to
-  transform: translateX(10px)
+  transform: translateY(20px)
   transition: all .2s ease-out
-  opacity: .4
+  opacity: .1
 </style>
