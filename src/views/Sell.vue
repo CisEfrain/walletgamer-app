@@ -19,42 +19,42 @@
       />
     </v-row>
 
-    <transition name="slide-fade">
-      <keep-alive>
-        <div class="mt-10" justify="center" v-if="currentProduct == 'Post'">
-          <h3 class="title">Mis publicaciones</h3>
-            <v-expansion-panels v-model="panel" multiple flat>
-              <PostList
-                product="Gold World of Warcraft"
-                cost="20"
-                quantity="500"
-                realm="Faerlina"
-                faction="Horda"
-              />
-              <PostList
-                product="Gold World of Warcraft"
-                cost="20"
-                quantity="500"
-                realm="Faerlina"
-                faction="Horda"
-              />
-            </v-expansion-panels>
-            </div>
+    <div class="mt-10" justify="center" v-if="currentProduct == 'Post'">
+      <h3 class="title">Mis publicaciones</h3>
+      <v-expansion-panels v-model="panel" multiple flat>
+        <PostList
+          product="Gold World of Warcraft"
+          cost="20"
+          quantity="500"
+          realm="Faerlina"
+          faction="Horda"
+        />
+        <PostList
+          product="Gold World of Warcraft"
+          cost="20"
+          quantity="500"
+          realm="Faerlina"
+          faction="Horda"
+        />
+      </v-expansion-panels>
+    </div>
 
-        <div v-else class="mt-10">
-          <h3 class="title">Ingresa las caracteristicas de tu publicación</h3>
+    <div v-else class="mt-10">
+      <h3 class="title">Ingresa las caracteristicas de tu publicación</h3>
+      <transition name="slide-fade">
+        <keep-alive>
           <component
             :key="productListSelected"
             :is="productListSelected"
           ></component>
-          <v-row class="px-4" align="center" justify="center">
-                <v-btn text small color="error" @click="setPosts">
-                  <b>Ver mis publicaciones</b>
-                </v-btn>
-            </v-row>
-        </div>
-      </keep-alive>
-    </transition>
+        </keep-alive>
+      </transition>
+      <v-row class="px-4" align="center" justify="center">
+        <v-btn text small color="error" @click="setPosts">
+          <b>Ver mis publicaciones</b>
+        </v-btn>
+      </v-row>
+    </div>
   </v-container>
 </template>
 
@@ -79,13 +79,14 @@ import PostList from "@/components/sell/PostList.vue";
 export default class Sell extends Vue {
   public productList: Array<string> = ["Gold", "Personaje", "Items"];
   public currentProduct: Array<string> = ["Post"];
-  private panel: Array<number> = [0]
+  private panel: Array<number> = [0];
 
   public selectProduct(tab: any): void {
     this.currentProduct = tab;
   }
   private setPosts(): void {
-    this.currentProduct = ["Post"]
+    this.currentProduct = ["Post"];
+    this.$store.commit("resetProduct")
   }
 
   get productListSelected(): any {
@@ -102,7 +103,7 @@ export default class Sell extends Vue {
   transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0)
 
 .slide-fade-enter, .slide-fade-leave-to
-  transform: translateX(10px)
+  transform: translateY(20px)
   transition: all .2s ease-out
-  opacity: .4
+  opacity: .1
 </style>

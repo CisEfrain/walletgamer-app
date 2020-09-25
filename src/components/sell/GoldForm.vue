@@ -123,7 +123,7 @@ export default class GoldForm extends Vue {
       quantity: this.quantity,
       price: this.price
     };
-    //this.$store.dispatch("setNewExpenditureData", newExpenditure)
+    this.$store.dispatch("setGoldPost", newGoldPost)
     console.log(newGoldPost);
     this.clearForm();
   }

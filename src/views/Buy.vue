@@ -17,8 +17,6 @@
       <component :key="productListSelected" :is="productListSelected"></component>
     </keep-alive>
     </transition>
-    
-
   </v-container>
 </template>
 
@@ -41,14 +39,14 @@ import BuyItemsList from "@/components/buy/BuyItemList.vue";
 })
 export default class Buy extends Vue {
   public productList: Array<string> = ["Gold", "Personaje", "Items"];
-  public currentProduct: Array<string> = [""];
+  public currentProduct = "";
 
   public selectProduct(tab: any): void {
     this.currentProduct = tab;
   }
 
   get productListSelected(): any {
-    return `Buy${this.currentProduct}List`;
+    return this.currentProduct && `Buy${this.currentProduct}List`;
   }
 }
 </script>
@@ -61,7 +59,7 @@ export default class Buy extends Vue {
   transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0)
 
 .slide-fade-enter, .slide-fade-leave-to
-  transform: translateX(10px)
+  transform: translateY(20px)
   transition: all .2s ease-out
-  opacity: .4
+  opacity: .1
 </style>

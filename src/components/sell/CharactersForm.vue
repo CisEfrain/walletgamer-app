@@ -149,15 +149,15 @@ export default class CharactersForm extends Vue {
   ]
 
   private addCharacterPost(): void {
-    const newGoldPost = {
+    const newCharacterPost = {
       realm:   this.realm,
       faction: this.faction,
       pjClass: this.pjClass,
       level:   this.level,
       price:   this.price,
     };
-    //this.$store.dispatch("setNewExpenditureData", newExpenditure)
-    console.log(newGoldPost);
+    this.$store.dispatch("setCharacterPost", newCharacterPost)
+    console.log(newCharacterPost);
     this.clearForm();
   }
 
