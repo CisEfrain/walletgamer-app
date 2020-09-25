@@ -17,8 +17,6 @@
       <component :key="productListSelected" :is="productListSelected"></component>
     </keep-alive>
     </transition>
-    
-
   </v-container>
 </template>
 
@@ -41,14 +39,14 @@ import BuyItemsList from "@/components/buy/BuyItemList.vue";
 })
 export default class Buy extends Vue {
   public productList: Array<string> = ["Gold", "Personaje", "Items"];
-  public currentProduct: Array<string> = [""];
+  public currentProduct = "";
 
   public selectProduct(tab: any): void {
     this.currentProduct = tab;
   }
 
   get productListSelected(): any {
-    return `Buy${this.currentProduct}List`;
+    return this.currentProduct && `Buy${this.currentProduct}List`;
   }
 }
 </script>

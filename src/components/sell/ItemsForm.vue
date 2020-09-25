@@ -128,7 +128,7 @@ export default class ItemsForm extends Vue {
       quantity: this.quantity,
       price:    this.price
     };
-    //this.$store.dispatch("setNewExpenditureData", newExpenditure)
+    this.$store.dispatch("setItemPost", newItemPost)
     console.log(newItemPost);
     this.clearForm();
   }

@@ -7,6 +7,7 @@ import paymentState from "@/store/modules/paymentState";
 import accountState from "@/store/modules/accountState";
 import walletState from "@/store/modules/walletState";
 import authState from "@/store/modules/authState";
+import sellState from "@/store/modules/sellState";
 
 Vue.use(Vuex);
 
@@ -20,5 +21,6 @@ export default new Vuex.Store({
     paymentState,
     accountState,
     walletState,
+    sellState
   }
 });

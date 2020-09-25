@@ -92,7 +92,7 @@ private clearForm(): void {
     !this.$v.withdraw.required && errors.push("El campo es requerido");
     return errors;
   }
-  get emailReceptorErrors(): Array<string> {
+  get receiveErrors(): Array<string> {
     const errors: Array<string> = [];
     if (!this.$v.receive.$dirty) return errors;
     !this.$v.receive.required && errors.push("El campo es requerido");
