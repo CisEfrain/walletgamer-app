@@ -289,7 +289,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Provide, Vue, Mixins } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import ProductCard from "@/components/ProductCard.vue";
 import { ItemBuyI } from "@/interfaces/product.interface";
 import GoldItemList from "@/components/buy/GoldItemList.vue";
@@ -375,9 +375,4 @@ export default class Payment extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
-// .btn-gradient {
-//   background: $button-gradient;
-//   color: $background !important;
-// }
-</style>
+<style lang="scss" scoped></style>

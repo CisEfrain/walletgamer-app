@@ -1,36 +1,36 @@
 <template>
   <v-container class="px-8">
-    <h2 class="custom-class">Payment page view</h2>
+    <h2 class="custom-class">Sellment page view</h2>
     <v-row>
       <v-col cols="12">
         <br />
         <v-stepper
-          v-model="$store.state.paymentState.currentStep"
+          v-model="$store.state.sellmentState.currentStepSell"
           class="elevation-0 buy-stepper"
         >
           <v-stepper-header class="elevation-0">
             <v-stepper-step
-              :complete="$store.state.paymentState.currentStep > 1"
+              :complete="$store.state.sellmentState.currentStepSell > 1"
               step="1"
             ></v-stepper-step>
 
             <v-divider></v-divider>
 
             <v-stepper-step
-              :complete="$store.state.paymentState.currentStep > 2"
+              :complete="$store.state.sellmentState.currentStepSell > 2"
               step="2"
             ></v-stepper-step>
 
             <v-divider></v-divider>
 
             <v-stepper-step
-              :complete="$store.state.paymentState.currentStep > 3"
+              :complete="$store.state.sellmentState.currentStepSell > 3"
               step="3"
             ></v-stepper-step>
             <v-divider></v-divider>
 
             <v-stepper-step
-              :complete="$store.state.paymentState.currentStep > 4"
+              :complete="$store.state.sellmentState.currentStepSell > 4"
               step="4"
             ></v-stepper-step>
           </v-stepper-header>
@@ -140,27 +140,45 @@
               <v-row justify="center">
                 <v-col cols="12">
                   <h3 class="title text-center">
-                    Muy bien, espera que
-                    <b>Fulano de tal</b> confirme la transferencia de los 500 de Oro
+                    Enhorabuena, haz vendido 500 de oro a
+                    <b>Fulano de tal</b>
                   </h3>
-                  <p>No te preocupes, ya fue notificado, si realizaste los pasos no demorara</p>
+                  <h3 class="text-center grey--text">
+                    Realiza los siguientes pasos para completar la transferencia
+                  </h3>
                 </v-col>
-
-                <v-col cols="12">
-                  <p class="text-center">
-                    No te preocupes, ya fue notificado de la operación
-                  </p>
+                <v-col cols="12" md="8">
+                  <v-textarea
+                    outlined
+                    rounded
+                    dense
+                    clearable
+                    clear-icon="cancel"
+                  ></v-textarea>
                 </v-col>
+                <h3 class="text-center grey--text">
+                  Por favor confirme en el siguiente boton cuando hayas
+                  realizado la transferencia
+                </h3>
               </v-row>
+              <v-row justify="center">
+                <v-btn
+                  type="button"
+                  rounded
+                  color="btn-gradient"
+                  class="button button--primary button--medium mt-4 px-6"
+                  @click="$store.dispatch('nextStepSell'), confirmSell()"
+                  >Confirmar</v-btn
+                >
 
-              <v-btn
-                type="button"
-                color="btn-gradient"
-                rounded
-                class="button button--primary button--medium mt-4 px-6"
-                @click="$store.dispatch('nextStep')"
-                >Confirmar</v-btn
-              >
+                <v-btn
+                  rounded
+                  color="blue-grey darken-4"
+                  class="btn-dark ml-3 mt-4 px-6"
+                  @click="$store.dispatch('nextStepSell', 'error')"
+                  >Tengo un problema</v-btn
+                >
+              </v-row>
             </v-stepper-content>
 
             <v-stepper-content step="3">
@@ -181,50 +199,33 @@
               <v-row justify="center">
                 <v-col cols="12">
                   <h3 class="title text-center">
-                    <b>Carlos Gomez</b> ha notificado la transferencia de 500 de
-                    Oro a tu cuenta
+                    Muy bien, espera que Fulano de tal confirme la transferencia
+                    de 500 de oro
                   </h3>
                 </v-col>
-
                 <v-col cols="12">
                   <p class="text-center">
-                    Realiza los siguientes pasos para confirmar la
-                    transferencia:
-                  </p>
-                </v-col>
-                <v-col cols="12" md="8">
-                  <v-textarea
-                    outlined
-                    rounded
-                    dense
-                    clearable
-                    clear-icon="cancel"
-                  ></v-textarea>
-                </v-col>
-                <v-col cols="12">
-                  <p class="text-center">
-                    Haz clic en el siguiente botón para confirmar la recepción
+                    No te preocupes, ya le hemos notificado, si has realizado
+                    todos los pasos no suele demorar
                   </p>
                 </v-col>
               </v-row>
-
-              <v-row justify="center">
-                <v-btn
-                  type="button"
-                  rounded
-                  color="btn-gradient"
-                  class="button button--primary button--medium mt-4 px-6"
-                  @click="$store.dispatch('nextStep')"
-                  >Confirmar</v-btn
-                >
-
-                <v-btn
-                  rounded
-                  color="blue-grey darken-4"
-                  class="btn-dark ml-3 mt-4 px-6"
-                  @click="$store.dispatch('nextStep', 'error')"
-                  >Tengo un problema</v-btn
-                >
+              <v-row justify="center" v-if="isConfirmed">
+                <v-col cols="12">
+                  <p class="text-center green--text">
+                    Fulano de tal ha confirmado la transferencia
+                  </p>
+                </v-col>
+                <v-col class="d-flex justify-center">
+                  <v-btn
+                    type="button"
+                    rounded
+                    color="btn-gradient"
+                    class="button button--primary button--medium px-6"
+                    @click="$store.dispatch('nextStepSell')"
+                    >Confirmar</v-btn
+                  >
+                </v-col>
               </v-row>
             </v-stepper-content>
 
@@ -244,22 +245,25 @@
                 </v-col>
               </v-row>
               <v-row justify="center">
-                <v-col cols="12">
-                  <h3
-                    v-if="!$store.state.paymentState.errorReported"
-                    class="title text-center"
-                  >
+                <v-col
+                  cols="12"
+                  v-if="!$store.state.sellmentState.errorReportedSell"
+                >
+                  <h3 class="title text-center">
                     Perfecto..!!! hemos terminado la operación
                   </h3>
-                  <h3
-                    v-if="$store.state.paymentState.errorReported"
-                    class="title text-center"
-                  >
-                    Tu operación está en mediación
-                  </h3>
+                  <p class="text-center">
+                    Ya tienes disponible el dinero en tu Wallet
+                  </p>
                 </v-col>
 
-                <v-col cols="12" v-if="$store.state.paymentState.errorReported">
+                <v-col
+                  cols="12"
+                  v-if="$store.state.sellmentState.errorReportedSell"
+                >
+                  <h3 class="title text-center">
+                    Tu operación está en mediación
+                  </h3>
                   <p class="text-center">
                     Estamos revisando tu caso, en breve te contactaremos
                   </p>
@@ -285,26 +289,23 @@
         />
       </v-col>
     </v-row>
-    <PaymentModal></PaymentModal>
   </v-container>
 </template>
 
 <script lang="ts">
-import { Component, Provide, Vue, Mixins } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import ProductCard from "@/components/ProductCard.vue";
 import { ItemBuyI } from "@/interfaces/product.interface";
 import GoldItemList from "@/components/buy/GoldItemList.vue";
 import OperationHistoryCard from "@/components/payment/OperationHistoryCard.vue";
-import PaymentModal from "@/components/payment/PaymentModal.vue";
 import { Validate } from "vuelidate-property-decorators";
 
-import { required, minLength, between } from "vuelidate/lib/validators";
+import { required, minLength } from "vuelidate/lib/validators";
 
 @Component({
   components: {
     ProductCard,
     GoldItemList,
-    PaymentModal,
     OperationHistoryCard
   }
 })
@@ -349,13 +350,20 @@ export default class Sellment extends Vue {
       payMethod: this.$v.payMethod.$model
     };
   }
-  checkout(): void {
+  private checkout(): void {
     console.log(this.form);
     if (this.isStepOneDisabled) return;
-    this.$store.dispatch("setActiveBuy", this.form);
-    this.$store.dispatch("openPayModal");
+    this.$store.dispatch("setActiveSell", this.form);
+    // this.$store.dispatch("openPayModal");
+    this.$store.dispatch("nextStepSell");
+  }
+  private confirmSell(): void {
+    this.$store.dispatch("setConfirmed");
   }
 
+  get isConfirmed(): unknown {
+    return this.$store.state.sellmentState.isConfirmed;
+  }
   item: ItemBuyI = {
     user: "Diosdado Garcia",
     rank: "Elite",
@@ -376,5 +384,4 @@ export default class Sellment extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -1,49 +1,60 @@
 const sellmentState = {
   state: () => ({
     //PayModal: false,
-    currentStep: 1,
-    activeBuy: {},
+    currentStepSell: 1,
+    activeSell: {},
     stripeData: {},
-    errorReported: false,
+    errorReportedSell: false,
+    isConfirmed: false
   }),
   mutations: {
     /**
      * @params name - product name to set selected product card.
      * @remarks this refers to product cards in buy and sell components
      *   */
-    setStripeData(state: any, payload: any): void {
-      console.log(payload);
-      state.stripeData = payload;
+    // setStripeData(state: any, payload: any): void {
+    //   console.log(payload);
+    //   state.stripeData = payload;
+    // },
+    setActiveSell(state: any, payload: any): void {
+      state.activeSell = payload;
     },
-    setActiveBuy(state: any, payload: any): void {
-      state.activeBuy = payload;
-    },
-    nextStep(state: any, payload?: any): void {
+    nextStepSell(state: any, payload?: any): void {
       if (!payload) {
-        state.currentStep++;
-      } else {
-        state.currentStep++;
-        state.errorReported = true;
+        state.currentStepSell++;
+      } 
+      else {
+        state.currentStepSell = 4;
+        state.errorReportedSell = true;
       }
+    },
+    setConfirmed(state:any): void {
+        setTimeout(() => {
+          state.isConfirmed = true
+        }, 3000); 
     },
     //   openPayModal(state: any): void {
     //       state.PayModal = !state.PayModal;
     //   }
   },
   actions: {
-    setStripeData({ commit }: any, payload: any): void {
-      commit("setStripeData", payload);
+    // setStripeData({ commit }: any, payload: any): void {
+    //   commit("setStripeData", payload);
+    // },
+    setActiveSell({ commit }: any, payload: any): void {
+      commit("setActiveSell", payload);
     },
-    setActiveBuy({ commit }: any, payload: any): void {
-      commit("setActiveBuy", payload);
-    },
-    nextStep({ commit }: any, payload?: any): void {
+    nextStepSell({ commit }: any, payload?: any): void {
       if (!payload) {
-        commit("nextStep");
-      } else {
-        commit("nextStep", true);
+        commit("nextStepSell");
+      } 
+      else {
+        commit("nextStepSell", true);
       }
     },
+    setConfirmed({commit}: any): void {
+      commit("setConfirmed");
+    }
     //   openPayModal({ commit }: any): void {
     //       commit('openPayModal')
 
