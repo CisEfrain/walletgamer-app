@@ -44,6 +44,14 @@ const routes: Array<RouteConfig> = [
         component: () => import("../views/Payment.vue")
       },
       {
+        path: "/sellment",
+        name: "Sellment",
+        // route level code-splitting
+        // this generates a separate chunk (buy.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import("../views/Sellment.vue")
+      },
+      {
         path: "/help",
         name: "Help",
         // route level code-splitting
