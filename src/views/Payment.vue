@@ -4,27 +4,43 @@
     <v-row>
       <v-col cols="12">
         <br />
-        <v-stepper v-model="$store.state.paymentState.currentStep" class="elevation-0 buy-stepper">
+        <v-stepper
+          v-model="$store.state.paymentState.currentStep"
+          class="elevation-0 buy-stepper"
+        >
           <v-stepper-header class="elevation-0">
-            <v-stepper-step :complete="$store.state.paymentState.currentStep > 1" step="1"></v-stepper-step>
+            <v-stepper-step
+              :complete="$store.state.paymentState.currentStep > 1"
+              step="1"
+            ></v-stepper-step>
 
             <v-divider></v-divider>
 
-            <v-stepper-step :complete="$store.state.paymentState.currentStep > 2" step="2"></v-stepper-step>
+            <v-stepper-step
+              :complete="$store.state.paymentState.currentStep > 2"
+              step="2"
+            ></v-stepper-step>
 
             <v-divider></v-divider>
 
-            <v-stepper-step :complete="$store.state.paymentState.currentStep > 3" step="3"></v-stepper-step>
+            <v-stepper-step
+              :complete="$store.state.paymentState.currentStep > 3"
+              step="3"
+            ></v-stepper-step>
             <v-divider></v-divider>
 
-            <v-stepper-step :complete="$store.state.paymentState.currentStep > 4" step="4"></v-stepper-step>
+            <v-stepper-step
+              :complete="$store.state.paymentState.currentStep > 4"
+              step="4"
+            ></v-stepper-step>
           </v-stepper-header>
 
           <v-stepper-items>
             <v-stepper-content step="1">
-              <h3
-                class="mb-4 title text-center"
-              >Ingresa los detalles de tu compra de {{$store.state.activeProduct}} World Warcraft Classic</h3>
+              <h3 class="mb-4 title text-center">
+                Ingresa los detalles de tu compra de
+                {{ $store.state.activeProduct }} World Warcraft Classic
+              </h3>
               <form novalidate>
                 <v-row class="d-flex justify-center">
                   <v-col cols="10">
@@ -100,7 +116,8 @@
                   :disabled="isStepOneDisabled"
                   class="button button--primary button--medium mt-4 px-6"
                   @click="checkout()"
-                >Confirmar</v-btn>
+                  >Confirmar</v-btn
+                >
                 <!-- <v-btn text>Cancel</v-btn> -->
               </v-row>
             </v-stepper-content>
@@ -129,16 +146,20 @@
                 </v-col>
 
                 <v-col cols="12">
-                  <p class="text-center">No te preocupes, ya fue notificado de la operación</p>
+                  <p class="text-center">
+                    No te preocupes, ya fue notificado de la operación
+                  </p>
                 </v-col>
               </v-row>
 
               <v-btn
                 type="button"
+                color="btn-gradient"
                 rounded
                 class="button button--primary button--medium mt-4 px-6"
                 @click="$store.dispatch('nextStep')"
-              >Confirmar</v-btn>
+                >Confirmar</v-btn
+              >
             </v-stepper-content>
 
             <v-stepper-content step="3">
@@ -159,20 +180,30 @@
               <v-row justify="center">
                 <v-col cols="12">
                   <h3 class="title text-center">
-                    <b>Carlos Gomez</b> ha notificado la transferencia de 500 de Oro a tu cuenta
+                    <b>Carlos Gomez</b> ha notificado la transferencia de 500 de
+                    Oro a tu cuenta
                   </h3>
                 </v-col>
 
                 <v-col cols="12">
-                  <p
-                    class="text-center"
-                  >Realiza los siguientes pasos para confirmar la transferencia:</p>
+                  <p class="text-center">
+                    Realiza los siguientes pasos para confirmar la
+                    transferencia:
+                  </p>
                 </v-col>
                 <v-col cols="12" md="8">
-                  <v-textarea outlined rounded dense clearable clear-icon="cancel"></v-textarea>
+                  <v-textarea
+                    outlined
+                    rounded
+                    dense
+                    clearable
+                    clear-icon="cancel"
+                  ></v-textarea>
                 </v-col>
                 <v-col cols="12">
-                  <p class="text-center">Haz clic en el siguiente botón para confirmar la recepción</p>
+                  <p class="text-center">
+                    Haz clic en el siguiente botón para confirmar la recepción
+                  </p>
                 </v-col>
               </v-row>
 
@@ -183,15 +214,16 @@
                   color="btn-gradient"
                   class="button button--primary button--medium mt-4 px-6"
                   @click="$store.dispatch('nextStep')"
-                >Confirmar</v-btn>
+                  >Confirmar</v-btn
+                >
 
                 <v-btn
-                  type="button"
                   rounded
-                  color="btn-gradient"
-                  class="button button--dark ml-3 button--medium mt-4 px-6"
-                  @click="$store.dispatch('nextStep','error')"
-                >Tengo un problema</v-btn>
+                  color="blue-grey darken-4"
+                  class="btn-dark ml-3 mt-4 px-6"
+                  @click="$store.dispatch('nextStep', 'error')"
+                  >Tengo un problema</v-btn
+                >
               </v-row>
             </v-stepper-content>
 
@@ -215,17 +247,23 @@
                   <h3
                     v-if="!$store.state.paymentState.errorReported"
                     class="title text-center"
-                  >Perfecto..!!! hemos terminado la operación</h3>
+                  >
+                    Perfecto..!!! hemos terminado la operación
+                  </h3>
                   <h3
                     v-if="$store.state.paymentState.errorReported"
                     class="title text-center"
-                  >Tu operación está en mediación</h3>
+                  >
+                    Tu operación está en mediación
+                  </h3>
                 </v-col>
 
                 <v-col cols="12" v-if="$store.state.paymentState.errorReported">
-                  <p class="text-center">Estamos revisando tu caso, en breve te contactaremos</p>
+                  <p class="text-center">
+                    Estamos revisando tu caso, en breve te contactaremos
+                  </p>
                 </v-col>
-               </v-row>
+              </v-row>
             </v-stepper-content>
           </v-stepper-items>
         </v-stepper>
@@ -337,9 +375,9 @@ export default class Payment extends Vue {
 }
 </script>
 
-<style lang="scss">
-.btn-gradient {
-  background: $button-gradient;
-  color: $background !important;
-}
+<style lang="scss" scoped>
+// .btn-gradient {
+//   background: $button-gradient;
+//   color: $background !important;
+// }
 </style>

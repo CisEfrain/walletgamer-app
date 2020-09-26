@@ -47,7 +47,7 @@
             </v-list-item-content>
           </v-list-item>
         </router-link>
-        <router-link to="/account" >
+        <router-link to="/account">
           <v-list-item link @click="resetProduct">
             <!-- <v-list-item-action>
               <v-icon>mdi-cog</v-icon>
@@ -57,13 +57,13 @@
             </v-list-item-content>
           </v-list-item>
         </router-link>
-        <router-link to="/help" >
+        <router-link to="/help">
           <v-list-item link @click="resetProduct">
             <!-- <v-list-item-action>
               <v-icon>mdi-cog</v-icon>
             </v-list-item-action>-->
             <v-list-item-content>
-              <v-list-item-title >Ayuda</v-list-item-title>
+              <v-list-item-title>Ayuda</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </router-link>
@@ -94,11 +94,11 @@ import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class Panel extends Vue {
-  private logout(): void{
-    this.$router.push('/login')
+  private logout(): void {
+    this.$router.push("/login");
   }
-  private resetProduct(): void{
-    this.$store.commit("resetProduct")
+  private resetProduct(): void {
+    this.$store.commit("resetProduct");
   }
 }
 </script>
@@ -119,5 +119,4 @@ export default class Panel extends Vue {
 @media (max-width: 768px)
   .custom-divider
     max-width: 80%
-
 </style>
