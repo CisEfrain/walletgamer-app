@@ -10,6 +10,7 @@
     "storybook": "start-storybook -p 6006"
   },
   "dependencies": {
+    "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "storybook": "^6.0.21",
     "vee-validate": "^3.3.11",
