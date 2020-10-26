@@ -48,9 +48,8 @@
           :disabled="isDisabled"
           color="btn-gradient"
           class="button button--primary button--medium px-8 mt-6"
-          ><b>
-            Entrar
-          </b>
+        >
+          <b>Entrar</b>
         </v-btn>
         <v-row align="center" justify="center">
           <v-col>
@@ -79,7 +78,6 @@
 .btn-gradient
   background: $button-gradient
   color: $background!important
-
 </style>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
@@ -89,38 +87,36 @@ import { required, email, minLength } from "vuelidate/lib/validators";
 
 @Component
 export default class LoginPage extends Vue {
-  @Validate({ required, email }) email = null
-  @Validate({ required, minLength: minLength(8) }) password = null
-  public showPass = false
+  @Validate({ required, email }) email = "";
+  @Validate({ required, minLength: minLength(8) }) password = "";
+  public showPass = false;
 
+  private async login() {
+    const loginData = {
+      email: this.email,
+      password: this.password
+    };
+    console.log(loginData);
+    this.$store.dispatch("setLogin", loginData);
 
-private login(): void {
-  const loginData = {
-    email : this.email,
-    password : this.password,
-  }
-  console.log(loginData)
-  this.$store.dispatch("setLogin", loginData)
-  
-    const response = Login("admin", "equis");
-    alert(response);
-    this.clearForm()
-  }
-
-get showPassword(): any {
-    return this.showPass ? true : false
+    const response = Login(this.email, this.password)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+    this.clearForm();
   }
 
-private clearForm(): void {
-  this.$v.$reset()
-  this.email = null
-  this.password = null
-}
+  get showPassword(): boolean {
+    return this.showPass ? true : false;
+  }
+
+  private clearForm(): void {
+    this.$v.$reset();
+    this.email = "";
+    this.password = "";
+  }
 
   get isDisabled(): boolean {
-    return !this.email || !this.password
-      ? true
-      : false;
+    return !this.email || !this.password ? true : false;
   }
 
   get emailErrors(): Array<string> {
@@ -134,7 +130,8 @@ private clearForm(): void {
     const errors: Array<string> = [];
     if (!this.$v.password.$dirty) return errors;
     !this.$v.password.required && errors.push("El campo es requerido");
-    !this.$v.password.minLength && errors.push("Debe contener minimo 8 digitos");
+    !this.$v.password.minLength &&
+      errors.push("Debe contener minimo 8 digitos");
     return errors;
   }
 }

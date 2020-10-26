@@ -10,6 +10,7 @@
     "storybook": "start-storybook -p 6006"
   },
   "dependencies": {
+    "@types/axios": "^0.14.0",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "storybook": "^6.0.21",
