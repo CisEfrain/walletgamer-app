@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import Home from "../views/Home.vue";
+import Transactions from "../views/Transactions.vue";
 import Panel from "../views/Panel.vue";
 
 Vue.use(VueRouter);
@@ -8,7 +8,6 @@ Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    name: "Panel",
     component: Panel,
     children: [
       {
@@ -69,11 +68,12 @@ const routes: Array<RouteConfig> = [
       },
       {
         path: "/",
-        // name: "Transactions",
+        name: "Transactions",
+        component: Transactions
         // route level code-splitting
         // this generates a separate chunk (transactions.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import("../views/Transactions.vue")
+        // component: () => import("../views/Transactions.vue")
       },
       {
         path: "/wallet",
@@ -104,10 +104,11 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem("token");
-  if (to.name !== "Login" && to.name !== "Register" && !token)
-    next({ name: "Login" });
-  else next();
+  const publicViews = ["/login", "/register"];
+  const authRequired = !publicViews.includes(to.path);
+  const loggedIn = localStorage.getItem("jwt");
+  if (authRequired && !loggedIn) next("/login");
+  next();
 });
 
 export default router;

@@ -81,7 +81,6 @@
 </style>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { Login } from "@/services/auth.service";
 import { Validate } from "vuelidate-property-decorators";
 import { required, email, minLength } from "vuelidate/lib/validators";
 
@@ -94,15 +93,10 @@ export default class LoginPage extends Vue {
   private async login() {
     const loginData = {
       email: this.email,
-      password: this.password
+      pass: this.password
     };
     console.log(loginData);
     this.$store.dispatch("setLogin", loginData);
-
-    const response = Login(this.email, this.password)
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
-    this.clearForm();
   }
 
   get showPassword(): boolean {
@@ -118,7 +112,6 @@ export default class LoginPage extends Vue {
   get isDisabled(): boolean {
     return !this.email || !this.password ? true : false;
   }
-
   get emailErrors(): Array<string> {
     const errors: Array<string> = [];
     if (!this.$v.email.$dirty) return errors;

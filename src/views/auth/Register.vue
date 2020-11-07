@@ -143,7 +143,7 @@
 .text-field
   height: 42px
   font-size: 14px
-  width: 30vw
+  width: 380px
 
 .custom-divider
   height: 2.4px
@@ -188,7 +188,7 @@ export default class Register extends Vue {
     this.fullName = null;
   }
 
-  get showPassword(): any {
+  get showPassword(): boolean {
     return this.showPass ? true : false;
   }
 

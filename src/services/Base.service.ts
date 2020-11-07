@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const baseURL = process.env.BASE_URL || "http://localhost:8080";
+const baseURL = process.env.VUE_APP_API;
 
 export default axios.create({
-	baseURL
+  baseURL
 });

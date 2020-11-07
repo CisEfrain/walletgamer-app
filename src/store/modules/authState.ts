@@ -1,4 +1,7 @@
-import registerService from "@/services/register.service";
+import { Register } from "@/services/register.service";
+import { Login } from "@/services/auth.service";
+import router from "@/router";
+import Vue from "vue";
 
 const authState = {
   state: () => ({
@@ -15,20 +18,50 @@ const authState = {
       state.login = payload;
       console.info(state.login);
     },
-    async setRegister(state: any, payload: any): Promise<any> {
+
+    setRegister(state: any, payload: any): void {
       console.log("from auth register:", payload);
       state.register = payload;
-      const registerUser = await registerService.register(payload);
-      console.info(registerUser);
-      console.info(state.register);
     }
   },
   actions: {
     setLogin({ commit }: any, payload: any): void {
-      commit("setLogin", payload);
+      Login(payload)
+        .then(async (response: any) => {
+          const {
+            data: {
+              data: {
+                jwt,
+                usuario: { nombre }
+              }
+            }
+          } = response;
+          console.info(response);
+          localStorage.setItem("jwt", jwt);
+          console.info(jwt);
+          response.status === 200 && Vue.$toast.success(`Bienvenido ${nombre}`);
+          commit("setLogin", response.data);
+          router.push("/");
+        })
+        .catch(error => {
+          console.info(error);
+          Vue.$toast.error("Parece que necesitas registrarte");
+        });
     },
     setRegister({ commit }: any, payload: any): void {
       commit("setRegister", payload);
+      Register(payload)
+        .then((response: any) => {
+          response.status === 200 &&
+            Vue.$toast.success(`${payload.nombre} tu registro fue exitoso!`);
+          router.push("/login");
+        })
+        .catch(error => {
+          console.info(error);
+          Vue.$toast.error(
+            `Lo sentimos ${payload.nombre}, ha ocurrido un error durante el registro`
+          );
+        });
     }
   }
   // getters: { ... }

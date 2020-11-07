@@ -20,10 +20,8 @@ interface RegisterUser {
 
 const resource = "usuarios";
 
-export default {
-	async register (registerUser:RegisterUser) {
+export const Register = async(registerUser:RegisterUser) => {
 		const {email, pass, nombre} = registerUser
 		if (email == "" || pass == "" || nombre == "") return false;
 		return await axios.post(resource, registerUser);
-	}
 }
