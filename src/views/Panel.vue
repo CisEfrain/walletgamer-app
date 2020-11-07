@@ -95,9 +95,10 @@ import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class Panel extends Vue {
   private logout(): void {
+    const userName = this.$store.state.authState.login.nombre;
+    this.$toast.success(`Hasta la proxima ${userName}`);
     localStorage.removeItem("jwt");
     this.$router.push("/login");
-    this.$toast.success("Hasta la proxima")
   }
   private resetProduct(): void {
     this.$store.commit("resetProduct");

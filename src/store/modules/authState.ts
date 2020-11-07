@@ -40,12 +40,14 @@ const authState = {
           localStorage.setItem("jwt", jwt);
           console.info(jwt);
           response.status === 200 && Vue.$toast.success(`Bienvenido ${nombre}`);
-          commit("setLogin", response.data);
+          commit("setLogin", { nombre });
           router.push("/");
         })
         .catch(error => {
           console.info(error);
-          Vue.$toast.error("Parece que necesitas registrarte");
+          Vue.$toast.error(
+            "Parece has colocado mal los datos o que necesitas registrarte"
+          );
         });
     },
     setRegister({ commit }: any, payload: any): void {
