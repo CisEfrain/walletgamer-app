@@ -1,7 +1,9 @@
+import registerService from "@/services/register.service";
+
 const authState = {
   state: () => ({
-    login:{},
-    register:{}
+    login: {},
+    register: {}
   }),
   mutations: {
     /**
@@ -9,14 +11,16 @@ const authState = {
      * @remarks this refers to product cards in buy and sell components
      *   */
     setLogin(state: any, payload: any): void {
-      console.log("from auth login:",payload);
+      console.log("from auth login:", payload);
       state.login = payload;
-      console.info(state.login)
+      console.info(state.login);
     },
-    setRegister(state: any, payload: any): void {
-      console.log("from auth register:",payload);
+    async setRegister(state: any, payload: any): Promise<any> {
+      console.log("from auth register:", payload);
       state.register = payload;
-      console.info(state.register)
+      const registerUser = await registerService.register(payload);
+      console.info(registerUser);
+      console.info(state.register);
     }
   },
   actions: {
@@ -26,7 +30,7 @@ const authState = {
     setRegister({ commit }: any, payload: any): void {
       commit("setRegister", payload);
     }
-  },
+  }
   // getters: { ... }
 };
 export default authState;

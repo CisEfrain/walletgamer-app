@@ -9,7 +9,7 @@
 
     <div class="custom-divider mt-1 mb-4"></div>
     <v-row class="d-flex justify-center">
-      <v-col cols="6" md="4" class="d-flex align-end flex-column">
+      <v-col cols="8" md="6" class="d-flex align-center flex-column">
         <v-text-field
           class="text-field"
           label="Nombre y apellido"
@@ -42,10 +42,23 @@
           @click:append="showPass = !showPass"
           counter
         ></v-text-field>
-        
+        <v-text-field
+          class="text-field mt-6"
+          label="Email"
+          rounded
+          v-model="$v.email.$model"
+          :error-messages="emailErrors"
+          @input="$v.email.$touch()"
+          @blur="$v.email.$touch()"
+          required
+          color="rgba(184,12,70,.6)"
+          background-color="white"
+          outlined
+          dense
+        ></v-text-field>
       </v-col>
 
-      <v-col cols="6" md="4" class="d-flex align-start flex-column">
+      <!-- <v-col cols="6" md="4" class="d-flex align-start flex-column">
         <v-text-field
           class="text-field"
           label="Teléfono movil"
@@ -74,7 +87,7 @@
           outlined
           dense
         ></v-text-field>
-        <!-- <v-text-field
+        <v-text-field
           class="text-field mt-6"
           placeholder="Confirmar la contraseña"
           rounded
@@ -82,8 +95,8 @@
           background-color="white"
           outlined
           dense
-        ></v-text-field> -->
-        <!-- <v-text-field
+        ></v-text-field>
+        <v-text-field
           class="text-field mt-6"
           placeholder="Confirma el email"
           rounded
@@ -96,8 +109,8 @@
           background-color="white"
           outlined
           dense
-        ></v-text-field> -->
-      </v-col>
+        ></v-text-field>
+      </v-col> -->
     </v-row>
     <v-row align="center" justify="center">
       <v-col align="center">
@@ -130,7 +143,7 @@
 .text-field
   height: 42px
   font-size: 14px
-  width: 300px
+  width: 30vw
 
 .custom-divider
   height: 2.4px
@@ -149,19 +162,20 @@ import { required, email, minLength } from "vuelidate/lib/validators";
 @Component
 export default class Register extends Vue {
   @Validate({ required, minLength: minLength(5) }) fullName = null;
-  @Validate({ required, minLength: minLength(5) }) phoneNumber = null;
+  //@Validate({ required, minLength: minLength(5) }) phoneNumber = null;
   @Validate({ required, email }) email = null;
   @Validate({ required, minLength: minLength(8) }) password = null;
-  public showPass = false
+  public showPass = false;
 
   private register(): void {
     const registerData = {
-      fullName: this.fullName,
+      nombre: this.fullName,
       email: this.email,
-      phoneNumber: this.phoneNumber,
-      password: this.password,
+      //phoneNumber: this.phoneNumber,
+      pass: this.password,
+      activo: true
     };
-  this.$store.dispatch("setRegister", registerData)
+    this.$store.dispatch("setRegister", registerData);
     console.log(registerData);
     this.clearForm();
   }
@@ -170,16 +184,17 @@ export default class Register extends Vue {
     this.$v.$reset();
     this.email = null;
     this.password = null;
-    this.phoneNumber = null;
+    //this.phoneNumber = null;
     this.fullName = null;
   }
 
   get showPassword(): any {
-    return this.showPass ? true : false
+    return this.showPass ? true : false;
   }
 
+  // || !this.phoneNumber
   get isDisabled(): boolean {
-    return !this.fullName || !this.password || !this.phoneNumber || !this.email
+    return !this.fullName || !this.password || !this.$v.email.email
       ? true
       : false;
   }

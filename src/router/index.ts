@@ -82,8 +82,7 @@ const routes: Array<RouteConfig> = [
         // this generates a separate chunk (wallet.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () => import("../views/Wallet.vue")
-      },
-
+      }
     ]
   },
   {
@@ -95,13 +94,20 @@ const routes: Array<RouteConfig> = [
     path: "/register",
     name: "Register",
     component: () => import("../views/auth/Register.vue")
-  },
+  }
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem("token");
+  if (to.name !== "Login" && to.name !== "Register" && !token)
+    next({ name: "Login" });
+  else next();
 });
 
 export default router;
