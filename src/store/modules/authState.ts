@@ -41,7 +41,7 @@ const authState = {
         .catch(error => {
           console.info(error);
           Vue.$toast.error(
-            "Parece has colocado mal los datos o que necesitas registrarte"
+            "Parece que has colocado mal los datos o necesitas registrarte"
           );
         });
     },
