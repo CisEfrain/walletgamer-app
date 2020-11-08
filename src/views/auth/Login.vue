@@ -95,7 +95,6 @@ export default class LoginPage extends Vue {
       email: this.email,
       pass: this.password
     };
-    console.log(loginData);
     this.$store.dispatch("setLogin", loginData);
   }
 

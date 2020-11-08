@@ -8,16 +8,13 @@
       <UserExpenditure />
     </v-row>
   </v-container>
-
-
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-import UserInfo from "@/components/account/UserInfo.vue"
-import UserExpenditure from "@/components/account/UserExpenditure.vue"
-
+import UserInfo from "@/components/account/UserInfo.vue";
+import UserExpenditure from "@/components/account/UserExpenditure.vue";
 
 @Component({
   components: {
@@ -25,10 +22,7 @@ import UserExpenditure from "@/components/account/UserExpenditure.vue"
     UserExpenditure
   }
 })
-export default class Account extends Vue {
-}
+export default class Account extends Vue {}
 </script>
 
-<style>
-
-</style>
+<style></style>

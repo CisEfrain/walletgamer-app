@@ -14,13 +14,10 @@ const authState = {
      * @remarks this refers to product cards in buy and sell components
      *   */
     setLogin(state: any, payload: any): void {
-      console.log("from auth login:", payload);
       state.login = payload;
-      console.info(state.login);
     },
 
     setRegister(state: any, payload: any): void {
-      console.log("from auth register:", payload);
       state.register = payload;
     }
   },
@@ -36,9 +33,7 @@ const authState = {
               }
             }
           } = response;
-          console.info(response);
           localStorage.setItem("jwt", jwt);
-          console.info(jwt);
           response.status === 200 && Vue.$toast.success(`Bienvenido ${nombre}`);
           commit("setLogin", { nombre });
           router.push("/");

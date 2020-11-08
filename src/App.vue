@@ -19,7 +19,11 @@ export default Vue.extend({
 
   data: () => ({
     //
-  })
+  }),
+
+  mounted() {
+    this.$store.dispatch("setUserData");
+  }
 });
 </script>
  <style lang="sass">
