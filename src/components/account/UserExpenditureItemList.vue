@@ -11,12 +11,15 @@
               <b>{{ pay_method }}</b>
             </v-chip>
           </v-col>
-          <v-col>
-            <p>Descripción / correo / cuenta</p>
+          <v-col class="text-justify">
+            <p>Email: {{ email }}</p>
+            <p>Descripcion: {{ descripcion }}</p>
           </v-col>
           <v-col class="d-flex justify-end align-center">
             <div>
-              <v-btn text large color="error"><b>Modificar</b></v-btn>
+              <v-btn @click="deleteMethod(id)" text large color="error"
+                ><b>Eliminar</b></v-btn
+              >
             </div>
           </v-col>
         </v-row>
@@ -32,17 +35,23 @@ import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
 
 @Component({
   components: {
-    BaseCardContainer,
-  },
+    BaseCardContainer
+  }
 })
 export default class UserExpenditureItemList extends Vue {
   @Prop({ required: true, type: String }) readonly alias!: string;
   @Prop({ required: true, type: String }) readonly pay_method!: string;
-  // @Prop({ required: true, type: String }) readonly kingdom!: string
-  // @Prop({ required: true, type: String }) readonly product!: string
-  // @Prop({ required: true, type: String }) readonly price!: string
+  @Prop({ required: true, type: String }) readonly descripcion!: string;
+  @Prop({ required: true, type: String }) readonly email!: string;
+  @Prop({ required: true, type: Number }) readonly id!: number;
   // @Prop({ required: true, type: String }) readonly available!: string
   // @Prop({ required: true, type: String }) readonly faction!: string
+
+  private async deleteMethod(id: any) {
+    console.info(id);
+    this.$store.dispatch("deleteExpenditureData", id);
+    this.$store.dispatch("getExpenditureData");
+  }
 }
 </script>
 
@@ -54,4 +63,15 @@ export default class UserExpenditureItemList extends Vue {
 p,small
   color: $font-main-color
   margin-bottom: 0
+
+.slide-fade-enter-active
+  transition: all .3s ease-in
+
+.slide-fade-leave-active
+  transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0)
+
+.slide-fade-enter, .slide-fade-leave-to
+  transform: translateY(20px)
+  transition: all .2s ease-out
+  opacity: .1
 </style>

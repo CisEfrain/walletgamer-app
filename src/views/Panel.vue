@@ -94,14 +94,20 @@ import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class Panel extends Vue {
-  private logout(): void {
+  public logout(): void {
     const userName = this.$store.state.accountState.userData.nombre;
     this.$toast.success(`Hasta la proxima ${userName}`);
-    localStorage.removeItem("jwt");
+    localStorage.clear();
     this.$router.push("/login");
+    this.$store.commit("resetUserData");
+    console.info("logout");
   }
   private resetProduct(): void {
     this.$store.commit("resetProduct");
+  }
+  mounted() {
+    this.$store.dispatch("setUserData");
+    this.$store.dispatch("getExpenditureData");
   }
 }
 </script>

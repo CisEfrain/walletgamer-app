@@ -83,6 +83,12 @@ import { Component, Vue } from "vue-property-decorator";
 import { Validate } from "vuelidate-property-decorators";
 import { required, minLength } from "vuelidate/lib/validators";
 
+interface UpdateData {
+  pass?: string;
+  nombre?: string;
+  numero?: string;
+}
+
 @Component
 export default class UserInfo extends Vue {
   @Validate({ required }) name = "";
@@ -92,16 +98,18 @@ export default class UserInfo extends Vue {
   public showPass = false;
   public isDisable = true;
 
-  async mounted() {
+  mounted() {
     this.getUser();
   }
 
   private async updateUserData() {
-    const updateData = {
-      nombre: this.name,
-      //numero: this.phone,
-      pass: this.password
-    };
+    const updateData: UpdateData = {};
+    this.name ? (updateData.nombre = this.name) : null;
+    this.password ? (updateData.pass = this.password) : null;
+    // nombre: this.name,
+    // numero: this.phone,
+    // pass: this.password
+    console.info(updateData);
     this.$store.dispatch("updateUserData", updateData);
     this.$store.dispatch("setUserData");
     this.isDisable = true;
@@ -125,7 +133,7 @@ export default class UserInfo extends Vue {
   }
 
   get isDisabled(): boolean {
-    return !this.name || this.password.length <= 7
+    return !this.name && this.password.length <= 7
       ? (this.isDisable = true)
       : (this.isDisable = false);
   }

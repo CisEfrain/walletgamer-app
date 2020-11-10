@@ -25,18 +25,22 @@ const authState = {
     setLogin({ commit }: any, payload: any): void {
       Login(payload)
         .then(async (response: any) => {
-          const {
-            data: {
+          console.info(response.data.status);
+
+          if (response.status === 200) {
+            const {
               data: {
-                jwt,
-                usuario: { nombre }
+                data: {
+                  jwt,
+                  usuario: { nombre, email }
+                }
               }
-            }
-          } = response;
-          localStorage.setItem("jwt", jwt);
-          response.status === 200 && Vue.$toast.success(`Bienvenido ${nombre}`);
-          commit("setLogin", { nombre });
-          router.push("/");
+            } = response;
+            localStorage.setItem("jwt", jwt);
+            Vue.$toast.success(`Bienvenid@ ${nombre}`);
+            commit("setLogin", { nombre, email });
+            router.push("/");
+          }
         })
         .catch(error => {
           console.info(error);

@@ -19,7 +19,7 @@
           dense
         ></v-select>
       </v-col>
-      <v-col class="d-flex" cols="6" sm="6" md="4">
+      <v-col class="d-flex" cols="6" sm="6" md="3">
         <v-text-field
           placeholder="Correo electrónico receptor"
           rounded
@@ -50,6 +50,22 @@
           dense
         ></v-text-field>
       </v-col>
+      <v-col class="d-flex" cols="6" sm="6" md="3">
+        <v-text-field
+          placeholder="Descripcion"
+          rounded
+          v-model="$v.description.$model"
+          :error-messages="descriptionErrors"
+          @input="$v.description.$touch()"
+          @blur="$v.description.$touch()"
+          required
+          color="rgba(184,12,70,.6)"
+          background-color="white"
+          ref="description"
+          outlined
+          dense
+        ></v-text-field>
+      </v-col>
       <v-col
         class="d-flex justify-center btn-request-mt-less"
         cols="6"
@@ -68,12 +84,17 @@
         </v-btn>
       </v-col>
     </v-row>
+
     <v-row class="px-4 mt-4">
-      <UserExpenditureItemList alias="Alias aqui" pay_method="PayPal" />
-      <UserExpenditureItemList alias="Alias aqui" pay_method="PayPal" />
-      <UserExpenditureItemList alias="Alias aqui" pay_method="PayPal" />
-      <UserExpenditureItemList alias="Alias aqui" pay_method="PayPal" />
-      <UserExpenditureItemList alias="Alias aqui" pay_method="PayPal" />
+      <UserExpenditureItemList
+        v-for="(payment, $index) in expenditure"
+        :alias="payment.alias"
+        :pay_method="payment.nombre"
+        :email="payment.email"
+        :id="payment.id"
+        :descripcion="payment.descripcion"
+        :key="$index"
+      />
     </v-row>
   </v-container>
 </template>
@@ -88,32 +109,40 @@ import { required, minLength, email } from "vuelidate/lib/validators";
 
 @Component({
   components: {
-    UserExpenditureItemList,
-  },
+    UserExpenditureItemList
+  }
 })
 export default class UserExpenditure extends Vue {
-  @Validate({ required }) typeExpenditure = null
-  @Validate({ required, minLength: minLength(5), email }) emailReceptor = null
-  @Validate({ required, minLength: minLength(3) }) aliasId = null
-  private typesExpenditure: Array<string> = ["Paypal", "Stripe", "BTC"];
+  @Validate({ required }) typeExpenditure = null;
+  @Validate({ required }) description = null;
+  @Validate({ required, minLength: minLength(5), email }) emailReceptor = null;
+  @Validate({ required, minLength: minLength(3) }) aliasId = null;
+  private typesExpenditure: Array<string> = ["Paypal", "Stripe", "GamerCoin"];
 
-private addExpenditure(): void {
-  const newExpenditure = {
-    typeExpenditure : this.typeExpenditure,
-    emailReceptor : this.emailReceptor,
-    aliasId : this.aliasId
+  private addExpenditure(): void {
+    const newExpenditure = {
+      nombre: this.typeExpenditure,
+      alias: this.aliasId,
+      email: this.emailReceptor,
+      descripcion: this.description
+    };
+    this.$store.dispatch("setNewExpenditureData", newExpenditure);
+    console.log(newExpenditure);
+    this.clearForm();
+    this.$store.dispatch("getExpenditureData");
   }
-  this.$store.dispatch("setNewExpenditureData", newExpenditure)
-  console.log(newExpenditure)
-  this.clearForm()
-}
 
-private clearForm(): void {
-  this.$v.$reset()
-  this.typeExpenditure = null
-  this.emailReceptor = null
-  this.aliasId = null
-}
+  get expenditure(): string {
+    return this.$store.state.accountState.expenditureData;
+  }
+
+  private clearForm(): void {
+    this.$v.$reset();
+    this.typeExpenditure = null;
+    this.emailReceptor = null;
+    this.description = null;
+    this.aliasId = null;
+  }
 
   get isDisabled(): boolean {
     return !this.typeExpenditure || !this.emailReceptor || !this.aliasId
@@ -143,6 +172,13 @@ private clearForm(): void {
     !this.$v.aliasId.required && errors.push("El campo es requerido");
     return errors;
   }
+  get descriptionErrors(): Array<string> {
+    const errors: Array<string> = [];
+    if (!this.$v.description.$dirty) return errors;
+    !this.$v.description.minLength && errors.push("Minimo de caracteres 3");
+    !this.$v.description.required && errors.push("El campo es requerido");
+    return errors;
+  }
 }
 </script>
 
@@ -156,4 +192,8 @@ private clearForm(): void {
 .btn-gradient
   background: $button-gradient
   color: $background!important
+
+.fade-enter-active,
+.fade-leave-active
+  transition: opacity .5s
 </style>

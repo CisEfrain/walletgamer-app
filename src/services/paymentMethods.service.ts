@@ -18,16 +18,25 @@ import axios from "@/services/Base.service";
  *@returns an object with jwt token and user info or error messages
  **/
 
-const resource = "usuarios";
+const resource = "pasarelas";
 
-export const Get = async ():Promise<any> => {
-		const jwt = localStorage.getItem("jwt")
-		const header = {headers:{ Authorization: "Bearer " + jwt }};
-		return await axios.get(`${resource}/me`, header);
-}
 
-export const Update = async (data: any):Promise<any> => {
+export const Add = async (data: any, userId: number):Promise<any> => {
+	console.info(userId)
 	const jwt = localStorage.getItem("jwt")
 	const header = {headers:{ Authorization: "Bearer " + jwt }};
-	return await axios.put(resource, data, header);
+	return await axios.post(`${resource}/${userId}`,data, header);
+}
+
+export const Get = async (userId: number):Promise<any> => {
+		console.info(userId)
+		const jwt = localStorage.getItem("jwt")
+		const header = {headers:{ Authorization: "Bearer " + jwt }};
+		return await axios.get(`${resource}`, header);
+}
+
+export const Delete = async (id: number):Promise<any> => {
+	const jwt = localStorage.getItem("jwt")
+	const header = {headers:{ Authorization: "Bearer " + jwt }};
+	return await axios.delete(`${resource}/${id}`, header);
 }
