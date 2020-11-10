@@ -3,6 +3,7 @@
     <v-row class="px-4">
       <h2 class="title">Medios de desembolso</h2>
     </v-row>
+
     <v-row align="center" justify="center" class="mt-6">
       <v-col class="d-flex" cols="6" sm="6" md="3">
         <v-select
@@ -66,12 +67,10 @@
           dense
         ></v-text-field>
       </v-col>
-      <v-col
-        class="d-flex justify-center btn-request-mt-less"
-        cols="6"
-        sm="6"
-        md="2"
-      >
+    </v-row>
+
+    <v-row>
+      <v-col class="d-flex btn-request-mt-less" cols="6" sm="6" md="2">
         <v-btn
           rounded
           color="btn-gradient"
@@ -94,6 +93,7 @@
         :id="payment.id"
         :descripcion="payment.descripcion"
         :key="$index"
+        @click="deleteMethod"
       />
     </v-row>
   </v-container>
@@ -124,7 +124,9 @@ export default class UserExpenditure extends Vue {
       nombre: this.typeExpenditure,
       alias: this.aliasId,
       email: this.emailReceptor,
-      descripcion: this.description
+      descripcion: this.description,
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      usuarios_id: this.$store.state.accountState.userData.id
     };
     this.$store.dispatch("setNewExpenditureData", newExpenditure);
     console.log(newExpenditure);
@@ -134,6 +136,11 @@ export default class UserExpenditure extends Vue {
 
   get expenditure(): string {
     return this.$store.state.accountState.expenditureData;
+  }
+
+  private deleteMethod(id: any): void {
+    console.info("delete emitter", id);
+    this.$store.dispatch("getExpenditureData");
   }
 
   private clearForm(): void {

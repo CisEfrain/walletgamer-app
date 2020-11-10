@@ -3,7 +3,7 @@
     <v-row class="px-4">
       <h2 class="title">Mis datos</h2>
     </v-row>
-    <v-row align="center" justify="space-between" class="mt-6">
+    <v-row align="center" justify="space-between" class="mt-6 mb-less">
       <v-col class="d-flex" cols="6" sm="6" md="3">
         <v-text-field
           placeholder="Nombre y apellido"
@@ -162,7 +162,7 @@ export default class UserInfo extends Vue {
 
 <style lang="sass" scoped>
 .mb-less
-  margin-bottom: -24px!important
+  margin-bottom: -40px!important
 
 .btn-gradient
   background: $button-gradient

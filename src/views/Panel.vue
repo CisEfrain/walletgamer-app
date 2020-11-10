@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer width="200px" app>
+    <v-navigation-drawer width="200px" app v-model="drawer">
       <v-list>
         <v-list-item>
           <v-list-item-content class="mb-16">
@@ -78,14 +78,24 @@
       </v-list>
     </v-navigation-drawer>
 
-    <!-- <v-app-bar app color="indigo" dark>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Wallet Gaming</v-toolbar-title>
-    </v-app-bar>-->
-
-    <v-container class="bg-grey">
+    <v-container class="bg-grey ">
       <router-view />
     </v-container>
+    <v-fab-transition>
+      <v-btn
+        fab
+        absolute
+        bottom
+        right
+        class="burger-menu-responsive btn-gradient"
+        @click="drawer = !drawer"
+      >
+        <v-icon>mdi-menu</v-icon>
+      </v-btn>
+    </v-fab-transition>
+    <!-- <v-app-bar class="burger-menu-responsive" bottom app dense rounded collapse>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+    </v-app-bar> -->
   </v-app>
 </template>
 
@@ -94,6 +104,7 @@ import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class Panel extends Vue {
+  public drawer = null;
   public logout(): void {
     const userName = this.$store.state.accountState.userData.nombre;
     this.$toast.success(`Hasta la proxima ${userName}`);
@@ -105,6 +116,7 @@ export default class Panel extends Vue {
   private resetProduct(): void {
     this.$store.commit("resetProduct");
   }
+
   mounted() {
     this.$store.dispatch("setUserData");
     this.$store.dispatch("getExpenditureData");
@@ -113,6 +125,28 @@ export default class Panel extends Vue {
 </script>
 
 <style lang="sass">
+
+#inspire > div > button.burger-menu-responsive
+  z-index: 300
+  position: fixed
+  bottom: 8%
+  right: 4%
+  display: none
+
+#inspire > div > header
+  height: 60px
+  margin-top: 0px
+  transform: translateY(0px)
+  left: 0px
+  right: 0px
+  margin-left: 80%
+  margin-bottom: 5%
+  background-color: transparent
+  border: none
+  box-shadow: none
+  width: 150px
+  display: none
+
 .bg-grey
   background-color: #f3f3f3
   border: none
@@ -128,4 +162,6 @@ export default class Panel extends Vue {
 @media (max-width: 768px)
   .custom-divider
     max-width: 80%
+  #inspire > div > button.burger-menu-responsive
+    display: block
 </style>

@@ -47,10 +47,11 @@ export default class UserExpenditureItemList extends Vue {
   // @Prop({ required: true, type: String }) readonly available!: string
   // @Prop({ required: true, type: String }) readonly faction!: string
 
-  private async deleteMethod(id: any) {
+  private deleteMethod(id: any) {
     console.info(id);
     this.$store.dispatch("deleteExpenditureData", id);
-    this.$store.dispatch("getExpenditureData");
+    this.$emit("click", this.id);
+    //this.$store.dispatch("getExpenditureData");
   }
 }
 </script>
