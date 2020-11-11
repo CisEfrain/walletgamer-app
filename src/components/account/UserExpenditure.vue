@@ -118,6 +118,7 @@ export default class UserExpenditure extends Vue {
   @Validate({ required, minLength: minLength(5), email }) emailReceptor = null;
   @Validate({ required, minLength: minLength(3) }) aliasId = null;
   private typesExpenditure: Array<string> = ["Paypal", "Stripe", "GamerCoin"];
+  //public expenditureList: Array<string> = [];
 
   private addExpenditure(): void {
     const newExpenditure = {
@@ -134,12 +135,13 @@ export default class UserExpenditure extends Vue {
     this.$store.dispatch("getExpenditureData");
   }
 
-  get expenditure(): string {
-    return this.$store.state.accountState.expenditureData;
+  get expenditure(): any {
+    return this.$store.getters.getExpenditure;
   }
 
   private deleteMethod(id: any): void {
     console.info("delete emitter", id);
+    this.$store.dispatch("deleteExpenditureData", id);
     this.$store.dispatch("getExpenditureData");
   }
 
@@ -150,13 +152,11 @@ export default class UserExpenditure extends Vue {
     this.description = null;
     this.aliasId = null;
   }
-
   get isDisabled(): boolean {
     return !this.typeExpenditure || !this.emailReceptor || !this.aliasId
       ? true
       : false;
   }
-
   get typeExpenditureErrors(): Array<string> {
     const errors: Array<string> = [];
     if (!this.$v.typeExpenditure.$dirty) return errors;

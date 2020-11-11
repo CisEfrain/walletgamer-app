@@ -28,15 +28,15 @@ export const Add = async (data: any, userId: number):Promise<any> => {
 	return await axios.post(`${resource}/${userId}`,data, header);
 }
 
-export const Get = async (userId: number):Promise<any> => {
-		console.info(userId)
+export const Get = async ():Promise<any> => {
 		const jwt = localStorage.getItem("jwt")
 		const header = {headers:{ Authorization: "Bearer " + jwt }};
 		return await axios.get(`${resource}`, header);
 }
 
-export const Delete = async (id: number):Promise<any> => {
+export const Delete = async (paymentMethodId: number):Promise<any> => {
+	console.info(paymentMethodId)
 	const jwt = localStorage.getItem("jwt")
 	const header = {headers:{ Authorization: "Bearer " + jwt }};
-	return await axios.delete(`${resource}/${id}`, header);
+	return await axios.delete(`${resource}/${paymentMethodId}`, header);
 }

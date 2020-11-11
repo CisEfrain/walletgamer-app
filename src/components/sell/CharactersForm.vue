@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row align="center" justify="center">
-      <v-col class="d-flex" >
+      <v-col class="d-flex">
         <v-select
           :items="realmList"
           label="Reino"
@@ -17,7 +17,7 @@
           dense
         ></v-select>
       </v-col>
-      <v-col class="d-flex" >
+      <v-col class="d-flex">
         <v-select
           :items="factionList"
           label="Faccion"
@@ -109,6 +109,7 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable @typescript-eslint/camelcase */
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { Validate } from "vuelidate-property-decorators";
 import { required, minLength } from "vuelidate/lib/validators";
@@ -125,53 +126,56 @@ export default class CharactersForm extends Vue {
     "Aerie Peak",
     "Aggramar",
     "Akama",
-    "Altar of Storms",
+    "Altar of Storms"
   ];
   private factionList: Array<string> = [
     "Horde",
     "Alliance",
     "Horde Force",
-    "Steamwheedle Cartel",
+    "Steamwheedle Cartel"
   ];
   private classList: Array<string> = [
-      "Warrior",
-      "Paladín",
-      "Pícaro",
-      "Hunter",
-      "Priest",
-      "Sorcerer",
-      "Mage",
-      "Monk",
-      "Demon Hunter"
-  ]
-  private levelList: Array<number> = [
-    15,30,45,60
-  ]
+    "Warrior",
+    "Paladín",
+    "Pícaro",
+    "Hunter",
+    "Priest",
+    "Sorcerer",
+    "Mage",
+    "Monk",
+    "Demon Hunter"
+  ];
+  private levelList: Array<number> = [15, 30, 45, 60];
 
   private addCharacterPost(): void {
     const newCharacterPost = {
-      realm:   this.realm,
-      faction: this.faction,
-      pjClass: this.pjClass,
-      level:   this.level,
-      price:   this.price,
+      reino: this.realm,
+      faccion: this.faction,
+      clase: this.pjClass,
+      nivel: this.level,
+      precio: this.price,
+      usuarios_id: this.$store.state.accountState.userData.id
     };
-    this.$store.dispatch("setCharacterPost", newCharacterPost)
+    this.$store.dispatch("addPost", newCharacterPost);
     console.log(newCharacterPost);
     this.clearForm();
   }
 
   private clearForm(): void {
     this.$v.$reset();
-    this.realm  = null
-    this.faction= null
-    this.pjClass= null
-    this.level  = null
-    this.price  = null
+    this.realm = null;
+    this.faction = null;
+    this.pjClass = null;
+    this.level = null;
+    this.price = null;
   }
 
   get isDisabled(): boolean {
-    return !this.realm || !this.faction || !this.pjClass || !this.level || !this.price
+    return !this.realm ||
+      !this.faction ||
+      !this.pjClass ||
+      !this.level ||
+      !this.price
       ? true
       : false;
   }

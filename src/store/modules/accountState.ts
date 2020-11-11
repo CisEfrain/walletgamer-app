@@ -18,7 +18,6 @@ const accountState = {
      * @remarks this refers to product cards in buy and sell components
      *   */
     setNewExpenditureData(state: any, payload: any): void {
-      console.log("from accountState:", payload);
       state.newExpenditureData = payload;
     },
     getExpenditureData(state: any, payload: any): void {
@@ -37,7 +36,7 @@ const accountState = {
       console.info(state.userData.id);
       Add(payload, state.userData.id)
         .then((response: any) => {
-          console.info(response);
+          console.info("from setnewexpenditure", response);
           response.data.status === 200 &&
             Vue.$toast.success(`metodo de pago agregado`);
           commit("setNewExpenditureData", payload);
@@ -48,12 +47,10 @@ const accountState = {
         });
     },
     getExpenditureData({ commit, state }: any): void {
-      console.info(state.userData.id);
-      GetPayMethods(state.userData.id)
+      console.info("From get expenditureData", state.userData.id);
+      GetPayMethods()
         .then((response: any) => {
-          console.info(response);
-          // response.data.status === 200 &&
-          //   Vue.$toast.success(`metodo de pago agregado`);
+          console.info("get expenditure:", response);
           const {
             data: { data }
           } = response;
@@ -67,7 +64,7 @@ const accountState = {
     deleteExpenditureData({ commit }: any, id: number): void {
       Delete(id)
         .then((response: any) => {
-          console.info(response);
+          console.info(response)
           response.data.status === 200 &&
             Vue.$toast.success(`metodo de pago eliminado`);
         })
@@ -79,7 +76,6 @@ const accountState = {
     setUserData({ commit }: any): void {
       Get()
         .then((response: any) => {
-          console.info(response);
           const {
             data: { data }
           } = response;
@@ -93,7 +89,6 @@ const accountState = {
     updateUserData({ commit }: any, payload: any): void {
       Update(payload)
         .then((response: any) => {
-          console.info(response);
           const { nombre } = payload;
           response.data.status === 200 &&
             Vue.$toast.success(`${nombre} tus datos se han actualizado`);
@@ -104,7 +99,11 @@ const accountState = {
           Vue.$toast.error(`Tus datos no se han podido actualizadar`);
         });
     }
+  },
+  getters: {
+    getExpenditure: (state: { expenditureData: any }) => {
+      return state.expenditureData;
+    }
   }
-  // getters: { ... }
 };
 export default accountState;

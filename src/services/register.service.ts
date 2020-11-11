@@ -5,7 +5,8 @@ interface RegisterUser {
 	nombre:string,
 	pass:string,
 	email:string,
-	activo:boolean
+	activo:boolean,
+	telefono:string
 }
 
 /**
@@ -14,14 +15,16 @@ interface RegisterUser {
  *@param nombre - string user name
  *@param pass - string user password
  *@param email - string user email
- *@param activo - boolean user state
+ *@param activo - boolean user status
+ *@param telefono - string user phone number
  *@returns an object with jwt token and user info or error messages
  **/
 
 const resource = "usuarios";
 
 export const Register = async(registerUser:RegisterUser) => {
-		const {email, pass, nombre} = registerUser
+		console.info("from register service", registerUser)
+		const {email, pass, nombre } = registerUser
 		if (email == "" || pass == "" || nombre == "") return false;
 		return await axios.post(resource, registerUser);
 }

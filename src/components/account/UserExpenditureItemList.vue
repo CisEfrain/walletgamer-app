@@ -39,19 +39,16 @@ import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
   }
 })
 export default class UserExpenditureItemList extends Vue {
-  @Prop({ required: true, type: String }) readonly alias!: string;
-  @Prop({ required: true, type: String }) readonly pay_method!: string;
-  @Prop({ required: true, type: String }) readonly descripcion!: string;
-  @Prop({ required: true, type: String }) readonly email!: string;
-  @Prop({ required: true, type: Number }) readonly id!: number;
+  @Prop({ type: String }) readonly alias: string | undefined;
+  @Prop({ type: String }) readonly pay_method: string | undefined;
+  @Prop({ type: String }) readonly descripcion: string | undefined;
+  @Prop({ type: String }) readonly email: string | undefined;
+  @Prop({ type: Number }) readonly id: number | undefined;
   // @Prop({ required: true, type: String }) readonly available!: string
   // @Prop({ required: true, type: String }) readonly faction!: string
 
   private deleteMethod(id: any) {
-    console.info(id);
-    this.$store.dispatch("deleteExpenditureData", id);
     this.$emit("click", this.id);
-    //this.$store.dispatch("getExpenditureData");
   }
 }
 </script>

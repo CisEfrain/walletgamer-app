@@ -22,18 +22,15 @@
       <h3 class="title">Mis publicaciones</h3>
       <v-expansion-panels v-model="panel" multiple flat>
         <PostList
-          product="Gold World of Warcraft"
-          cost="20"
-          quantity="500"
-          realm="Faerlina"
-          faction="Horda"
-        />
-        <PostList
-          product="Gold World of Warcraft"
-          cost="20"
-          quantity="500"
-          realm="Faerlina"
-          faction="Horda"
+          v-for="post in postList"
+          :key="post.id"
+          :product="post.tipo"
+          :nivel="post.nivel"
+          :item="post.item"
+          :cost="post.precio"
+          :quantity="post.cantidad"
+          :realm="post.reino"
+          :faction="post.faccion"
         />
       </v-expansion-panels>
     </div>
@@ -86,6 +83,14 @@ export default class Sell extends Vue {
   private setPosts(): void {
     this.currentProduct = ["Post"];
     this.$store.commit("resetProduct")
+  }
+
+  mounted(){
+    this.$store.dispatch("getPosts");
+  }
+
+  get postList(): any{
+    return this.$store.getters.getPostList;
   }
 
   get productListSelected(): any {

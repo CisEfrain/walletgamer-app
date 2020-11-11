@@ -95,6 +95,7 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable @typescript-eslint/camelcase */
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { Validate } from "vuelidate-property-decorators";
 import { required, minLength } from "vuelidate/lib/validators";
@@ -123,12 +124,13 @@ export default class ItemsForm extends Vue {
 
   private addItemPost(): void {
     const newItemPost = {
-      item:     this.item,
-      faction:  this.faction,
-      quantity: this.quantity,
-      price:    this.price
+      tipo:     this.item,
+      faccion:  this.faction,
+      cantidad: this.quantity,
+      precio:    this.price,
+      usuarios_id: this.$store.state.accountState.userData.id
     };
-    this.$store.dispatch("setItemPost", newItemPost)
+    this.$store.dispatch("addPost", newItemPost)
     console.log(newItemPost);
     this.clearForm();
   }

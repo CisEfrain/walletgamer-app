@@ -24,21 +24,19 @@ const authState = {
   actions: {
     setLogin({ commit }: any, payload: any): void {
       Login(payload)
-        .then(async (response: any) => {
-          console.info(response.data.status);
-
+        .then((response: any) => {
           if (response.status === 200) {
             const {
               data: {
                 data: {
                   jwt,
-                  usuario: { nombre, email }
+                  usuario: { nombre, email, telefono }
                 }
               }
             } = response;
             localStorage.setItem("jwt", jwt);
             Vue.$toast.success(`Bienvenid@ ${nombre}`);
-            commit("setLogin", { nombre, email });
+            commit("setLogin", { nombre, email, telefono });
             router.push("/");
           }
         })
@@ -50,12 +48,12 @@ const authState = {
         });
     },
     setRegister({ commit }: any, payload: any): void {
-      commit("setRegister", payload);
       Register(payload)
         .then((response: any) => {
           response.status === 200 &&
             Vue.$toast.success(`${payload.nombre} tu registro fue exitoso!`);
           router.push("/login");
+          commit("setRegister", payload);
         })
         .catch(error => {
           console.info(error);

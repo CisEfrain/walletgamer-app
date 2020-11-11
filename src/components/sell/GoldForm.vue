@@ -92,6 +92,7 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable @typescript-eslint/camelcase */
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { Validate } from "vuelidate-property-decorators";
 import { required, minLength } from "vuelidate/lib/validators";
@@ -118,13 +119,13 @@ export default class GoldForm extends Vue {
 
   private addGoldPost(): void {
     const newGoldPost = {
-      realm: this.realm,
-      faction: this.faction,
-      quantity: this.quantity,
-      price: this.price
+      reino: this.realm,
+      faccion: this.faction,
+      cantidad: this.quantity,
+      precio: this.price,
+      usuarios_id: this.$store.state.accountState.userData.id
     };
-    this.$store.dispatch("setGoldPost", newGoldPost)
-    console.log(newGoldPost);
+    this.$store.dispatch("addPost", newGoldPost);
     this.clearForm();
   }
 

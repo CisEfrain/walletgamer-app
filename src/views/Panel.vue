@@ -106,8 +106,8 @@ import { Component, Vue } from "vue-property-decorator";
 export default class Panel extends Vue {
   public drawer = null;
   public logout(): void {
-    const userName = this.$store.state.accountState.userData.nombre;
-    this.$toast.success(`Hasta la proxima ${userName}`);
+    //const userName = this.$store.state.accountState.userData.nombre;
+    this.$toast.success(`Hasta la proxima`);
     localStorage.clear();
     this.$router.push("/login");
     this.$store.commit("resetUserData");
@@ -120,6 +120,7 @@ export default class Panel extends Vue {
   mounted() {
     this.$store.dispatch("setUserData");
     this.$store.dispatch("getExpenditureData");
+    this.$store.dispatch("getPosts");
   }
 }
 </script>

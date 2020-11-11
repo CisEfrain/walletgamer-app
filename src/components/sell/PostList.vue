@@ -45,16 +45,17 @@ import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
 
 @Component({
   components: {
-    BaseCardContainer,
-  },
+    BaseCardContainer
+  }
 })
 export default class PostList extends Vue {
-  @Prop({ required: true, type: String }) readonly product!: string;
-  @Prop({ required: true, type: String }) readonly cost!: string;
-  @Prop({ required: true, type: String }) readonly quantity!: string;
-  @Prop({ required: true, type: String }) readonly realm!: string;
-  @Prop({ required: true, type: String }) readonly faction!: string;
-
+  @Prop({ type: String }) readonly product: string | undefined;
+  @Prop({ type: String }) readonly level: string | undefined;
+  @Prop({ type: String }) readonly item: string | undefined;
+  @Prop({ type: String }) readonly cost: string | undefined;
+  @Prop({ type: String }) readonly quantity: string | undefined;
+  @Prop({ type: String }) readonly realm: string | undefined;
+  @Prop({ type: String }) readonly faction: string | undefined;
 }
 </script>
 

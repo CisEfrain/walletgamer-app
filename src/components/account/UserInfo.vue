@@ -19,12 +19,12 @@
         ></v-text-field>
       </v-col>
       <v-col class="d-flex" cols="6" sm="6" md="3">
-        <!-- v-model="$v.phone.$model"
-          :error-messages="phoneErrors"
-          @input="$v.phone.$touch()"
-          @blur="$v.phone.$touch()" -->
         <v-text-field
           placeholder="Telefono movil"
+          v-model="$v.phone.$model"
+          :error-messages="phoneErrors"
+          @input="$v.phone.$touch()"
+          @blur="$v.phone.$touch()"
           rounded
           color="rgba(184,12,70,.6)"
           background-color="white"
@@ -86,14 +86,14 @@ import { required, minLength } from "vuelidate/lib/validators";
 interface UpdateData {
   pass?: string;
   nombre?: string;
-  numero?: string;
+  telefono?: string;
 }
 
 @Component
 export default class UserInfo extends Vue {
   @Validate({ required }) name = "";
   @Validate({ required, minLength: minLength(8) }) password = "";
-  //@Validate({ required }) phone = "";
+  @Validate({ required }) phone = "";
   @Validate({ required }) email = "";
   public showPass = false;
   public isDisable = true;
@@ -106,9 +106,8 @@ export default class UserInfo extends Vue {
     const updateData: UpdateData = {};
     this.name ? (updateData.nombre = this.name) : null;
     this.password ? (updateData.pass = this.password) : null;
-    // nombre: this.name,
-    // numero: this.phone,
-    // pass: this.password
+    this.phone ? (updateData.telefono = this.phone) : null;
+
     console.info(updateData);
     this.$store.dispatch("updateUserData", updateData);
     this.$store.dispatch("setUserData");
