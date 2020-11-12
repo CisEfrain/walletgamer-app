@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { GetMe, Delete, Update, Add } from "@/services/post.service";
+import { GetMe, Delete, Update, GetAll, Add } from "@/services/post.service";
 import Vue from "vue";
 
 const sellState = {
   state: () => ({
     postList: [],
+    allPostList: [],
     goldPost: {},
     characterPost: {},
     itemPost: {}
@@ -30,6 +31,10 @@ const sellState = {
       console.log("getPost:", payload);
       state.postList = payload;
     },
+    getAllPosts(state: any, payload: any): void {
+      console.log("getPost:", payload);
+      state.allPostList = payload;
+    },
     deletePost(state: any, payload: any): void {
       // state.userData
       const { index } = payload;
@@ -39,7 +44,7 @@ const sellState = {
   actions: {
     addPost({ commit }: any, payload: any): void {
       const { usuarios_id } = payload;
-      Add(payload, usuarios_id )
+      Add(payload, usuarios_id)
         .then((response: any) => {
           console.info("from pos", response);
           response.data.status === 200 &&
@@ -62,6 +67,19 @@ const sellState = {
           Vue.$toast.error(`No se ha podido realizar tu publicación`);
         });
     },
+    getAllPosts({ commit }: any): void {
+      GetAll()
+        .then((response: any) => {
+          console.info("from get all post", response);
+          commit("getAllPosts", response.data.data);
+        })
+        .catch(error => {
+          console.info(error);
+          Vue.$toast.error(
+            `Ha ocurrido un error al intentar obtener las publicaciones`
+          );
+        });
+    },
     deletePost({ commit }: any, payload: any): void {
       const { id } = payload;
       Delete(id)
@@ -76,7 +94,7 @@ const sellState = {
           console.info(error);
           Vue.$toast.error(`No se ha podido eliminar tu publicación`);
         });
-    },
+    }
     // setCharacterPost({ commit }: any, payload: any): void {
     //   commit("setCharacterPost", payload);
     // },
@@ -84,10 +102,28 @@ const sellState = {
     //   commit("setItemPost", payload);
     // }
   },
-  getters: { 
+  getters: {
     getPostList: (state: { postList: any }) => {
       return state.postList;
+    },
+    getAllPostList: (state: { allPostList: any }) => {
+      return state.allPostList;
+    },
+    getGoldPostList: (state: { allPostList: any }) => {
+      return state.allPostList.filter(
+        (goldPost: any) => goldPost.tipo === "Gold"
+      );
+    },
+    getCharacterPostList: (state: { allPostList: any }) => {
+      return state.allPostList.filter(
+        (characterPost: any) => characterPost.tipo === "Personaje"
+      );
+    },
+    getItemPostList: (state: { allPostList: any }) => {
+      return state.allPostList.filter(
+        (itemPost: any) => itemPost.tipo === "Item"
+      );
     }
-   }
+  }
 };
 export default sellState;

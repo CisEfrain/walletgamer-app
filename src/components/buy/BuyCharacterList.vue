@@ -1,5 +1,5 @@
 <template>
-<v-container class="mt-8">
+  <v-container class="mt-8">
     <v-row align="center" justify="center" class="mt-6 mb-less">
       <v-col class="d-flex" cols="3" sm="3">
         <v-select
@@ -47,86 +47,90 @@
       </v-col>
     </v-row>
 
-  <CharactersItemList
-    user="Manuel Perez"
-    rank="Newbie"
-    kingdom="AD"
-    faction="Horda"
-    characterClass="Magician"
-    price="100"
-    level="60"
-  />
-  <CharactersItemList
-    user="Manuel Perez"
-    rank="Newbie"
-    kingdom="AD"
-    faction="Horda"
-    characterClass="Magician"
-    price="100"
-    level="60"
-  />
-  <CharactersItemList
-    user="Manuel Perez"
-    rank="Newbie"
-    kingdom="AD"
-    faction="Horda"
-    characterClass="Magician"
-    price="100"
-    level="60"
-  />
-  <CharactersItemList
-    user="Manuel Perez"
-    rank="Newbie"
-    kingdom="AD"
-    faction="Horda"
-    characterClass="Magician"
-    price="100"
-    level="60"
-  />
-
-</v-container>
+    <CharactersItemList
+      v-for="(characterPost, $index) in postCharacterList"
+      :key="characterPost.id"
+      user="Default Name"
+      :rank="characterPost.rango"
+      :kingdom="characterPost.reino"
+      :faction="characterPost.faccion"
+      :characterClass="characterPost.clase"
+      :price="characterPost.precio"
+      :level="characterPost.nivel"
+      @click="buyGold($index, goldPost.id)"
+    />
+    <!-- <CharactersItemList
+      user="Manuel Perez"
+      rank="Newbie"
+      kingdom="AD"
+      faction="Horda"
+      characterClass="Magician"
+      price="100"
+      level="60"
+    />
+    <CharactersItemList
+      user="Manuel Perez"
+      rank="Newbie"
+      kingdom="AD"
+      faction="Horda"
+      characterClass="Magician"
+      price="100"
+      level="60"
+    />
+    <CharactersItemList
+      user="Manuel Perez"
+      rank="Newbie"
+      kingdom="AD"
+      faction="Horda"
+      characterClass="Magician"
+      price="100"
+      level="60"
+    /> -->
+  </v-container>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 
-import ProductCard from "@/components/ProductCard.vue"
-import CharactersItemList from "@/components/buy/CharactersItemList.vue"
+import ProductCard from "@/components/ProductCard.vue";
+import CharactersItemList from "@/components/buy/CharactersItemList.vue";
 
 @Component({
-  components:{
+  components: {
     ProductCard,
     CharactersItemList
   }
 })
 export default class BuyCharacterList extends Vue {
   private realm: Array<string> = [
-      "Aegwynn",
-      "Aerie Peak",
-      "Aggramar",
-      "Akama",
-      "Altar of Storms"
-  ]
+    "Aegwynn",
+    "Aerie Peak",
+    "Aggramar",
+    "Akama",
+    "Altar of Storms"
+  ];
   private factions: Array<string> = [
-      "Horde",
-      "Alliance",
-      "Horde Force",
-      "Steamwheedle Cartel"
-  ]
+    "Horde",
+    "Alliance",
+    "Horde Force",
+    "Steamwheedle Cartel"
+  ];
   private classes: Array<string> = [
-      "Warrior",
-      "Paladín",
-      "Pícaro",
-      "Hunter",
-      "Priest",
-      "Sorcerer",
-      "Mage",
-      "Monk",
-      "Demon Hunter"
-  ]
-  private level: Array<number> = [
-    15,30,45,60
-  ]
+    "Warrior",
+    "Paladín",
+    "Pícaro",
+    "Hunter",
+    "Priest",
+    "Sorcerer",
+    "Mage",
+    "Monk",
+    "Demon Hunter"
+  ];
+  private level: Array<number> = [15, 30, 45, 60];
+
+  get postCharacterList(): any {
+    return this.$store.getters.getCharacterPostList;
+  }
 }
 </script>
 

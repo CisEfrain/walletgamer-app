@@ -11,7 +11,7 @@
 
     <v-row class="d-flex justify-center">
       <ProductCard
-        v-for="(product,$index) in productList"
+        v-for="(product, $index) in productList"
         :key="$index"
         :productTitle="product"
         @selected="selectProduct(product)"
@@ -19,14 +19,16 @@
     </v-row>
     <transition name="slide-fade">
       <keep-alive>
-      <component :key="productListSelected" :is="productListSelected"></component>
-    </keep-alive>
+        <component
+          :key="productListSelected"
+          :is="productListSelected"
+        ></component>
+      </keep-alive>
     </transition>
   </v-container>
 </template>
 
 <script lang="ts">
-
 import { Component, Vue, Prop } from "vue-property-decorator";
 
 import ProductCard from "@/components/ProductCard.vue";
@@ -50,8 +52,8 @@ export default class Buy extends Vue {
     this.currentProduct = tab;
   }
 
-  mounted(){
-    this.$store.dispatch("getPosts");
+  mounted() {
+    this.$store.dispatch("getAllPosts");
   }
 
   get productListSelected(): any {
@@ -61,10 +63,10 @@ export default class Buy extends Vue {
 </script>
 
 <style lang="sass" scoped>
-.slide-fade-enter-active 
+.slide-fade-enter-active
   transition: all .3s ease-in
 
-.slide-fade-leave-active 
+.slide-fade-leave-active
   transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0)
 
 .slide-fade-enter, .slide-fade-leave-to

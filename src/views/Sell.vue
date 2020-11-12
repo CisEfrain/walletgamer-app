@@ -9,7 +9,7 @@
       <h3 class="mt-12 mb-4 title">¿Qué te interesa vender?</h3>
     </v-row>
 
-    <v-row class="d-flex">
+    <v-row class="d-flex align-content-center justify-center mb-1">
       <ProductCard
         v-for="(product, $index) in productList"
         :key="$index"
@@ -19,8 +19,8 @@
     </v-row>
 
     <div class="mt-10" justify="center" v-if="currentProduct == 'Post'">
-      <h3 class="title">Mis publicaciones</h3>
-      <v-expansion-panels v-model="panel" multiple flat>
+      <h3 class="title mb-6">Mis publicaciones</h3>
+      <v-expansion-panels class="container" v-model="panel" multiple flat>
         <PostList
           v-for="(post, $index) in postList"
           :key="post.id"

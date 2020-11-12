@@ -1,15 +1,21 @@
 <template>
-  <v-card
-    :class="isActive"
-    class="mx-3 d-flex flex-column align-center pb-4 card-radius"
-    width="240"
-    elevation="4"
-    @click="isSelected()"
-  >
-    
-    <v-card-title class="product-title">{{ productTitle }}</v-card-title>
-    <v-img class="align-center" width="140px" height="60px" src="../assets/wow-logo.png"></v-img>
-  </v-card>
+  <v-col cols="4" md="4" sm="12" class="d-flex justify-center">
+    <v-card
+      :class="isActive"
+      class="mx-3 d-flex flex-column align-center pb-4 card-radius"
+      width="240"
+      elevation="4"
+      @click="isSelected()"
+    >
+      <v-card-title class="product-title">{{ productTitle }}</v-card-title>
+      <v-img
+        class="align-center"
+        width="140px"
+        height="60px"
+        src="../assets/wow-logo.png"
+      ></v-img>
+    </v-card>
+  </v-col>
 </template>
 
 <script lang="ts">
@@ -20,13 +26,15 @@ export default class ProductCard extends Vue {
   //Props
   @Prop({ required: true, type: String }) readonly productTitle!: string;
 
-  get isActive(){
-    return this.$store.state.AppState.activeProduct === this.productTitle ? 'active-card': null
+  get isActive() {
+    return this.$store.state.AppState.activeProduct === this.productTitle
+      ? "active-card"
+      : null;
   }
 
   @Emit("selected")
-  isSelected(){
-    this.$store.commit("setProduct", {name:this.productTitle})
+  isSelected() {
+    this.$store.commit("setProduct", { name: this.productTitle });
   }
 }
 </script>

@@ -1,13 +1,6 @@
 /* eslint-disable prettier/prettier */
 import axios from "@/services/Base.service";
 
-// interface User {
-// 	nombre:string,
-// 	pass:string,
-// 	email:string,
-// 	activo:boolean
-// }
-
 /**
  *@remarks
  * this function can be changed
@@ -32,6 +25,12 @@ export const GetMe = async ():Promise<unknown> => {
 		const jwt = localStorage.getItem("jwt")
 		const header = {headers:{ Authorization: "Bearer " + jwt }};
 		return await axios.get(`me/${resource}`, header);
+}
+
+export const GetAll = async ():Promise<unknown> => {
+	const jwt = localStorage.getItem("jwt")
+	const header = {headers:{ Authorization: "Bearer " + jwt }};
+	return await axios.get(`${resource}`, header);
 }
 
 export const Delete = async (postId: number):Promise<unknown> => {
