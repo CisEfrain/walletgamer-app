@@ -33,6 +33,17 @@
           :faction="post.faccion"
           @click="deletePost($index, post.id)"
         />
+        <!-- <div class="text-center">
+          <v-pagination
+            v-model="page"
+            :length="3"
+            color="#E4445B"
+            prev-icon="mdi-menu-left"
+            next-icon="mdi-menu-right"
+            @input="next"
+          >
+          </v-pagination>
+        </div> -->
       </v-expansion-panels>
     </div>
 
@@ -77,6 +88,7 @@ export default class Sell extends Vue {
   public productList: Array<string> = ["Gold", "Personaje", "Items"];
   public currentProduct: Array<string> = ["Post"];
   private panel: Array<number> = [0];
+  public page = 1;
 
   public selectProduct(tab: any): void {
     this.currentProduct = tab;
@@ -85,7 +97,6 @@ export default class Sell extends Vue {
     this.currentProduct = ["Post"];
     this.$store.commit("resetProduct");
   }
-
   private deletePost(index: any, id: any): void {
     const payload = { index, id };
     console.info("id", id, "index", index);
@@ -98,6 +109,7 @@ export default class Sell extends Vue {
   }
 
   get postList(): any {
+    this.page = this.$store.getters.getPostList;
     return this.$store.getters.getPostList;
   }
 
