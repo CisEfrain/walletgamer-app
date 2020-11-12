@@ -5,8 +5,8 @@
         to sellment
       </a>
     </h2>
-    <v-row align="center">
-      <h3 class="mt-12 mb-4 title">¿Qué te interesa vender?</h3>
+    <v-row align="center" justify="center">
+      <h3 class="mt-12 mb-4 title text-center">¿Qué te interesa vender?</h3>
     </v-row>
 
     <v-row class="d-flex align-content-center justify-center mb-1">
@@ -19,7 +19,7 @@
     </v-row>
 
     <div class="mt-10" justify="center" v-if="currentProduct == 'Post'">
-      <h3 class="title mb-6">Mis publicaciones</h3>
+      <h3 class="title mb-6" v-show="postList.lenght > 0">Mis publicaciones</h3>
       <v-expansion-panels class="container" v-model="panel" multiple flat>
         <PostList
           v-for="(post, $index) in postList"

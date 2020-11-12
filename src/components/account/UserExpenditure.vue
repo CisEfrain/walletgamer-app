@@ -114,7 +114,7 @@ import { required, minLength, email } from "vuelidate/lib/validators";
 })
 export default class UserExpenditure extends Vue {
   @Validate({ required }) typeExpenditure = null;
-  @Validate({ required }) description = null;
+  @Validate({ required, minLength: minLength(4) }) description = null;
   @Validate({ required, minLength: minLength(5), email }) emailReceptor = null;
   @Validate({ required, minLength: minLength(3) }) aliasId = null;
   private typesExpenditure: Array<string> = ["Paypal", "Stripe", "GamerCoin"];
@@ -142,7 +142,7 @@ export default class UserExpenditure extends Vue {
   private deleteMethod(index: any, id: any): void {
     console.info("delete emitter", id);
     const payload = { index, id };
-    console.info("id",id, "index", index);
+    console.info("id", id, "index", index);
     console.info(this.expenditure);
     this.$store.dispatch("deleteExpenditureData", payload);
     this.$store.dispatch("getExpenditureData");
@@ -156,7 +156,10 @@ export default class UserExpenditure extends Vue {
     this.aliasId = null;
   }
   get isDisabled(): boolean {
-    return !this.typeExpenditure || !this.emailReceptor || !this.aliasId
+    return !this.typeExpenditure ||
+      !this.emailReceptor ||
+      !this.aliasId ||
+      !this.description
       ? true
       : false;
   }
@@ -185,7 +188,7 @@ export default class UserExpenditure extends Vue {
   get descriptionErrors(): Array<string> {
     const errors: Array<string> = [];
     if (!this.$v.description.$dirty) return errors;
-    !this.$v.description.minLength && errors.push("Minimo de caracteres 3");
+    !this.$v.description.minLength && errors.push("Minimo de caracteres 4");
     !this.$v.description.required && errors.push("El campo es requerido");
     return errors;
   }
