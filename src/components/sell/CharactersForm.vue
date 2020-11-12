@@ -149,6 +149,7 @@ export default class CharactersForm extends Vue {
 
   private addCharacterPost(): void {
     const newCharacterPost = {
+      tipo: "Personaje",
       reino: this.realm,
       faccion: this.faction,
       clase: this.pjClass,
@@ -157,6 +158,7 @@ export default class CharactersForm extends Vue {
       usuarios_id: this.$store.state.accountState.userData.id
     };
     this.$store.dispatch("addPost", newCharacterPost);
+    this.$store.dispatch("getPosts");
     console.log(newCharacterPost);
     this.clearForm();
   }

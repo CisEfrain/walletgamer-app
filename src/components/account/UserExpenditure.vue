@@ -93,7 +93,7 @@
         :id="payment.id"
         :descripcion="payment.descripcion"
         :key="$index"
-        @click="deleteMethod"
+        @click="deleteMethod($index, payment.id)"
       />
     </v-row>
   </v-container>
@@ -139,9 +139,12 @@ export default class UserExpenditure extends Vue {
     return this.$store.getters.getExpenditure;
   }
 
-  private deleteMethod(id: any): void {
+  private deleteMethod(index: any, id: any): void {
     console.info("delete emitter", id);
-    this.$store.dispatch("deleteExpenditureData", id);
+    const payload = { index, id };
+    console.info("id",id, "index", index);
+    console.info(this.expenditure);
+    this.$store.dispatch("deleteExpenditureData", payload);
     this.$store.dispatch("getExpenditureData");
   }
 

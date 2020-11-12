@@ -25,10 +25,15 @@ const accountState = {
       state.expenditureData = payload;
     },
     setUserData(state: any, payload: any): void {
-      state.userData = payload;
+      state.userData = { ...state.userData, ...payload };
     },
     resetUserData(state: any): void {
       state.userData = "";
+    },
+    deleteExpenditureData(state: any, payload: any): void {
+      // state.userData
+      const { index } = payload;
+      state.expenditureData.splice(index, 1);
     }
   },
   actions: {
@@ -61,12 +66,15 @@ const accountState = {
           Vue.$toast.error(`No se han podido cargar tus metodos de pago`);
         });
     },
-    deleteExpenditureData({ commit }: any, id: number): void {
+    deleteExpenditureData({ commit }: any, payload: any): void {
+      const { id } = payload;
       Delete(id)
         .then((response: any) => {
-          console.info(response)
+          console.info(response);
           response.data.status === 200 &&
             Vue.$toast.success(`metodo de pago eliminado`);
+          console.info(id);
+          commit("deleteExpenditureData", payload);
         })
         .catch(error => {
           console.info(error);

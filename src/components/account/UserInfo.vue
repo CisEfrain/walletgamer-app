@@ -116,10 +116,11 @@ export default class UserInfo extends Vue {
   }
 
   private async getUser() {
-    const { nombre, email } = await this.$store.state.accountState.userData;
+    const { nombre, email, telefono } = await this.$store.state.accountState.userData;
     console.info("from UserInfo Component:", nombre, email);
     this.email = email;
     this.name = nombre;
+    this.phone = telefono;
   }
 
   get showPassword(): boolean {

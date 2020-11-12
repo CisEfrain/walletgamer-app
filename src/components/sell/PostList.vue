@@ -23,7 +23,7 @@
                 <p>Facción: {{ faction }}</p>
               </v-col>
               <v-col cols="12" md="6" sm="6" class="d-flex justify-end">
-                <v-btn text small color="error">
+                <v-btn  @click="deletePost" text small color="error">
                   <b>Eliminar publicación</b>
                 </v-btn>
                 <v-btn text small color="error">
@@ -53,9 +53,13 @@ export default class PostList extends Vue {
   @Prop({ type: String }) readonly level: string | undefined;
   @Prop({ type: String }) readonly item: string | undefined;
   @Prop({ type: String }) readonly cost: string | undefined;
-  @Prop({ type: String }) readonly quantity: string | undefined;
+  @Prop({ type: Number }) readonly quantity: number | undefined;
   @Prop({ type: String }) readonly realm: string | undefined;
   @Prop({ type: String }) readonly faction: string | undefined;
+
+  private deletePost() {
+    this.$emit("click");
+  }
 }
 </script>
 

@@ -22,7 +22,7 @@
       <h3 class="title">Mis publicaciones</h3>
       <v-expansion-panels v-model="panel" multiple flat>
         <PostList
-          v-for="post in postList"
+          v-for="(post, $index) in postList"
           :key="post.id"
           :product="post.tipo"
           :nivel="post.nivel"
@@ -31,6 +31,7 @@
           :quantity="post.cantidad"
           :realm="post.reino"
           :faction="post.faccion"
+          @click="deletePost($index, post.id)"
         />
       </v-expansion-panels>
     </div>
@@ -69,8 +70,8 @@ import PostList from "@/components/sell/PostList.vue";
     PersonajeForm,
     GoldForm,
     ItemsForm,
-    PostList,
-  },
+    PostList
+  }
 })
 export default class Sell extends Vue {
   public productList: Array<string> = ["Gold", "Personaje", "Items"];
@@ -82,14 +83,21 @@ export default class Sell extends Vue {
   }
   private setPosts(): void {
     this.currentProduct = ["Post"];
-    this.$store.commit("resetProduct")
+    this.$store.commit("resetProduct");
   }
 
-  mounted(){
+  private deletePost(index: any, id: any): void {
+    const payload = { index, id };
+    console.info("id", id, "index", index);
+    this.$store.dispatch("deletePost", payload);
     this.$store.dispatch("getPosts");
   }
 
-  get postList(): any{
+  mounted() {
+    this.$store.dispatch("getPosts");
+  }
+
+  get postList(): any {
     return this.$store.getters.getPostList;
   }
 

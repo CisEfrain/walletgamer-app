@@ -85,12 +85,11 @@
     </v-row>
 
     <v-row class="mt-4" justify="center">
-          <v-col class="commission_info text-center px-4 py-4" cols="4">
-            <p>Comision: 5%</p>
-            <h5>Por cada item vendido recibiras: 0</h5>
-          </v-col>
+      <v-col class="commission_info text-center px-4 py-4" cols="4">
+        <p>Comision: 5%</p>
+        <h5>Por cada item vendido recibiras: 0</h5>
+      </v-col>
     </v-row>
-
   </v-container>
 </template>
 
@@ -111,36 +110,37 @@ export default class ItemsForm extends Vue {
     "Horde",
     "Alliance",
     "Horde Force",
-    "Steamwheedle Cartel",
+    "Steamwheedle Cartel"
   ];
   private itemList: Array<string> = [
-      "Alavacio Incorrupto",
-      "Vermis de ascuas",
-      "Riendas de invencibles",
-      "Marca de honor",
-      "Talisman de mascota pulido",
-      "Tueno furioso"
-  ]
+    "Alavacio Incorrupto",
+    "Vermis de ascuas",
+    "Riendas de invencibles",
+    "Marca de honor",
+    "Talisman de mascota pulido",
+    "Tueno furioso"
+  ];
 
   private addItemPost(): void {
     const newItemPost = {
-      tipo:     this.item,
-      faccion:  this.faction,
+      tipo: "Item",
+      faccion: this.faction,
       cantidad: this.quantity,
-      precio:    this.price,
+      precio: this.price,
       usuarios_id: this.$store.state.accountState.userData.id
     };
-    this.$store.dispatch("addPost", newItemPost)
+    this.$store.dispatch("addPost", newItemPost);
+    this.$store.dispatch("getPosts");
     console.log(newItemPost);
     this.clearForm();
   }
 
   private clearForm(): void {
     this.$v.$reset();
-    this.item     = null;
-    this.faction  = null;
+    this.item = null;
+    this.faction = null;
     this.quantity = null;
-    this.price    = null;
+    this.price = null;
   }
 
   get isDisabled(): boolean {

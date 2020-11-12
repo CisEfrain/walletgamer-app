@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { GetMe, Update, Add } from "@/services/post.service";
+import { GetMe, Delete, Update, Add } from "@/services/post.service";
 import Vue from "vue";
 
 const sellState = {
@@ -29,6 +29,11 @@ const sellState = {
     getPost(state: any, payload: any): void {
       console.log("getPost:", payload);
       state.postList = payload;
+    },
+    deletePost(state: any, payload: any): void {
+      // state.userData
+      const { index } = payload;
+      state.postList.splice(index, 1);
     }
   },
   actions: {
@@ -55,6 +60,21 @@ const sellState = {
         .catch(error => {
           console.info(error);
           Vue.$toast.error(`No se ha podido realizar tu publicación`);
+        });
+    },
+    deletePost({ commit }: any, payload: any): void {
+      const { id } = payload;
+      Delete(id)
+        .then((response: any) => {
+          console.info(response);
+          response.data.status === 200 &&
+            Vue.$toast.success(`Publicacion de venta eliminada`);
+          console.info(id);
+          commit("deletePost", payload);
+        })
+        .catch(error => {
+          console.info(error);
+          Vue.$toast.error(`No se ha podido eliminar tu publicación`);
         });
     },
     // setCharacterPost({ commit }: any, payload: any): void {

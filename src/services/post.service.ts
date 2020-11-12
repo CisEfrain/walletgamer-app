@@ -29,16 +29,15 @@ export const Add = async (data: any, userId: number):Promise<unknown> => {
 }
 
 export const GetMe = async ():Promise<unknown> => {
-		//console.info(userId)
 		const jwt = localStorage.getItem("jwt")
 		const header = {headers:{ Authorization: "Bearer " + jwt }};
-		return await axios.get(`${resource}`, header);
+		return await axios.get(`me/${resource}`, header);
 }
 
-export const Delete = async (id: number):Promise<unknown> => {
+export const Delete = async (postId: number):Promise<unknown> => {
 	const jwt = localStorage.getItem("jwt")
 	const header = {headers:{ Authorization: "Bearer " + jwt }};
-	return await axios.delete(`${resource}/${id}`, header);
+	return await axios.delete(`${resource}/${postId}`, header);
 }
 
 export const Update = async (data:any, postId: number):Promise<unknown> => {

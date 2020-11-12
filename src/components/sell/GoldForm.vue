@@ -119,6 +119,7 @@ export default class GoldForm extends Vue {
 
   private addGoldPost(): void {
     const newGoldPost = {
+      tipo: "Gold",
       reino: this.realm,
       faccion: this.faction,
       cantidad: this.quantity,
@@ -126,6 +127,7 @@ export default class GoldForm extends Vue {
       usuarios_id: this.$store.state.accountState.userData.id
     };
     this.$store.dispatch("addPost", newGoldPost);
+    this.$store.dispatch("getPosts");
     this.clearForm();
   }
 
