@@ -42,5 +42,7 @@ export const Delete = async (postId: number):Promise<unknown> => {
 export const Update = async (data:any, postId: number):Promise<unknown> => {
 	const jwt = localStorage.getItem("jwt")
 	const header = {headers:{ Authorization: "Bearer " + jwt }};
-	return await axios.put(`${resource}/${postId}`,data, header);
+	console.info(data, "From update post service")
+	const disabledPost = { activo: data.activo }
+	return await axios.put(`${resource}/${postId}`,disabledPost, header);
 }

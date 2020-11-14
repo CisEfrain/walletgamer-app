@@ -4,21 +4,26 @@
       <BaseCardContainer>
         <v-expansion-panel class="bg-transparent">
           <v-expansion-panel-header>
-            <v-row class="px-4" align="center">
-              <v-col cols="12" md="4" sm="12">
-                <h2 class="transaction-title mt-2">{{ product }}</h2>
-                <small>{{ date_transaction }}</small>
+            <v-row align="center" justify="start">
+              <v-col cols="4" md="2" sm="4" class="text-center">
+                <p>ID: {{ transaction_id }}</p>
+                <h4>{{ transaction_date }}</h4>
               </v-col>
-              <v-col cols="6" md="2" sm="4">
-                <p>Valor: {{ cost }} $</p>
+              <v-col cols="6" md="2" sm="3" class="">
+                <v-chip class="info">
+                  {{ type }}
+                </v-chip>
               </v-col>
-              <v-col cols="6" md="2" sm="4">
-                <p>Cantidad: {{ quantity }}</p>
+              <v-col cols="6" md="4" sm="5">
+                <h3 class="transaction-title mt-1">{{ product }}</h3>
+              </v-col>
+              <v-col cols="6" md="2" sm="6">
+                <h3>{{ cost }} $</h3>
               </v-col>
               <v-col
                 cols="12"
-                md="3"
-                sm="4"
+                md="2"
+                sm="6"
                 class="d-flex justify-center align-center"
               >
                 <v-chip :class="hasStatus">
@@ -30,14 +35,15 @@
           <v-expansion-panel-content>
             <v-row class="px-4" align="center" justify="space-between">
               <v-col cols="12" md="6" sm="6">
-                <p>Reino: {{ realm }}</p>
-                <p>Facción: {{ faction }}</p>
+                <p>Descripción...</p>
+                <!-- <p>Reino: {{ realm }}</p>
+                <p>Facción: {{ faction }}</p> -->
               </v-col>
-              <v-col cols="12" md="6" sm="6" class="d-flex justify-end">
+              <!-- <v-col cols="12" md="6" sm="6" class="d-flex justify-end">
                 <v-btn text small color="error"
                   ><b>Ver detalles de la operación</b></v-btn
                 >
-              </v-col>
+              </v-col> -->
             </v-row>
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -53,30 +59,30 @@ import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
 
 @Component({
   components: {
-    BaseCardContainer,
-  },
+    BaseCardContainer
+  }
 })
 export default class TransactionItemList extends Vue {
   @Prop({ required: true, type: String }) readonly product!: string;
-  @Prop({ required: true, type: String }) readonly date_transaction!: string;
+  @Prop({ required: true, type: String }) readonly transaction_date!: string;
   @Prop({ required: true, type: String }) readonly cost!: string;
-  @Prop({ required: true, type: String }) readonly quantity!: string;
+  @Prop({ required: true, type: String }) readonly type!: string;
   @Prop({ required: true, type: String }) readonly status!: string;
-  @Prop({ required: true, type: String }) readonly realm!: string;
-  @Prop({ required: true, type: String }) readonly faction!: string;
+  @Prop({ required: true, type: String }) readonly transaction_id!: string;
+  // @Prop({ required: true, type: String }) readonly faction!: string;
 
   //Computed
   get hasStatus(): any {
     if (this.status === "Completa") return `success`;
 
-    if (this.status === "Error") return "error";
+    if (this.status === "Anulada") return "error";
     else return "warning";
   }
 }
 </script>
 
 <style lang="sass" scoped>
-p,small
+p,small,h3,h4
   color: $font-main-color
 
 .success

@@ -80,6 +80,20 @@ const sellState = {
           );
         });
     },
+    updatePost({ commit }: any, payload: any): void {
+      const { id } = payload;
+      console.info("from update actions", payload)
+      Update(payload, id)
+        .then((response: any) => {
+          console.info("from update action", response);
+          response.data.status === 200 &&
+            Vue.$toast.success(`Publicación desactivada`);
+        })
+        .catch(error => {
+          console.info(error);
+          Vue.$toast.error(`No se ha podido desactivar tu publicación`);
+        });
+    },
     deletePost({ commit }: any, payload: any): void {
       const { id } = payload;
       Delete(id)
@@ -95,12 +109,6 @@ const sellState = {
           Vue.$toast.error(`No se ha podido eliminar tu publicación`);
         });
     }
-    // setCharacterPost({ commit }: any, payload: any): void {
-    //   commit("setCharacterPost", payload);
-    // },
-    // setItemPost({ commit }: any, payload: any): void {
-    //   commit("setItemPost", payload);
-    // }
   },
   getters: {
     getPostList: (state: { postList: any }) => {

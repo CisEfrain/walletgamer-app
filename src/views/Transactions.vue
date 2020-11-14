@@ -1,66 +1,80 @@
 <template>
   <v-container class="px-8">
     <v-row class="px-8" justify="space-around" align="center">
-      <v-col cols="12" sm="12" md="4">
-        <BalanceCard balance="50" actions />
+      <v-col cols="12" sm="12" md="3">
+        <!-- <BalanceCard balance="50" actions /> -->
+        <BalanceCard balance="50" />
       </v-col>
-      <v-col cols="12" sm="12" md="7">
+      <v-col cols="12" sm="12" md="3">
+        <!-- <BalanceCard balance="50" actions /> -->
+        <ActionsCard actions="Nuevo desembolso" />
+      </v-col>
+      <v-col cols="12" sm="12" md="3">
+        <!-- <BalanceCard balance="50" actions /> -->
+        <ActionsCard actions="Transferir a amigo" />
+      </v-col>
+      <v-col cols="12" sm="12" md="3">
+        <!-- <BalanceCard balance="50" actions /> -->
+        <ActionsCard actions="Fondear" />
+      </v-col>
+      <!-- <v-col cols="12" sm="12" md="7">
         <NotificationsCard />
+      </v-col> -->
+    </v-row>
+
+    <v-row class="px-8 mt-6" align="center" justify="space-between">
+      <v-col cols="12" sm="12" md="6">
+        <h3 class="title">Mis Operaciones en curso</h3>
       </v-col>
     </v-row>
 
-    <v-row class="px-8" align="center" justify="space-between">
-      <v-col cols="12" sm="12" md="6">
-        <h3 class="title">Mis Transacciones</h3>
-      </v-col>
-      <v-col cols="12" sm="12" md="6">
-        <v-row align="center" justify="center" class="mt-6">
-          <v-col class="d-flex" cols="6" sm="6">
-            <v-select
-              :items="[]"
-              label="Tipo"
-              outlined
-              rounded
-              color="rgba(184,12,70,.6)"
-              dense
-              class="select-field"
-            ></v-select>
-          </v-col>
-          <v-col class="d-flex" cols="6" sm="6">
-            <v-select
-              :items="[]"
-              label="Estado"
-              outlined
-              rounded
-              color="rgba(184,12,70,.6)"
-              dense
-              class="select-field"
-            ></v-select>
-          </v-col>
-        </v-row>
+    <v-row class="px-5" justify="center">
+      <v-col cols="12">
+        <v-expansion-panels v-model="panel" multiple flat>
+          <PendingCard
+            product="Gold World of Warcraft"
+            transaction_date="10/12/2020"
+            transaction_id="00225588"
+            cost="20"
+            status="Completa"
+            type="Venta"
+          />
+          <PendingCard
+            product="Gold World of Warcraft"
+            transaction_date="10/12/2020"
+            transaction_id="00225599"
+            cost="20"
+            type="Venta"
+            status="Anulada"
+          />
+        </v-expansion-panels>
       </v-col>
     </v-row>
 
-    <v-row class="px-8" justify="center">
+    <v-row class="px-8 mt-6" align="center" justify="space-between">
+      <v-col cols="12" sm="12" md="6">
+        <h3 class="title">Historial de operaciones</h3>
+      </v-col>
+    </v-row>
+
+    <v-row class="px-5" justify="center">
       <v-col cols="12">
         <v-expansion-panels v-model="panel" multiple flat>
           <TransactionItemList
             product="Gold World of Warcraft"
-            date_transaction="10/12/2020"
+            transaction_date="10/12/2020"
+            transaction_id="00225588"
             cost="20"
-            quantity="500"
             status="Completa"
-            realm="Faerlina"
-            faction="Horda"
+            type="Venta"
           />
           <TransactionItemList
             product="Gold World of Warcraft"
-            date_transaction="10/12/2020"
+            transaction_date="10/12/2020"
+            transaction_id="00225599"
             cost="20"
-            quantity="500"
-            status="Esperando mi confirmación"
-            realm="Faerlina"
-            faction="Horda"
+            type="Venta"
+            status="Anulada"
           />
         </v-expansion-panels>
       </v-col>
@@ -72,14 +86,18 @@
 import { Component, Vue } from "vue-property-decorator";
 
 import BalanceCard from "@/components/BalanceCard.vue";
+import ActionsCard from "@/components/ActionsCard.vue";
 import NotificationsCard from "@/components/transactions/NotificationsCard.vue";
 import TransactionItemList from "@/components/transactions/TransactionItemList.vue";
+import PendingCard from "@/components/transactions/PendingCard.vue";
 
 @Component({
   components: {
     BalanceCard,
     NotificationsCard,
-    TransactionItemList
+    TransactionItemList,
+    ActionsCard,
+    PendingCard
   }
 })
 export default class Transactions extends Vue {

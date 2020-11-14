@@ -20,10 +20,10 @@
             <p v-if="hasTransactionId">Nº Transaccion: {{ transaction_id }}</p>
           </v-col>
           <v-col class="d-flex justify-center align-center">
-                <v-chip :class="hasStatus">
-                  {{ status }}
-                </v-chip>
-              </v-col>
+            <v-chip :class="hasStatus">
+              {{ status }}
+            </v-chip>
+          </v-col>
         </v-row>
       </BaseCardContainer>
     </v-col>
@@ -37,28 +37,26 @@ import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
 
 @Component({
   components: {
-    BaseCardContainer,
-  },
+    BaseCardContainer
+  }
 })
 export default class RequestDisbursementItemList extends Vue {
-  @Prop({ required: true, type: String }) readonly date!: string
-  @Prop({ required: true, type: String }) readonly cost!: string
-  @Prop({ required: true, type: String }) readonly pay_method!: string
-  @Prop({ type: String }) readonly transaction_id!: string
-  @Prop({ required: true, type: String }) readonly status!: string
+  @Prop({ required: true, type: String }) readonly date!: string;
+  @Prop({ required: true, type: String }) readonly cost!: string;
+  @Prop({ required: true, type: String }) readonly pay_method!: string;
+  @Prop({ type: String }) readonly transaction_id!: string;
+  @Prop({ required: true, type: String }) readonly status!: string;
 
-
-get hasStatus(): any {
+  get hasStatus(): any {
     if (this.status === "Completa") return `success`;
 
     if (this.status === "Error") return "error";
     else return "warning";
   }
 
-get hasTransactionId(): boolean {
-  return this.transaction_id ? true : false
-}
-
+  get hasTransactionId(): boolean {
+    return this.transaction_id ? true : false;
+  }
 }
 </script>
 
@@ -66,5 +64,4 @@ get hasTransactionId(): boolean {
 p,small
   color: $font-main-color
   margin-bottom: 0
-
 </style>

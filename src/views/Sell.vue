@@ -27,11 +27,13 @@
           :product="post.tipo"
           :nivel="post.nivel"
           :item="post.item"
+          :active="post.activo"
           :cost="post.precio"
           :quantity="post.cantidad"
           :realm="post.reino"
           :faction="post.faccion"
           @click="deletePost($index, post.id)"
+          @change="disablePost(post)"
         />
 
         <!-- :page.sync="page"
@@ -139,6 +141,15 @@ export default class Sell extends Vue {
     this.$store.dispatch("deletePost", payload);
     this.$store.dispatch("getPosts");
   }
+  private disablePost(post: any): void {
+    const payload = {
+      activo: post.activo === 1 ? --post.activo : ++post.activo,
+      id: post.id
+    };
+    this.$store.dispatch("updatePost", payload);
+    this.$store.dispatch("getPosts");
+  }
+
   get isNextDisabled() {
     return this.page === this.pagesLength;
   }

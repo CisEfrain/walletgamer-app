@@ -13,7 +13,7 @@
               <v-icon>mdi-account-details</v-icon>
             </v-list-item-action>-->
             <v-list-item-content>
-              <v-list-item-title>Transacciones</v-list-item-title>
+              <v-list-item-title>Operaciones</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </router-link>
@@ -37,16 +37,16 @@
             </v-list-item-content>
           </v-list-item>
         </router-link>
-        <router-link to="/wallet">
+        <!-- <router-link to="/wallet">
           <v-list-item link @click="resetProduct">
-            <!-- <v-list-item-action>
+            <v-list-item-action>
               <v-icon>mdi-store</v-icon>
-            </v-list-item-action>-->
+            </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title>Mi wallet</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-        </router-link>
+        </router-link> -->
         <router-link to="/account">
           <v-list-item link @click="resetProduct">
             <!-- <v-list-item-action>

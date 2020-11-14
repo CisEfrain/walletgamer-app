@@ -20,17 +20,27 @@
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row class="" align="center" justify="space-between">
-              <v-col cols="12" md="6" sm="12">
+              <v-col cols="12" md="7" sm="12">
                 <p v-show="realm">Reino: {{ realm }}</p>
                 <p>Facción: {{ faction }}</p>
               </v-col>
-              <v-col cols="12" md="6" sm="12" class="d-flex justify-end">
-                <v-btn @click="deletePost" text small color="error">
-                  <b>Eliminar publicación</b>
-                </v-btn>
-                <v-btn text small color="error">
-                  <b>Modificar</b>
-                </v-btn>
+              <v-col cols="12" md="5" sm="12" class="d-flex">
+                <v-row class="d-flex justify-center">
+                  <v-col>
+                    <v-switch
+                      v-model="status"
+                      @change="disablePost"
+                      color="success"
+                      inset
+                      :label="isActive ? `Activo` : `Inactivo`"
+                    ></v-switch>
+                  </v-col>
+                  <v-col class="d-flex justify-end">
+                    <v-btn @click="deletePost" text small color="error">
+                      <b>Eliminar publicación</b>
+                    </v-btn>
+                  </v-col>
+                </v-row>
               </v-col>
             </v-row>
           </v-expansion-panel-content>
@@ -58,14 +68,25 @@ export default class PostList extends Vue {
   @Prop({ type: Number }) readonly quantity: string | any;
   @Prop({ type: String }) readonly realm: string | undefined;
   @Prop({ type: String }) readonly faction: string | undefined;
+  @Prop({ type: Number }) active: number | boolean = 1;
+
+  public status = this.active;
 
   private deletePost() {
     this.$emit("click");
   }
 
+  private disablePost() {
+    this.$emit("change");
+  }
+
   get formatCurrency() {
     const quantity = parseInt(this.quantity);
     return new Intl.NumberFormat().format(quantity);
+  }
+
+  get isActive() {
+    return this.status == 1 ? true : false;
   }
 
   get isGold(): any {
@@ -105,4 +126,8 @@ p
   margin-top: -2em
 .mt-less-3
   margin-top: -3em
+
+.v-input--selection-controls
+  margin-top: 0px
+  padding-top: 2px
 </style>
