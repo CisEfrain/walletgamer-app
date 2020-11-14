@@ -87,11 +87,9 @@
             Registrarme
           </b>
         </v-btn>
-        <div class="mt-2">
+        <div class="mt-4">
           <router-link class="register-text links" to="Login">
-            <small class="register-text links">
-              <p>Ya tengo cuenta</p>
-            </small>
+            <p class="register-text links">Ya tengo cuenta</p>
           </router-link>
         </div>
       </v-col>

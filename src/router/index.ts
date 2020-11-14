@@ -94,6 +94,16 @@ const routes: Array<RouteConfig> = [
     path: "/register",
     name: "Register",
     component: () => import("../views/auth/Register.vue")
+  },
+  {
+    path: "/new-password",
+    name: "NewPass",
+    component: () => import("../views/auth/NewPass.vue")
+  },
+  {
+    path: "/recovery-password",
+    name: "RecoveryPass",
+    component: () => import("../views/auth/RecoveryPass.vue")
   }
 ];
 
@@ -104,7 +114,12 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicViews = ["/login", "/register"];
+  const publicViews = [
+    "/login",
+    "/register",
+    "/recovery-password",
+    "/new-password"
+  ];
   const authRequired = !publicViews.includes(to.path);
   const loggedIn = localStorage.getItem("jwt");
   if (authRequired && !loggedIn) next("/login");

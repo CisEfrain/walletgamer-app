@@ -1,5 +1,6 @@
 import { Register } from "@/services/register.service";
 import { Login } from "@/services/auth.service";
+import { RecoveryPass } from "@/services/recoveryPass.service";
 import router from "@/router";
 import Vue from "vue";
 
@@ -59,6 +60,23 @@ const authState = {
           console.info(error);
           Vue.$toast.error(
             `Lo sentimos ${payload.nombre}, ha ocurrido un error durante el registro`
+          );
+        });
+    },
+    recoveryPass({ commit }: any, payload: any): void {
+      RecoveryPass(payload)
+        .then((response: any) => {
+          console.info(response)
+          response.status === 200 &&
+            Vue.$toast.success(
+              `Se ha enviado un email a tu correo para reestablecer tu contraseña!`
+            );
+          //router.push("/login");
+        })
+        .catch((error: any) => {
+          console.info(error);
+          Vue.$toast.error(
+            `Lo sentimos, ha ocurrido un error intenta nuevamente`
           );
         });
     }

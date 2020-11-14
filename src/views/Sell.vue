@@ -33,17 +33,48 @@
           :faction="post.faccion"
           @click="deletePost($index, post.id)"
         />
-        <!-- <div class="text-center">
-          <v-pagination
+
+        <!-- :page.sync="page"
+          :items-per-page="itemsPerPage"
+          hide-default-footer
+          @page-count="pageCount = $event" -->
+
+        <div class="text-center">
+          <!-- <v-btn
+            class="mx-2"
+            elevation="3"
+            dark
+            small
+            color="#E4445B"
+            :disabled="page === 0"
+            @click="previus"
+          >
+            <v-icon dark>
+              mdi-menu-left
+            </v-icon>
+          </v-btn>
+          <v-btn
+            class="mx-2"
+            elevation="3"
+            dark
+            small
+            color="#E4445B"
+            @click="next"
+            :disabled="isNextDisabled"
+          >
+            <v-icon dark>
+              mdi-menu-right
+            </v-icon>
+          </v-btn> -->
+          <!-- <v-pagination
             v-model="page"
-            :length="3"
+            :length="pages.length"
             color="#E4445B"
             prev-icon="mdi-menu-left"
             next-icon="mdi-menu-right"
-            @input="next"
           >
-          </v-pagination>
-        </div> -->
+          </v-pagination> -->
+        </div>
       </v-expansion-panels>
     </div>
 
@@ -67,7 +98,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 
 import ProductCard from "@/components/ProductCard.vue";
 import PersonajeForm from "@/components/sell/CharactersForm.vue";
@@ -85,10 +116,15 @@ import PostList from "@/components/sell/PostList.vue";
   }
 })
 export default class Sell extends Vue {
+  [x: string]: any;
   public productList: Array<string> = ["Gold", "Personaje", "Items"];
   public currentProduct: Array<string> = ["Post"];
   private panel: Array<number> = [0];
-  public page = 1;
+  // public page = 0;
+  // public pagesLength: number;
+  // public allPages = [];
+  // public pages: Array<any> = [];
+  // public currentPage: Array<any> = [];
 
   public selectProduct(tab: any): void {
     this.currentProduct = tab;
@@ -103,13 +139,45 @@ export default class Sell extends Vue {
     this.$store.dispatch("deletePost", payload);
     this.$store.dispatch("getPosts");
   }
+  get isNextDisabled() {
+    return this.page === this.pagesLength;
+  }
 
-  mounted() {
+  // mounted() {
+  //   this.$store.dispatch("getPosts");
+  // }
+  created() {
+    //this.getPostList();
     this.$store.dispatch("getPosts");
+    // this.getPostList();
+  }
+
+  // private getPostList(): any {
+  //   this.allPages = this.$store.getters.getPostList;
+  //   while (this.allPages.length > 0) {
+  //     this.pages.push(this.allPages.splice(0, 6));
+  //     this.currentPage = this.pages[0];
+  //   }
+  //   this.pagesLength = this.pages.length - 1;
+  //   console.info(this.pages);
+  // }
+
+  private next(): void {
+    if (this.page < this.pagesLength) {
+      this.page++;
+      this.currentPage = this.pages[this.page];
+    }
+    console.info(this.page, this.pagesLength);
+  }
+
+  private previus(): void {
+    this.page <= 0 ? null : this.page--;
+    this.currentPage = this.pages[this.page];
+    console.info(this.page);
+    console.info(this.page, this.pagesLength);
   }
 
   get postList(): any {
-    this.page = this.$store.getters.getPostList;
     return this.$store.getters.getPostList;
   }
 

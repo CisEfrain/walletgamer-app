@@ -3,7 +3,7 @@
     <v-col>
       <BaseCardContainer>
         <v-row class="px-4" align="center" justify="space-between">
-          <v-col cols="3" md="3" sm="12" class="text-center">
+          <v-col cols="3" md="2" sm="12" class="text-center">
             <h4 class="title">{{ user }}</h4>
             <small>Rango {{ rank }}</small>
           </v-col>

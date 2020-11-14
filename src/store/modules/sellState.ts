@@ -104,7 +104,7 @@ const sellState = {
   },
   getters: {
     getPostList: (state: { postList: any }) => {
-      return state.postList;
+      return state.postList.reverse();
     },
     getAllPostList: (state: { allPostList: any }) => {
       return state.allPostList;

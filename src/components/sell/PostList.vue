@@ -5,21 +5,23 @@
         <v-expansion-panel class="bg-transparent">
           <v-expansion-panel-header>
             <v-row class="" align="center" justify="space-between">
-              <v-col cols="3" md="2" sm="12" class="text-center">
-                <h3 class="transaction-title mt-2">{{ product }}</h3>
+              <v-col cols="4" md="4" sm="12">
+                <h3 class="transaction-title mt-2">
+                  {{ product }} World of WarCraft
+                </h3>
               </v-col>
               <v-col cols="4" md="5" sm="6">
                 <h4>{{ cost }}$ {{ isGold }}</h4>
               </v-col>
               <v-col cols="4" md="3" sm="6">
-                <p>Disponible: {{ formatCurrency }}</p>
+                <h4>Disponible: {{ formatCurrency }}</h4>
               </v-col>
             </v-row>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row class="" align="center" justify="space-between">
               <v-col cols="12" md="6" sm="12">
-                <p>Reino: {{ realm }}</p>
+                <p v-show="realm">Reino: {{ realm }}</p>
                 <p>Facción: {{ faction }}</p>
               </v-col>
               <v-col cols="12" md="6" sm="12" class="d-flex justify-end">
@@ -73,7 +75,7 @@ export default class PostList extends Vue {
 </script>
 
 <style lang="sass" scoped>
-p,small,h4
+p,small,h4,h3
   color: $font-main-color
 
 .success
