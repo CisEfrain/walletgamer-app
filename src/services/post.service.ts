@@ -24,7 +24,7 @@ export const Add = async (data: any, userId: number):Promise<unknown> => {
 export const GetMe = async ():Promise<unknown> => {
 		const jwt = localStorage.getItem("jwt")
 		const header = {headers:{ Authorization: "Bearer " + jwt }};
-		return await axios.get(`me/${resource}`, header);
+		return await axios.get(`${resource}/me`, header);
 }
 
 export const GetAll = async ():Promise<unknown> => {
