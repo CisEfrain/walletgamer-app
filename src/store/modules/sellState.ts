@@ -81,13 +81,14 @@ const sellState = {
         });
     },
     updatePost({ commit }: any, payload: any): void {
-      const { id } = payload;
-      console.info("from update actions", payload)
+      const { id, activo } = payload;
+      console.info("from update actions", payload);
       Update(payload, id)
         .then((response: any) => {
           console.info("from update action", response);
+          const { activo } = response.data.data;
           response.data.status === 200 &&
-            Vue.$toast.success(`Publicación desactivada`);
+            Vue.$toast.success(`Publicación ${activo ? "activa" : "inactiva"}`);
         })
         .catch(error => {
           console.info(error);
@@ -119,17 +120,18 @@ const sellState = {
     },
     getGoldPostList: (state: { allPostList: any }) => {
       return state.allPostList.filter(
-        (goldPost: any) => goldPost.tipo === "Gold"
+        (goldPost: any) => goldPost.tipo === "Gold" && goldPost.activo === 1
       );
     },
     getCharacterPostList: (state: { allPostList: any }) => {
       return state.allPostList.filter(
-        (characterPost: any) => characterPost.tipo === "Personaje"
+        (characterPost: any) =>
+          characterPost.tipo === "Personaje" && characterPost.activo === 1
       );
     },
     getItemPostList: (state: { allPostList: any }) => {
       return state.allPostList.filter(
-        (itemPost: any) => itemPost.tipo === "Item"
+        (itemPost: any) => itemPost.tipo === "Item" && itemPost.activo === 1
       );
     }
   }
