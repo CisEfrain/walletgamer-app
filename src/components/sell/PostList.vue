@@ -68,9 +68,9 @@ export default class PostList extends Vue {
   @Prop({ type: Number }) readonly quantity: string | any;
   @Prop({ type: String }) readonly realm: string | undefined;
   @Prop({ type: String }) readonly faction: string | undefined;
-  @Prop({ type: Number }) active: number | boolean = 1;
+  @Prop({ type: Number }) readonly active: number | undefined;
 
-  public status = this.active;
+  public status: number | undefined = this.active;
 
   private deletePost() {
     this.$emit("click");
