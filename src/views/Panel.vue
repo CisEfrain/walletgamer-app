@@ -118,6 +118,7 @@ export default class Panel extends Vue {
   }
 
   mounted() {
+    this.$store.dispatch("getData");
     this.$store.dispatch("setUserData");
     this.$store.dispatch("getExpenditureData");
     this.$store.dispatch("getPosts");

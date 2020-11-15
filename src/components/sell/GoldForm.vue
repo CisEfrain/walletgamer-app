@@ -55,6 +55,7 @@
           @input="$v.price.$touch()"
           @blur="$v.price.$touch()"
           required
+          @keyup="calculateComision(price)"
           color="rgba(184,12,70,.6)"
           background-color="white"
           outlined
@@ -84,8 +85,11 @@
 
     <v-row class="mt-4" justify="center">
       <v-col class="commission_info text-center px-4 py-4" cols="4">
-        <p>Comision: 5%</p>
-        <h5>Por cada 100 unidades vendidas recibiras: 0</h5>
+        <p>Comision: {{ goldData.comision }}%</p>
+        <h5>
+          Por cada 100 unidades vendidas recibiras
+          {{ Object.is(NaN, getPrice) ? 0 : totalPrice }}$
+        </h5>
       </v-col>
     </v-row>
   </v-container>
@@ -93,7 +97,7 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/camelcase */
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import { Validate } from "vuelidate-property-decorators";
 import { required, minLength } from "vuelidate/lib/validators";
 
@@ -102,7 +106,24 @@ export default class GoldForm extends Vue {
   @Validate({ required }) realm = null;
   @Validate({ required }) faction = null;
   @Validate({ required, minLength: minLength(5) }) quantity = null;
-  @Validate({ required, minLength: minLength(3) }) price = null;
+  @Validate({ required, minLength: minLength(3) }) price = 0;
+  public comision: any;
+  public getPrice = 0;
+
+  get totalPrice(): any {
+    return new Intl.NumberFormat().format(this.getPrice);
+  }
+
+  private calculateComision(e: any): void {
+    const price = parseInt(e);
+    this.getPrice =
+      (price / 100) * this.$store.getters.getGoldPostData.comision;
+  }
+  get goldData(): void {
+    this.comision = this.$store.getters.getGoldPostData;
+    return this.$store.getters.getGoldPostData;
+  }
+
   private realmList: Array<string> = [
     "Aegwynn",
     "Aerie Peak",
@@ -130,21 +151,18 @@ export default class GoldForm extends Vue {
     this.$store.dispatch("getPosts");
     this.clearForm();
   }
-
   private clearForm(): void {
     this.$v.$reset();
     this.realm = null;
     this.faction = null;
     this.quantity = null;
-    this.price = null;
+    this.price = 0;
   }
-
   get isDisabled(): boolean {
     return !this.realm || !this.faction || !this.quantity || !this.price
       ? true
       : false;
   }
-
   get typeExpenditureErrors(): Array<string> {
     const errors: Array<string> = [];
     if (!this.$v.typeExpenditure.$dirty) return errors;

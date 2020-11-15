@@ -136,7 +136,8 @@ export default class Register extends Vue {
       email: this.email,
       telefono: this.phoneNumber,
       pass: this.password,
-      activo: true
+      activo: true,
+      rango: "Pollo"
     };
     this.$store.dispatch("setRegister", registerData);
     console.log(registerData);

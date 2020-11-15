@@ -23,7 +23,7 @@ const resource = "usuarios";
 export const Get = async ():Promise<unknown> => {
 		const jwt = localStorage.getItem("jwt")
 		const header = {headers:{ Authorization: "Bearer " + jwt }};
-		return await axios.get(`${resource}/me`, header);
+		return await axios.get(`me/${resource}`, header);
 }
 
 export const Update = async (data: any):Promise<unknown> => {

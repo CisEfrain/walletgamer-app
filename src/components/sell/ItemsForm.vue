@@ -56,6 +56,7 @@
           :error-messages="priceErrors"
           @input="$v.price.$touch()"
           @blur="$v.price.$touch()"
+          @keyup="calculateComision(price)"
           required
           color="rgba(184,12,70,.6)"
           background-color="white"
@@ -86,8 +87,11 @@
 
     <v-row class="mt-4" justify="center">
       <v-col class="commission_info text-center px-4 py-4" cols="4">
-        <p>Comision: 5%</p>
-        <h5>Por cada item vendido recibiras: 0</h5>
+        <p>Comision: {{ itemData.comision }}%</p>
+        <h5>
+          Por cada item vendido recibiras:
+          {{ Object.is(NaN, getPrice) ? 0 : totalPrice }}$
+        </h5>
       </v-col>
     </v-row>
   </v-container>
@@ -105,6 +109,24 @@ export default class ItemsForm extends Vue {
   @Validate({ required }) faction = null;
   @Validate({ required, minLength: minLength(1) }) quantity = null;
   @Validate({ required, minLength: minLength(2) }) price = null;
+
+  public comision: any;
+  public getPrice = 0;
+
+  get totalPrice(): any {
+    return new Intl.NumberFormat().format(this.getPrice);
+  }
+  private calculateComision(e: any): void {
+    console.info(e);
+    const price = parseInt(e);
+    this.getPrice =
+      (price / 100) * this.$store.getters.getItemsPostData.comision;
+    console.info(this.getPrice);
+  }
+  get itemData(): void {
+    this.comision = this.$store.getters.getItemsPostData;
+    return this.$store.getters.getItemsPostData;
+  }
 
   private factionList: Array<string> = [
     "Horde",

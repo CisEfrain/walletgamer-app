@@ -75,6 +75,7 @@
           color="rgba(184,12,70,.6)"
           background-color="white"
           outlined
+          @keyup="calculateComision(price)"
           dense
         ></v-text-field>
       </v-col>
@@ -101,8 +102,8 @@
 
     <v-row class="mt-4" justify="center">
       <v-col class="commission_info text-center px-4 py-4" cols="4">
-        <p>Comision: 5%</p>
-        <h5>Recibiras: 0</h5>
+        <p>Comision: {{ characterData.comision }}%</p>
+        <h5>Recibiras: {{ Object.is(NaN, getPrice) ? 0 : totalPrice }}$</h5>
       </v-col>
     </v-row>
   </v-container>
@@ -147,6 +148,21 @@ export default class CharactersForm extends Vue {
   ];
   private levelList: Array<number> = [15, 30, 45, 60];
 
+  public comision: any;
+  public getPrice = 0;
+
+  get totalPrice(): any {
+    return new Intl.NumberFormat().format(this.getPrice);
+  }
+  private calculateComision(e: any): void {
+    const price = parseInt(e);
+    this.getPrice =
+      (price / 100) * this.$store.getters.getCharactersPostData.comision;
+  }
+  get characterData(): void {
+    this.comision = this.$store.getters.getCharactersPostData;
+    return this.$store.getters.getCharactersPostData;
+  }
   private addCharacterPost(): void {
     const newCharacterPost = {
       tipo: "Personaje",
@@ -162,7 +178,6 @@ export default class CharactersForm extends Vue {
     console.log(newCharacterPost);
     this.clearForm();
   }
-
   private clearForm(): void {
     this.$v.$reset();
     this.realm = null;
@@ -171,7 +186,6 @@ export default class CharactersForm extends Vue {
     this.level = null;
     this.price = null;
   }
-
   get isDisabled(): boolean {
     return !this.realm ||
       !this.faction ||
@@ -181,7 +195,6 @@ export default class CharactersForm extends Vue {
       ? true
       : false;
   }
-
   get realmErrors(): Array<string> {
     const errors: Array<string> = [];
     if (!this.$v.realm.$dirty) return errors;
