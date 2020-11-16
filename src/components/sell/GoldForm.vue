@@ -106,7 +106,10 @@ export default class GoldForm extends Vue {
   @Validate({ required }) faction = null;
   @Validate({ required, minLength: minLength(3), minValue: minValue(100) })
   quantity = null;
-  @Validate({ required, minLength: minLength(1) }) price: number | undefined;
+  @Validate({ required, minLength: minLength(1) }) price:
+    | number
+    | undefined 
+    | string = "";
   public comision: any;
   public getPrice = 0;
   private realmList: Array<string> = [
