@@ -1,12 +1,13 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer width="200px" app v-model="drawer">
+    <v-navigation-drawer width="216px" app v-model="drawer">
       <v-list>
         <v-list-item>
-          <v-list-item-content class="mb-16">
+          <v-list-item-content class="mb-5">
             <img class="logo" src="../assets/logo.png" alt="Logo Admin" />
           </v-list-item-content>
         </v-list-item>
+        <Avatar />
         <router-link to="/">
           <v-list-item link @click="resetProduct">
             <!-- <v-list-item-action>
@@ -101,8 +102,13 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import Avatar from "@/components/Avatar.vue";
 
-@Component
+@Component({
+  components: {
+    Avatar
+  }
+})
 export default class Panel extends Vue {
   public drawer = null;
   public logout(): void {
@@ -117,7 +123,7 @@ export default class Panel extends Vue {
     this.$store.commit("resetProduct");
   }
 
-  mounted() {
+  created() {
     this.$store.dispatch("getData");
     this.$store.dispatch("setUserData");
     this.$store.dispatch("getExpenditureData");
