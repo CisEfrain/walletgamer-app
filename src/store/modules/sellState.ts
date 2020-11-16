@@ -43,8 +43,7 @@ const sellState = {
   },
   actions: {
     addPost({ commit }: any, payload: any): void {
-      const { usuarios_id } = payload;
-      Add(payload, usuarios_id)
+      Add(payload)
         .then((response: any) => {
           console.info("from pos", response);
           response.data.status === 200 &&

@@ -33,9 +33,8 @@
       </v-col>
       <v-col class="d-flex" cols="6" sm="6" md="3">
         <v-text-field
-          Label="Cantidad disponible"
+          label="Cantidad disponible"
           rounded
-          placeholder="Cantidad disponible"
           v-model="$v.quantity.$model"
           :error-messages="quantityErrors"
           @input="$v.quantity.$touch()"
@@ -49,8 +48,7 @@
       </v-col>
       <v-col class="d-flex" cols="6" sm="6" md="3">
         <v-text-field
-          Label="Precio"
-          placeholder="Precio"
+          label="Precio"
           rounded
           v-model="$v.price.$model"
           :error-messages="priceErrors"
@@ -90,7 +88,7 @@
         <p>Comision: {{ itemData.comision }}%</p>
         <h5>
           Por cada item vendido recibiras:
-          {{ Object.is(NaN, getPrice) ? 0 : totalPrice }}$
+          {{ netPrice }}$
         </h5>
       </v-col>
     </v-row>
@@ -108,7 +106,7 @@ export default class ItemsForm extends Vue {
   @Validate({ required }) item = null;
   @Validate({ required }) faction = null;
   @Validate({ required, minLength: minLength(1) }) quantity = null;
-  @Validate({ required, minLength: minLength(2) }) price = null;
+  @Validate({ required, minLength: minLength(1) }) price = null;
 
   public comision: any;
   public getPrice = 0;
@@ -120,12 +118,15 @@ export default class ItemsForm extends Vue {
     console.info(e);
     const price = parseInt(e);
     this.getPrice =
-      (price / 100) * this.$store.getters.getItemsPostData.comision;
+      price - (price / 100) * this.$store.getters.getItemsPostData.comision;
     console.info(this.getPrice);
   }
   get itemData(): void {
     this.comision = this.$store.getters.getItemsPostData;
     return this.$store.getters.getItemsPostData;
+  }
+  get netPrice(): number {
+    return Object.is(NaN, this.getPrice) ? 0 : this.totalPrice;
   }
 
   private factionList: Array<string> = [
@@ -193,7 +194,7 @@ export default class ItemsForm extends Vue {
   get priceErrors(): Array<string> {
     const errors: Array<string> = [];
     if (!this.$v.price.$dirty) return errors;
-    !this.$v.price.minLength && errors.push("Minimo de caracteres 2");
+    !this.$v.price.minLength && errors.push("Minimo de caracteres 1");
     !this.$v.price.required && errors.push("El campo es requerido");
     return errors;
   }

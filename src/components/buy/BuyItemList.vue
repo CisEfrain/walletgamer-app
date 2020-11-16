@@ -10,6 +10,8 @@
           color="rgba(184,12,70,.6)"
           dense
           class="select-field"
+          @change="filterItem"
+          v-model="itemSelected"
         ></v-select>
       </v-col>
       <v-col class="d-flex" cols="3" sm="3">
@@ -21,12 +23,14 @@
           color="rgba(184,12,70,.6)"
           dense
           class="select-field"
+          @change="filterItem"
+          v-model="factionSelected"
         ></v-select>
       </v-col>
     </v-row>
 
     <ItemsItemList
-      v-for="(itemPost, $index) in postItemList"
+      v-for="(itemPost, $index) in showFiltered"
       :key="itemPost.id"
       user="Default name"
       :rank="itemPost.rango"
@@ -36,35 +40,11 @@
       :available="itemPost.cantidad"
       @click="buyItem($index, itemPost.id)"
     />
-    <!-- <ItemsItemList
-      user="Mariana Lyn"
-      rank="Asesinos"
-      faction="Horda"
-      price="10"
-      item="Toddy"
-      available="200"
-    />
-    <ItemsItemList
-      user="Mariana Lyn"
-      rank="Asesinos"
-      faction="Horda"
-      price="10"
-      item="Toddy"
-      available="200"
-    />
-    <ItemsItemList
-      user="Mariana Lyn"
-      rank="Asesinos"
-      faction="Horda"
-      price="10"
-      item="Toddy"
-      available="200"
-    /> -->
   </v-container>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 
 import ProductCard from "@/components/ProductCard.vue";
 import ItemsItemList from "@/components/buy/ItemsItemList.vue";
@@ -91,9 +71,27 @@ export default class BuyItemList extends Vue {
     "Steamwheedle Cartel"
   ];
 
+  private itemSelected = "";
+  private factionSelected = "";
+  private itemList: Array<unknown> = [];
+
   get postItemList(): any {
-    return this.$store.getters.getItemPostList;
+    return this.$store.getters.getItemPostList.reverse();
   }
+
+  get showFiltered(): any {
+    return this.itemList.length <= 0 ? this.postItemList : this.itemList;
+  }
+
+  private filterItem(): void {
+    this.itemList = this.postItemList.filter((itemPost: any) => {
+      return (
+        //itemPost.descripcion === this.itemSelected ||
+        itemPost.faccion === this.factionSelected
+      );
+    });
+  }
+
   private buyItem(index: any, id: any) {
     console.info(index, id);
   }

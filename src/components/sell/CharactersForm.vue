@@ -64,8 +64,7 @@
       </v-col>
       <v-col class="d-flex" cols="6" sm="6" md="2">
         <v-text-field
-          Label="Precio"
-          placeholder="Precio"
+          label="Precio"
           rounded
           v-model="$v.price.$model"
           :error-messages="priceErrors"
@@ -103,7 +102,7 @@
     <v-row class="mt-4" justify="center">
       <v-col class="commission_info text-center px-4 py-4" cols="4">
         <p>Comision: {{ characterData.comision }}%</p>
-        <h5>Recibiras: {{ Object.is(NaN, getPrice) ? 0 : totalPrice }}$</h5>
+        <h5>Recibiras: {{ netPrice }}$</h5>
       </v-col>
     </v-row>
   </v-container>
@@ -157,7 +156,11 @@ export default class CharactersForm extends Vue {
   private calculateComision(e: any): void {
     const price = parseInt(e);
     this.getPrice =
+      price -
       (price / 100) * this.$store.getters.getCharactersPostData.comision;
+  }
+  get netPrice(): number {
+    return Object.is(NaN, this.getPrice) ? 0 : this.totalPrice;
   }
   get characterData(): void {
     this.comision = this.$store.getters.getCharactersPostData;
@@ -228,7 +231,7 @@ export default class CharactersForm extends Vue {
   get priceErrors(): Array<string> {
     const errors: Array<string> = [];
     if (!this.$v.price.$dirty) return errors;
-    !this.$v.price.minLength && errors.push("Minimo de caracteres 3");
+    !this.$v.price.minLength && errors.push("Minimo de caracteres 1");
     !this.$v.price.required && errors.push("El campo es requerido");
     return errors;
   }

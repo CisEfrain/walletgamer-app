@@ -4,29 +4,33 @@
       <v-col class="d-flex" cols="3" sm="3">
         <v-select
           :items="realm"
+          v-model="realmSelected"
           label="Reino"
           outlined
           rounded
           color="rgba(184,12,70,.6)"
           dense
           class="select-field"
+          @change="filterGold"
         ></v-select>
       </v-col>
       <v-col class="d-flex" cols="3" sm="3">
         <v-select
           :items="factions"
+          v-model="factionSelected"
           label="Facción"
           outlined
           rounded
           color="rgba(184,12,70,.6)"
           dense
           class="select-field"
+          @change="filterGold"
         ></v-select>
       </v-col>
     </v-row>
 
     <GoldItemList
-      v-for="(goldPost, $index) in postGoldList"
+      v-for="(goldPost, $index) in showFiltered"
       :key="goldPost.id"
       user="Default Name"
       :rank="goldPost.rango"
@@ -37,39 +41,11 @@
       :available="goldPost.cantidad"
       @click="buyGold($index, goldPost.id)"
     />
-
-    <!-- <GoldItemList
-      user="Diosdado Garcia"
-      rank="Elite"
-      kingdom="Psuv"
-      faction="Horda"
-      price="20"
-      product="10.000"
-      available="1.000.000"
-    />
-    <GoldItemList
-      user="Diosdado Garcia"
-      rank="Elite"
-      kingdom="Psuv"
-      faction="Horda"
-      price="20"
-      product="10.000"
-      available="1.000.000"
-    />
-    <GoldItemList
-      user="Diosdado Garcia"
-      rank="Elite"
-      kingdom="Psuv"
-      faction="Horda"
-      price="20"
-      product="10.000"
-      available="1.000.000"
-    /> -->
   </v-container>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 
 import ProductCard from "@/components/ProductCard.vue";
 import GoldItemList from "@/components/buy/GoldItemList.vue";
@@ -81,6 +57,9 @@ import GoldItemList from "@/components/buy/GoldItemList.vue";
   }
 })
 export default class BuyGoldList extends Vue {
+  private realmSelected = "";
+  private factionSelected = "";
+  private goldList: Array<unknown> = [];
   private realm: Array<string> = [
     "Aegwynn",
     "Aerie Peak",
@@ -95,8 +74,21 @@ export default class BuyGoldList extends Vue {
     "Steamwheedle Cartel"
   ];
 
-  get postGoldList(): any {
+  get postGoldList(): Array<unknown> {
     return this.$store.getters.getGoldPostList;
+  }
+
+  get showFiltered(): any {
+    return this.goldList.length <= 0 ? this.postGoldList : this.goldList;
+  }
+
+  private filterGold(): void {
+    this.goldList = this.postGoldList.filter((goldPost: any) => {
+      return (
+        goldPost.reino === this.realmSelected ||
+        goldPost.faccion === this.factionSelected
+      );
+    });
   }
 }
 </script>

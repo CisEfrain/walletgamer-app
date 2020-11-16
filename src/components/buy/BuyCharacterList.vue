@@ -10,6 +10,8 @@
           color="rgba(184,12,70,.6)"
           dense
           class="select-field"
+          @change="filterCharacter"
+          v-model="realmSelected"
         ></v-select>
       </v-col>
       <v-col class="d-flex" cols="3" sm="3">
@@ -21,6 +23,8 @@
           color="rgba(184,12,70,.6)"
           dense
           class="select-field"
+          @change="filterCharacter"
+          v-model="factionSelected"
         ></v-select>
       </v-col>
       <v-col class="d-flex" cols="3" sm="2">
@@ -32,6 +36,8 @@
           color="rgba(184,12,70,.6)"
           dense
           class="select-field"
+          @change="filterCharacter"
+          v-model="classSelected"
         ></v-select>
       </v-col>
       <v-col class="d-flex" cols="3" sm="2">
@@ -43,12 +49,14 @@
           color="rgba(184,12,70,.6)"
           dense
           class="select-field"
+          @change="filterCharacter"
+          v-model="levelSelected"
         ></v-select>
       </v-col>
     </v-row>
 
     <CharactersItemList
-      v-for="(characterPost, $index) in postCharacterList"
+      v-for="(characterPost, $index) in showFiltered"
       :key="characterPost.id"
       user="Default Name"
       :rank="characterPost.rango"
@@ -59,38 +67,11 @@
       :level="characterPost.nivel"
       @click="buyGold($index, goldPost.id)"
     />
-    <!-- <CharactersItemList
-      user="Manuel Perez"
-      rank="Newbie"
-      kingdom="AD"
-      faction="Horda"
-      characterClass="Magician"
-      price="100"
-      level="60"
-    />
-    <CharactersItemList
-      user="Manuel Perez"
-      rank="Newbie"
-      kingdom="AD"
-      faction="Horda"
-      characterClass="Magician"
-      price="100"
-      level="60"
-    />
-    <CharactersItemList
-      user="Manuel Perez"
-      rank="Newbie"
-      kingdom="AD"
-      faction="Horda"
-      characterClass="Magician"
-      price="100"
-      level="60"
-    /> -->
   </v-container>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 
 import ProductCard from "@/components/ProductCard.vue";
 import CharactersItemList from "@/components/buy/CharactersItemList.vue";
@@ -127,9 +108,31 @@ export default class BuyCharacterList extends Vue {
     "Demon Hunter"
   ];
   private level: Array<number> = [15, 30, 45, 60];
+  private realmSelected = "";
+  private classSelected = "";
+  private levelSelected = 0;
+  private factionSelected = "";
+  private characterList: Array<unknown> = [];
 
-  get postCharacterList(): any {
-    return this.$store.getters.getCharacterPostList;
+  get postCharacterList(): Array<unknown> {
+    return this.$store.getters.getCharacterPostList.reverse();
+  }
+
+  get showFiltered(): any {
+    return this.characterList.length <= 0
+      ? this.postCharacterList
+      : this.characterList;
+  }
+
+  private filterCharacter(): void {
+    this.characterList = this.postCharacterList.filter((characterPost: any) => {
+      return (
+        characterPost.reino === this.realmSelected ||
+        characterPost.faccion === this.factionSelected ||
+        characterPost.clase === this.classSelected ||
+        characterPost.nivel === this.levelSelected
+      );
+    });
   }
 }
 </script>

@@ -33,10 +33,11 @@
       </v-col>
       <v-col class="d-flex" cols="6" sm="6" md="3">
         <v-text-field
-          placeholder="Cantidad disponible"
+          label="Cantidad disponible"
           rounded
           v-model="$v.quantity.$model"
           :error-messages="quantityErrors"
+          type="number"
           @input="$v.quantity.$touch()"
           @blur="$v.quantity.$touch()"
           required
@@ -48,13 +49,14 @@
       </v-col>
       <v-col class="d-flex" cols="6" sm="6" md="3">
         <v-text-field
-          placeholder="Precio por cada 100 unidades"
+          label="Precio por 100 unidades"
           rounded
           v-model="$v.price.$model"
           :error-messages="priceErrors"
           @input="$v.price.$touch()"
           @blur="$v.price.$touch()"
           required
+          type="number"
           @keyup="calculateComision(price)"
           color="rgba(184,12,70,.6)"
           background-color="white"
@@ -86,10 +88,7 @@
     <v-row class="mt-4" justify="center">
       <v-col class="commission_info text-center px-4 py-4" cols="4">
         <p>Comision: {{ goldData.comision }}%</p>
-        <h5>
-          Por cada 100 unidades vendidas recibiras
-          {{ Object.is(NaN, getPrice) ? 0 : totalPrice }}$
-        </h5>
+        <h5>Por cada 100 unidades vendidas recibiras {{ netPrice }}$</h5>
       </v-col>
     </v-row>
   </v-container>
@@ -99,31 +98,17 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Component, Vue } from "vue-property-decorator";
 import { Validate } from "vuelidate-property-decorators";
-import { required, minLength } from "vuelidate/lib/validators";
+import { required, minLength, minValue } from "vuelidate/lib/validators";
 
 @Component
 export default class GoldForm extends Vue {
   @Validate({ required }) realm = null;
   @Validate({ required }) faction = null;
-  @Validate({ required, minLength: minLength(5) }) quantity = null;
-  @Validate({ required, minLength: minLength(3) }) price = 0;
+  @Validate({ required, minLength: minLength(3), minValue: minValue(100) })
+  quantity = null;
+  @Validate({ required, minLength: minLength(1) }) price: number | undefined;
   public comision: any;
   public getPrice = 0;
-
-  get totalPrice(): any {
-    return new Intl.NumberFormat().format(this.getPrice);
-  }
-
-  private calculateComision(e: any): void {
-    const price = parseInt(e);
-    this.getPrice =
-      (price / 100) * this.$store.getters.getGoldPostData.comision;
-  }
-  get goldData(): void {
-    this.comision = this.$store.getters.getGoldPostData;
-    return this.$store.getters.getGoldPostData;
-  }
-
   private realmList: Array<string> = [
     "Aegwynn",
     "Aerie Peak",
@@ -138,6 +123,21 @@ export default class GoldForm extends Vue {
     "Steamwheedle Cartel"
   ];
 
+  get totalPrice(): any {
+    return new Intl.NumberFormat().format(this.getPrice);
+  }
+  private calculateComision(e: any): void {
+    const price = parseInt(e);
+    this.getPrice =
+      price - (price / 100) * this.$store.getters.getGoldPostData.comision;
+  }
+  get goldData(): void {
+    this.comision = this.$store.getters.getGoldPostData;
+    return this.$store.getters.getGoldPostData;
+  }
+  get netPrice(): number {
+    return Object.is(NaN, this.getPrice) ? 0 : this.totalPrice;
+  }
   private addGoldPost(): void {
     const newGoldPost = {
       tipo: "Gold",
@@ -159,10 +159,16 @@ export default class GoldForm extends Vue {
     this.price = 0;
   }
   get isDisabled(): boolean {
-    return !this.realm || !this.faction || !this.quantity || !this.price
+    return !this.realm ||
+      !this.faction ||
+      !this.quantity ||
+      !this.$v.quantity.minValue ||
+      !this.price
       ? true
       : false;
   }
+
+  // handle errors validations
   get typeExpenditureErrors(): Array<string> {
     const errors: Array<string> = [];
     if (!this.$v.typeExpenditure.$dirty) return errors;
@@ -186,6 +192,7 @@ export default class GoldForm extends Vue {
     const errors: Array<string> = [];
     if (!this.$v.quantity.$dirty) return errors;
     !this.$v.quantity.minLength && errors.push("Minimo de caracteres 3");
+    !this.$v.quantity.minValue && errors.push("Minimo 100 unidades");
     !this.$v.quantity.required && errors.push("El campo es requerido");
     return errors;
   }
