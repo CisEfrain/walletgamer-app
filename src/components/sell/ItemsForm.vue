@@ -99,13 +99,14 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { Validate } from "vuelidate-property-decorators";
-import { required, minLength } from "vuelidate/lib/validators";
+import { required, minLength, minValue } from "vuelidate/lib/validators";
 
 @Component
 export default class ItemsForm extends Vue {
   @Validate({ required }) item = null;
   @Validate({ required }) faction = null;
-  @Validate({ required, minLength: minLength(1) }) quantity = null;
+  @Validate({ required, minLength: minLength(1), minValue: minValue(1) })
+  quantity = null;
   @Validate({ required, minLength: minLength(1) }) price = null;
 
   public comision: any;
@@ -167,7 +168,7 @@ export default class ItemsForm extends Vue {
   }
 
   get isDisabled(): boolean {
-    return !this.item || !this.faction || !this.quantity || !this.price
+    return !this.item || !this.faction || this.quantity < 1 || !this.price
       ? true
       : false;
   }
@@ -189,6 +190,7 @@ export default class ItemsForm extends Vue {
     if (!this.$v.quantity.$dirty) return errors;
     !this.$v.quantity.minLength && errors.push("Minimo de caracteres 1");
     !this.$v.quantity.required && errors.push("El campo es requerido");
+    !this.$v.quantity.minValue && errors.push("Minimo 1 item")
     return errors;
   }
   get priceErrors(): Array<string> {

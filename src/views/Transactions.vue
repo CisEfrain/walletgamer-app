@@ -92,16 +92,17 @@
           <v-col cols="12" md="12" align="center">
             <v-text-field
               label="¿Cuánto quieres retirar?"
+              type="number"
               rounded
-              v-model="$v.email.$model"
-              :error-messages="emailErrors"
-              @input="$v.email.$touch()"
-              @blur="$v.email.$touch()"
+              v-model="$v.mountDisbursement.$model"
+              :error-messages="mountDisbursementErrors"
+              @input="$v.mountDisbursement.$touch()"
+              @blur="$v.mountDisbursement.$touch()"
               required
               color="rgba(184,12,70,.6)"
               background-color="white"
               outlined
-              class="text-field"
+              class="text-field text-center"
               dense
             ></v-text-field>
             <v-select
@@ -115,16 +116,17 @@
               required
               rounded
               color="rgba(184,12,70,.6)"
+              class="text-field text-center"
               dense
             ></v-select>
             <v-btn
               rounded
-              @click="login"
-              :disabled="isDisabled"
+              @click="newDisbursement"
+              :disabled="isDisbursementDisabled"
               color="btn-gradient"
               class="button button--primary button--medium px-8 mt-6"
             >
-              <b>Fondear</b>
+              <b>Solicitar</b>
             </v-btn>
           </v-col>
         </v-row>
@@ -145,40 +147,44 @@
         <v-row align="center" class="px-8 mt-8" justify="center">
           <v-col cols="12" md="12" align="center">
             <v-text-field
-              label="Email"
+              label="¿Cuanto deseas transferir?"
               rounded
-              v-model="$v.email.$model"
-              :error-messages="emailErrors"
-              @input="$v.email.$touch()"
-              @blur="$v.email.$touch()"
+              type="number"
+              v-model="$v.mountSendToFriend.$model"
+              :error-messages="mountSendToFriendErrors"
+              @input="$v.mountSendToFriend.$touch()"
+              @blur="$v.mountSendToFriend.$touch()"
               required
               color="rgba(184,12,70,.6)"
               background-color="white"
               outlined
-              class="text-field"
+              class="text-field text-center"
               dense
             ></v-text-field>
-            <v-select
-              :items="payMethods"
-              label="¿Donde lo quieres recibir?"
-              outlined
-              v-model="$v.disbursement.$model"
-              :error-messages="disbursementErrors"
-              @input="$v.disbursement.$touch()"
-              @blur="$v.disbursement.$touch()"
-              required
+
+            <v-text-field
               rounded
+              label="¿A quien lo quieres enviar?"
+              outlined
+              v-model="$v.sendToFriend.$model"
+              :error-messages="sendToFriendErrors"
+              @input="$v.sendToFriend.$touch()"
+              @blur="$v.sendToFriend.$touch()"
+              required
+              type="email"
               color="rgba(184,12,70,.6)"
+              background-color="white"
+              class="text-field text-center"
               dense
-            ></v-select>
+            ></v-text-field>
             <v-btn
               rounded
-              @click="login"
-              :disabled="isDisabled"
+              @click="newSendToFriend"
+              :disabled="isSendToFriendDisabled"
               color="btn-gradient"
               class="button button--primary button--medium px-8 mt-6"
             >
-              <b>Fondear</b>
+              <b>Transferir</b>
             </v-btn>
           </v-col>
         </v-row>
@@ -199,36 +205,38 @@
         <v-row align="center" class="px-8 mt-8" justify="center">
           <v-col cols="12" md="12" align="center">
             <v-text-field
-              label="Email"
+              label="¿Cuanto quieres fondear?"
               rounded
-              v-model="$v.email.$model"
-              :error-messages="emailErrors"
-              @input="$v.email.$touch()"
-              @blur="$v.email.$touch()"
+              type="number"
+              v-model="$v.mountFund.$model"
+              :error-messages="mountFundErrors"
+              @input="$v.mountFund.$touch()"
+              @blur="$v.mountFund.$touch()"
               required
               color="rgba(184,12,70,.6)"
               background-color="white"
               outlined
-              class="text-field"
+              class="text-field text-center"
               dense
             ></v-text-field>
             <v-select
               :items="payMethods"
-              label="¿Donde lo quieres recibir?"
+              label="¿De donde quieres fondear?"
               outlined
-              v-model="$v.disbursement.$model"
-              :error-messages="disbursementErrors"
-              @input="$v.disbursement.$touch()"
-              @blur="$v.disbursement.$touch()"
+              v-model="$v.fund.$model"
+              :error-messages="fundErrors"
+              @input="$v.fund.$touch()"
+              @blur="$v.fund.$touch()"
               required
               rounded
               color="rgba(184,12,70,.6)"
+              class="text-center"
               dense
             ></v-select>
             <v-btn
               rounded
-              @click="login"
-              :disabled="isDisabled"
+              @click="newFund"
+              :disabled="isFundDisabled"
               color="btn-gradient"
               class="button button--primary button--medium px-8 mt-6"
             >
@@ -252,7 +260,7 @@ import TransactionItemList from "@/components/transactions/TransactionItemList.v
 import PendingCard from "@/components/transactions/PendingCard.vue";
 
 import { Validate } from "vuelidate-property-decorators";
-import { required, email, minLength } from "vuelidate/lib/validators";
+import { required, email } from "vuelidate/lib/validators";
 
 @Component({
   components: {
@@ -266,13 +274,24 @@ import { required, email, minLength } from "vuelidate/lib/validators";
 })
 export default class Transactions extends Vue {
   private panel: Array<number> = [0];
+
   private drawerDisbursement = false;
   private drawerTransferToFriend = false;
   private drawerFund = false;
   private payMethods: Array<string> = ["Paypal", "Stripe"];
 
-  @Validate({ required, email }) email = "";
-  @Validate({ required, minLength: minLength(8) }) disbursement = "";
+  //New disbursement
+  @Validate({ required }) disbursement = "";
+  @Validate({ required })
+  mountDisbursement!: number | bigint;
+
+  //Send to friend
+  @Validate({ required, email }) sendToFriend = "";
+  @Validate({ required }) mountSendToFriend = "";
+
+  //Fund
+  @Validate({ required }) fund = "";
+  @Validate({ required }) mountFund = "";
 
   private isFormDisbursement(): void {
     this.drawerDisbursement = true;
@@ -287,34 +306,87 @@ export default class Transactions extends Vue {
     console.info("clicked from trans", this.drawerFund);
   }
 
-  private async login() {
-    const loginData = {
-      email: this.email,
-      pass: this.disbursement
-    };
-    this.$store.dispatch("setLogin", loginData);
+  // private async login() {
+  //   const loginData = {
+  //     email: this.email,
+  //     pass: this.disbursement
+  //   };
+  //   this.$store.dispatch("setLogin", loginData);
+  // }
+  // private clearForm(): void {
+  //   this.$v.$reset();
+  //   this.email = "";
+  //   this.disbursement = "";
+  // }
+
+  private newDisbursement() {
+    console.info("ADD disbursement");
   }
-  private clearForm(): void {
-    this.$v.$reset();
-    this.email = "";
-    this.disbursement = "";
+  get isDisbursementDisabled(): boolean {
+    return !this.disbursement || !this.mountDisbursement ? true : false;
   }
-  get isDisabled(): boolean {
-    return !this.email || !this.disbursement ? true : false;
+
+  private newSendToFriend() {
+    console.info("ADD send to friend");
   }
-  get emailErrors(): Array<string> {
-    const errors: Array<string> = [];
-    if (!this.$v.email.$dirty) return errors;
-    !this.$v.email.required && errors.push("El campo es requerido");
-    !this.$v.email.email && errors.push("El email debe ser valido");
-    return errors;
+  get isSendToFriendDisabled(): boolean {
+    return this.sendToFriend.length < 7 ||
+      !this.$v.sendToFriend.email ||
+      !this.mountSendToFriend
+      ? true
+      : false;
   }
+
+  private newFund() {
+    console.info("ADD fund");
+  }
+  get isFundDisabled(): boolean {
+    return !this.fund || !this.mountFund ? true : false;
+  }
+
+  // Disbursement handle input errors
   get disbursementErrors(): Array<string> {
     const errors: Array<string> = [];
     if (!this.$v.disbursement.$dirty) return errors;
     !this.$v.disbursement.required && errors.push("El campo es requerido");
-    !this.$v.disbursement.minLength &&
-      errors.push("Debe contener minimo 8 digitos");
+    return errors;
+  }
+
+  get mountDisbursementErrors(): Array<string> {
+    const errors: Array<string> = [];
+    if (!this.$v.mountDisbursement.$dirty) return errors;
+    !this.$v.mountDisbursement.required && errors.push("El campo es requerido");
+    return errors;
+  }
+
+  // Send to friend handle input errors
+  get sendToFriendErrors(): Array<string> {
+    const errors: Array<string> = [];
+    if (!this.$v.sendToFriend.$dirty) return errors;
+    !this.$v.sendToFriend.required && errors.push("El campo es requerido");
+    !this.$v.sendToFriend.email && errors.push("Debe ser un email valido");
+    return errors;
+  }
+
+  get mountSendToFriendErrors(): Array<string> {
+    const errors: Array<string> = [];
+    if (!this.$v.mountSendToFriend.$dirty) return errors;
+    !this.$v.mountSendToFriend.required && errors.push("El campo es requerido");
+    return errors;
+  }
+
+  // Fund handle input errors
+  get fundErrors(): Array<string> {
+    const errors: Array<string> = [];
+    if (!this.$v.fund.$dirty) return errors;
+    !this.$v.fund.required && errors.push("El campo es requerido");
+    return errors;
+  }
+
+  get mountFundErrors(): Array<string> {
+    const errors: Array<string> = [];
+    if (!this.$v.mountFund.$dirty) return errors;
+    !this.$v.mountFund.required && errors.push("El campo es requerido");
     return errors;
   }
 }
