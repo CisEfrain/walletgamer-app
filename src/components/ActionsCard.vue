@@ -1,6 +1,6 @@
 <template>
   <v-row class="d-flex justify-center">
-    <BaseCardContainer class="balance-height-card">
+    <BaseCardContainer class="balance-height-card action-card action">
       <v-row class="mt-3 mb-less" align="center">
         <v-col class="d-flex justify-center">
           <!-- <h2 class="balance-currency">${{ balance }}</h2> -->
@@ -70,4 +70,10 @@ export default class ActionsCard extends Vue {
 
 .balance-height-card
   min-height: 140px
+
+.action-card
+  cursor: pointer
+
+.action:hover
+  background: $bg-product-card
 </style>

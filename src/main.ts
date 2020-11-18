@@ -8,6 +8,7 @@ import "vuetify/dist/vuetify.min.css";
 import Vuelidate from "vuelidate";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
+
 // import VueStripeCheckout from "vue-stripe-checkout";
 // Vue.use(VueStripeCheckout, "pk_test_51HUYgHFLYR3KSOT0qrJ9jtjLOZNaGWgNBmxSghB5PXmedAiaGNoyQSJrjUcAYAWBrf9ytsEMoQyMjgo9fFSPmsWn00Jpt950Fx");
 
@@ -16,7 +17,8 @@ Vue.use(Vuelidate);
 Vue.use(Toast, {
   transition: "Vue-Toastification__bounce",
   maxToasts: 20,
-  newestOnTop: true
+  newestOnTop: true,
+  duration: 3000
 });
 Vue.config.productionTip = false;
 
