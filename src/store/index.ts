@@ -9,7 +9,7 @@ import walletState from "@/store/modules/walletState";
 import authState from "@/store/modules/authState";
 import sellState from "@/store/modules/sellState";
 import sellmentState from "@/store/modules/sellmentState";
-
+import operationState from "@/store/modules/operationState";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -23,6 +23,7 @@ export default new Vuex.Store({
     accountState,
     walletState,
     sellState,
-    sellmentState
+    sellmentState,
+    operationState
   }
 });

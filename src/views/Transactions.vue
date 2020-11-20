@@ -65,14 +65,6 @@
             status="Completa"
             type="Venta"
           />
-          <TransactionItemList
-            product="Gold World of Warcraft"
-            transaction_date="10/12/2020"
-            transaction_id="00225599"
-            cost="20"
-            type="Venta"
-            status="Anulada"
-          />
         </v-expansion-panels>
       </v-col>
     </v-row>
@@ -306,19 +298,10 @@ export default class Transactions extends Vue {
     console.info("clicked from trans", this.drawerFund);
   }
 
-  // private async login() {
-  //   const loginData = {
-  //     email: this.email,
-  //     pass: this.disbursement
-  //   };
-  //   this.$store.dispatch("setLogin", loginData);
-  // }
-  // private clearForm(): void {
-  //   this.$v.$reset();
-  //   this.email = "";
-  //   this.disbursement = "";
-  // }
-
+  created(){
+    this.$store.dispatch('MyOperations');
+  // this.$store.state.operationState.getOperations
+  }
   private newDisbursement() {
     console.info("ADD disbursement");
   }
