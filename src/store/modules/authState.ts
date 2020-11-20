@@ -1,6 +1,6 @@
 import { Register } from "@/services/register.service";
 import { Login } from "@/services/auth.service";
-import { RecoveryPass } from "@/services/recoveryPass.service";
+import { RecoveryPass, RequestEmailPassChange } from "@/services/recoveryPass.service";
 import router from "@/router";
 import Vue from "vue";
 
@@ -65,7 +65,25 @@ const authState = {
     },
     recoveryPass({ commit }: any, payload: any): void {
       const { pass, token } = payload
-      RecoveryPass(pass,token)
+      RecoveryPass(pass, token)
+        .then((response: any) => {
+          console.info(response)
+          response.status === 200 &&
+            Vue.$toast.success(
+              `Se ha enviado un email a tu correo para reestablecer tu contraseña!`
+            );
+          //router.push("/login");
+        })
+        .catch((error: any) => {
+          console.info(error);
+          Vue.$toast.error(
+            `Lo sentimos, ha ocurrido un error intenta nuevamente`
+          );
+        });
+    },
+    requestEmailPassChange({ commit }: any, payload: any): void {
+      const { email } = payload
+      RequestEmailPassChange(email)
         .then((response: any) => {
           console.info(response)
           response.status === 200 &&

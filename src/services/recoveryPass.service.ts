@@ -15,3 +15,8 @@ export const RecoveryPass = async (pass: string, token: string) => {
 	const header = { headers: { Authorization: "Bearer " + token } };
 	return await axios.post(resource, { pass }, header);
 }
+export const RequestEmailPassChange = async (email: string) => {
+	if (!email) return false;
+
+	return await axios.post('enviar-email-pass', { email });
+} 
