@@ -298,9 +298,9 @@ export default class Transactions extends Vue {
     console.info("clicked from trans", this.drawerFund);
   }
 
-  created(){
-    this.$store.dispatch('MyOperations');
-  // this.$store.state.operationState.getOperations
+  created() {
+    this.$store.dispatch("MyOperations");
+    // this.$store.state.operationState.getOperations
   }
   private newDisbursement() {
     console.info("ADD disbursement");

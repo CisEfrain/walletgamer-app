@@ -48,19 +48,23 @@
         ></v-select>
       </v-col>
       <v-col class="d-flex">
-        <v-select
-          :items="levelList"
+        <v-text-field
           label="Nivel"
-          outlined
+          rounded
+          type="number"
           v-model="$v.level.$model"
           :error-messages="levelErrors"
           @input="$v.level.$touch()"
           @blur="$v.level.$touch()"
           required
-          rounded
+          min="1"
+          max="60"
+          step="1"
           color="rgba(184,12,70,.6)"
+          background-color="white"
+          outlined
           dense
-        ></v-select>
+        ></v-text-field>
       </v-col>
       <v-col class="d-flex" cols="6" sm="6" md="2">
         <v-text-field
@@ -70,6 +74,7 @@
           :error-messages="priceErrors"
           @input="$v.price.$touch()"
           @blur="$v.price.$touch()"
+          type="number"
           required
           color="rgba(184,12,70,.6)"
           background-color="white"

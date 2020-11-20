@@ -4,11 +4,10 @@ const operationState = {
     operations: []
   }),
   mutations: {
-
     resetData(state: any): void {
       state.operations = [];
     },
-    setData(state: any, payload: any): void {
+    setOperationData(state: any, payload: any): void {
       state.operations = payload;
     }
   },
@@ -20,10 +19,10 @@ const operationState = {
       commit("resetProduct", payload);
     },
     MyOperations({ commit }: any): void {
-        GetOperations()
+      GetOperations()
         .then((response: any) => {
           console.info("from get general data", response);
-          commit("setData", response.data.data);
+          commit("setOperationData", response.data.data);
         })
         .catch(error => {
           console.info(error);
@@ -32,10 +31,10 @@ const operationState = {
   },
   getters: {
     getOperations: (state: { data: any }) => {
-      const res = state.data.operations
-      console.log("my operations ",res)
+      const res = state.data.operations;
+      console.log("my operations ", res);
       return res;
-    },
+    }
   }
 };
 export default operationState;

@@ -2,19 +2,19 @@
   <v-container>
     <v-row align="center" justify="space-between">
       <v-col class="d-flex" cols="6" sm="6" md="3">
-        <v-select
-          :items="itemList"
-          label="Item"
-          outlined
+        <v-text-field
+          label="Nombre de item"
+          rounded
           v-model="$v.item.$model"
           :error-messages="itemErrors"
           @input="$v.item.$touch()"
           @blur="$v.item.$touch()"
           required
-          rounded
           color="rgba(184,12,70,.6)"
+          background-color="white"
+          outlined
           dense
-        ></v-select>
+        ></v-text-field>
       </v-col>
       <v-col class="d-flex" cols="6" sm="6" md="3">
         <v-select
@@ -35,6 +35,8 @@
         <v-text-field
           label="Cantidad disponible"
           rounded
+          type="number"
+          min="1"
           v-model="$v.quantity.$model"
           :error-messages="quantityErrors"
           @input="$v.quantity.$touch()"
