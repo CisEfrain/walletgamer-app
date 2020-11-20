@@ -41,6 +41,8 @@
           @input="$v.quantity.$touch()"
           @blur="$v.quantity.$touch()"
           required
+          min="100"
+          step="100"
           color="rgba(184,12,70,.6)"
           background-color="white"
           outlined
@@ -189,7 +191,7 @@ export default class GoldForm extends Vue {
   get quantityErrors(): Array<string> {
     const errors: Array<string> = [];
     if (!this.$v.quantity.$dirty) return errors;
-    !this.$v.quantity.minLength && errors.push("Minimo de caracteres 3");
+    !this.$v.quantity.minLength && errors.push("Minimo 100 unidades");
     !this.$v.quantity.minValue && errors.push("Minimo 100 unidades");
     !this.$v.quantity.required && errors.push("El campo es requerido");
     return errors;
