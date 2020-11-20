@@ -3,7 +3,7 @@
     <v-row align="center" justify="center" class="mt-6 mb-less">
       <v-col class="d-flex" cols="3" sm="3">
         <v-select
-          :items="realm"
+          :items="realmList"
           label="Reino"
           outlined
           rounded
@@ -16,7 +16,7 @@
       </v-col>
       <v-col class="d-flex" cols="3" sm="3">
         <v-select
-          :items="factions"
+          :items="factionList"
           label="Facción"
           outlined
           rounded
@@ -29,7 +29,7 @@
       </v-col>
       <v-col class="d-flex" cols="3" sm="2">
         <v-select
-          :items="classes"
+          :items="classList"
           label="Clase"
           outlined
           rounded
@@ -107,6 +107,20 @@ export default class BuyCharacterList extends Vue {
     "Monk",
     "Demon Hunter"
   ];
+
+  get factionList(): Array<string> {
+    return this.$store.getters.getFactionList;
+  }
+
+  get realmList(): Array<string> {
+    return this.$store.getters.getRealmList;
+  }
+
+  get classList(): Array<string> {
+    return this.$store.getters.getClassList;
+  }
+
+
   private level: Array<number> = [15, 30, 45, 60];
   private realmSelected = "";
   private classSelected = "";

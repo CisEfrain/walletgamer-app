@@ -8,7 +8,9 @@
             <small>Rango {{ rank }}</small>
           </v-col>
           <v-col class="text-center" cols="3" md="3" sm="6">
-            <div>Ítems {{ item }}</div>
+            <div v-show="item">
+              Item: <b>{{ item }}</b>
+            </div>
             <v-chip>
               {{ faction }}
             </v-chip>

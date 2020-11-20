@@ -140,7 +140,7 @@ export default class ItemsForm extends Vue {
     "Riendas de invencibles",
     "Marca de honor",
     "Talisman de mascota pulido",
-    "Tueno furioso"
+    "Trueno furioso"
   ];
 
   private addItemPost(): void {

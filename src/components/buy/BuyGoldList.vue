@@ -3,7 +3,7 @@
     <v-row align="center" justify="center" class="mt-6">
       <v-col class="d-flex" cols="3" sm="3">
         <v-select
-          :items="realm"
+          :items="realmList"
           v-model="realmSelected"
           label="Reino"
           outlined
@@ -16,7 +16,7 @@
       </v-col>
       <v-col class="d-flex" cols="3" sm="3">
         <v-select
-          :items="factions"
+          :items="factionList"
           v-model="factionSelected"
           label="Facción"
           outlined
@@ -60,19 +60,14 @@ export default class BuyGoldList extends Vue {
   private realmSelected = "";
   private factionSelected = "";
   private goldList: Array<unknown> = [];
-  private realm: Array<string> = [
-    "Aegwynn",
-    "Aerie Peak",
-    "Aggramar",
-    "Akama",
-    "Altar of Storms"
-  ];
-  private factions: Array<string> = [
-    "Horde",
-    "Alliance",
-    "Horde Force",
-    "Steamwheedle Cartel"
-  ];
+
+  get factionList(): Array<string> {
+    return this.$store.getters.getFactionList;
+  }
+
+  get realmList(): Array<string> {
+    return this.$store.getters.getRealmList;
+  }
 
   get postGoldList(): Array<unknown> {
     return this.$store.getters.getGoldPostList;

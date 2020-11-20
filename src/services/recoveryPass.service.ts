@@ -10,12 +10,12 @@ import axios from "@/services/Base.service";
 
 const resource = "cambiar-password";
 
-export const RecoveryPass = async (pass: string, token: string) => {
+export const NewPass = async (pass: string, token: string) => {
 	if (!pass || !token) return false;
 	const header = { headers: { Authorization: "Bearer " + token } };
-	return await axios.post(resource, { pass }, header);
+	return await axios.put(resource, { pass }, header);
 }
-export const RequestEmailPassChange = async (email: string) => {
+export const RecoveryPass = async (email: string) => {
 	if (!email) return false;
 
 	return await axios.post('enviar-email-pass', { email });

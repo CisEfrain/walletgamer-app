@@ -16,7 +16,7 @@
       </v-col>
       <v-col class="d-flex" cols="3" sm="3">
         <v-select
-          :items="factions"
+          :items="factionList"
           label="Facción"
           outlined
           rounded
@@ -36,7 +36,7 @@
       :rank="itemPost.rango || 'Pollo'"
       :faction="itemPost.faccion"
       :price="itemPost.precio"
-      :item="itemPost.description"
+      :item="itemPost.descripcion"
       :available="itemPost.cantidad"
       @click="buyItem($index, itemPost.id)"
     />
@@ -64,12 +64,11 @@ export default class BuyItemList extends Vue {
     "Talisman de mascota pulido",
     "Tueno furioso"
   ];
-  private factions: Array<string> = [
-    "Horde",
-    "Alliance",
-    "Horde Force",
-    "Steamwheedle Cartel"
-  ];
+
+
+  get factionList(): Array<string> {
+    return this.$store.getters.getFactionList;
+  }
 
   private itemSelected = "";
   private factionSelected = "";
@@ -86,7 +85,7 @@ export default class BuyItemList extends Vue {
   private filterItem(): void {
     this.itemList = this.postItemList.filter((itemPost: any) => {
       return (
-        //itemPost.descripcion === this.itemSelected ||
+        itemPost.descripcion === this.itemSelected ||
         itemPost.faccion === this.factionSelected
       );
     });

@@ -72,7 +72,7 @@ export default class RecoveryPass extends Vue {
     const recoveryEmail = {
       email: this.email
     };
-    this.$store.dispatch("requestEmailPassChange", recoveryEmail);
+    this.$store.dispatch("recoveryPass", recoveryEmail);
     this.clearForm();
   }
 
