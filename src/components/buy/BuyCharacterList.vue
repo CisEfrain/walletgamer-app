@@ -58,8 +58,8 @@
     <CharactersItemList
       v-for="(characterPost, $index) in showFiltered"
       :key="characterPost.id"
-      user="Default Name"
-      :rank="characterPost.rango"
+      :user="characterPost.usuario.nombre"
+      :rank="characterPost.usuario.rango || 'Pollo'"
       :kingdom="characterPost.reino"
       :faction="characterPost.faccion"
       :characterClass="characterPost.clase"

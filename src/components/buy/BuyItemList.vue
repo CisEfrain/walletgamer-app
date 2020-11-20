@@ -32,11 +32,11 @@
     <ItemsItemList
       v-for="(itemPost, $index) in showFiltered"
       :key="itemPost.id"
-      user="Default name"
-      :rank="itemPost.rango"
+      :user="itemPost.usuario.nombre"
+      :rank="itemPost.rango || 'Pollo'"
       :faction="itemPost.faccion"
       :price="itemPost.precio"
-      item="Default Name Item"
+      :item="itemPost.description"
       :available="itemPost.cantidad"
       @click="buyItem($index, itemPost.id)"
     />

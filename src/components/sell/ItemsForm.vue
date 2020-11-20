@@ -130,12 +130,10 @@ export default class ItemsForm extends Vue {
     return Object.is(NaN, this.getPrice) ? 0 : this.totalPrice;
   }
 
-  private factionList: Array<string> = [
-    "Horde",
-    "Alliance",
-    "Horde Force",
-    "Steamwheedle Cartel"
-  ];
+  get factionList(): Array<string> {
+    return this.$store.getters.getFactionList;
+  }
+
   private itemList: Array<string> = [
     "Alavacio Incorrupto",
     "Vermis de ascuas",
@@ -149,6 +147,7 @@ export default class ItemsForm extends Vue {
     const newItemPost = {
       tipo: "Item",
       faccion: this.faction,
+      descripcion: this.item,
       cantidad: this.quantity,
       precio: this.price,
       usuarios_id: this.$store.state.accountState.userData.id

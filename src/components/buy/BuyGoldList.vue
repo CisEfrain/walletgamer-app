@@ -32,8 +32,8 @@
     <GoldItemList
       v-for="(goldPost, $index) in showFiltered"
       :key="goldPost.id"
-      user="Default Name"
-      :rank="goldPost.rango"
+      :user="goldPost.usuario.nombre"
+      :rank="goldPost.rango || 'Pollo'"
       :kingdom="goldPost.reino"
       :faction="goldPost.faccion"
       :price="goldPost.precio"

@@ -5,16 +5,16 @@
         <v-row class="px-4" align="center" justify="space-between">
           <v-col cols="3" md="2" sm="12" class="text-center">
             <h4 class="title">{{ user }}</h4>
-            <small>Rango {{ rank }}</small>
+            <small>Rango: {{ rank }}</small>
           </v-col>
           <v-col cols="3" md="3" sm="5" class="text-center">
-            <div>Reino {{ kingdom }}</div>
+            <div>Reino: {{ kingdom }}</div>
             <v-chip>
               {{ faction }}
             </v-chip>
           </v-col>
           <v-col cols="3" md="3" sm="4" class="text-center">
-            <div>Clase {{ characterClass }}</div>
+            <div>Clase: {{ characterClass }}</div>
             <v-chip width=""> Nivel: {{ level }} </v-chip>
           </v-col>
           <v-col cols="3" md="1" sm="3" class="d-flex justify-center">

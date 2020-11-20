@@ -46,7 +46,21 @@ const AppState = {
     },
     getItemsPostData: (state: { data: any }) => {
       return state.data.publicaciones.items;
+    },
+    getFactionList: (state: { data: any }) => {
+      return state.data.listas.facciones;
+    },
+    getRealmList: (state: { data: any }) => {
+      return state.data.listas.reinos;
+    },
+    getClassList: (state: { data: any }) => {
+      return state.data.listas.clases;
+    },
+    getRankList: (state: { data: any }) => {
+      return state.data.listas.rangos;
     }
+
+
   }
 };
 export default AppState;

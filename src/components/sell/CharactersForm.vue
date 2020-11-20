@@ -121,34 +121,23 @@ export default class CharactersForm extends Vue {
   @Validate({ required }) pjClass = null;
   @Validate({ required }) level = null;
   @Validate({ required, minLength: minLength(1) }) price = null;
-  private realmList: Array<string> = [
-    "Aegwynn",
-    "Aerie Peak",
-    "Aggramar",
-    "Akama",
-    "Altar of Storms"
-  ];
-  private factionList: Array<string> = [
-    "Horde",
-    "Alliance",
-    "Horde Force",
-    "Steamwheedle Cartel"
-  ];
-  private classList: Array<string> = [
-    "Warrior",
-    "Paladín",
-    "Pícaro",
-    "Hunter",
-    "Priest",
-    "Sorcerer",
-    "Mage",
-    "Monk",
-    "Demon Hunter"
-  ];
   private levelList: Array<number> = [15, 30, 45, 60];
 
   public comision: any;
   public getPrice = 0;
+
+  get factionList(): Array<string> {
+    return this.$store.getters.getFactionList;
+  }
+
+  get realmList(): Array<string> {
+    return this.$store.getters.getRealmList;
+  }
+
+  get classList(): Array<string> {
+    return this.$store.getters.getClassList;
+  }
+
 
   get totalPrice(): any {
     return new Intl.NumberFormat().format(this.getPrice);

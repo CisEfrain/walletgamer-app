@@ -112,19 +112,14 @@ export default class GoldForm extends Vue {
     | string = "";
   public comision: any;
   public getPrice = 0;
-  private realmList: Array<string> = [
-    "Aegwynn",
-    "Aerie Peak",
-    "Aggramar",
-    "Akama",
-    "Altar of Storms"
-  ];
-  private factionList: Array<string> = [
-    "Horde",
-    "Alliance",
-    "Horde Force",
-    "Steamwheedle Cartel"
-  ];
+
+  get factionList(): Array<string> {
+    return this.$store.getters.getFactionList;
+  }
+
+  get realmList(): Array<string> {
+    return this.$store.getters.getRealmList;
+  }
 
   get totalPrice(): any {
     return new Intl.NumberFormat().format(this.getPrice);
