@@ -92,15 +92,24 @@ export default class RecoveryPass extends Vue {
   @Validate({
     required,
     minLength: minLength(8),
-    sameAs: sameAs("password")
+    sameAs: sameAs("password"),
   })
   repeatPassword = "";
+  token: string | any = "";
   public showPass = false;
   public repeatShowPass = false;
 
+  created() {
+    const { token } = this.$route.query;
+    if (!token) return this.$router.replace("/login");
+    this.token = token;
+    console.log(this.token);
+  }
+
   private sendNewPassword() {
     const newPassword = {
-      pass: this.password
+      pass: this.password,
+      token: this.token
     };
     this.$store.dispatch("newPass", newPassword);
     this.clearForm();

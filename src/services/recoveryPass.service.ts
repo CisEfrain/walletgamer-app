@@ -1,10 +1,6 @@
 /* eslint-disable prettier/prettier */
 import axios from "@/services/Base.service";
 
-interface RecoveryPass {
-	email:string,
-}
-
 /**
  *@remarks
  * this function can be changed
@@ -12,10 +8,10 @@ interface RecoveryPass {
  *@returns an object with jwt token and user info or error messages
  **/
 
-const resource = "recuperar-pass";
+const resource = "cambiar-password";
 
-export const RecoveryPass = async(recoveryPass:RecoveryPass) => {
-		const { email } = recoveryPass
-		if (email == "" ) return false;
-		return await axios.post(resource, recoveryPass);
+export const RecoveryPass = async (pass: string, token: string) => {
+	if (!pass || !token) return false;
+	const header = { headers: { Authorization: "Bearer " + token } };
+	return await axios.post(resource, { pass }, header);
 }

@@ -64,7 +64,8 @@ const authState = {
         });
     },
     recoveryPass({ commit }: any, payload: any): void {
-      RecoveryPass(payload)
+      const { pass, token } = payload
+      RecoveryPass(pass,token)
         .then((response: any) => {
           console.info(response)
           response.status === 200 &&
