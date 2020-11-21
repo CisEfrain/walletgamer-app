@@ -7,7 +7,7 @@
     <v-row align="center" justify="center" class="mt-6">
       <v-col class="d-flex" cols="6" sm="6" md="3">
         <v-select
-          :items="typesExpenditure"
+          :items="paymentMethods"
           label="Tipo"
           outlined
           v-model="$v.typeExpenditure.$model"
@@ -121,25 +121,24 @@ export default class UserExpenditure extends Vue {
   public page = 1;
   //public expenditureList: Array<string> = [];
 
+  get paymentMethods(): any {
+    return this.$store.getters.getPayMethodList;
+  }
   private addExpenditure(): void {
     const newExpenditure = {
       nombre: this.typeExpenditure,
       alias: this.aliasId,
       email: this.emailReceptor,
-      descripcion: this.description,
-      // eslint-disable-next-line @typescript-eslint/camelcase
-      usuarios_id: this.$store.state.accountState.userData.id
+      descripcion: this.description
     };
     this.$store.dispatch("setNewExpenditureData", newExpenditure);
     console.log(newExpenditure);
     this.clearForm();
     this.$store.dispatch("getExpenditureData");
   }
-
   get expenditure(): any {
     return this.$store.getters.getExpenditure;
   }
-
   private deleteMethod(index: any, id: any): void {
     console.info("delete emitter", id);
     const payload = { index, id };
@@ -148,7 +147,6 @@ export default class UserExpenditure extends Vue {
     this.$store.dispatch("deleteExpenditureData", payload);
     this.$store.dispatch("getExpenditureData");
   }
-
   private clearForm(): void {
     this.$v.$reset();
     this.typeExpenditure = null;

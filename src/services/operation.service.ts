@@ -22,3 +22,9 @@ export const Delete = async (paymentMethodId: number):Promise<any> => {
 	const header = {headers:{ Authorization: "Bearer " + jwt }};
 	return await axios.delete(`${resource}/${paymentMethodId}`, header);
 }
+
+export const GetBalance = async ():Promise<any> => {
+	const jwt = localStorage.getItem("jwt")
+	const header = {headers:{ Authorization: "Bearer " + jwt }};
+	return await axios.get(`${resource}/saldo`, header);
+}

@@ -58,9 +58,11 @@ const AppState = {
     },
     getRankList: (state: { data: any }) => {
       return state.data.listas.rangos;
+    },
+    getPayMethodList: (state: { data: any }) => {
+      const paymentMethods = Object.keys(state.data.pasarelas);
+      return paymentMethods;
     }
-
-
   }
 };
 export default AppState;

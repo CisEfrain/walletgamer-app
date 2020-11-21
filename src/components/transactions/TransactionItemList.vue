@@ -39,7 +39,7 @@
             <v-row class="px-4" align="center" justify="space-between">
               <v-col cols="12" md="6" sm="6">
                 <p>
-                  {{ description.length > 1 ? description : "Sin descripción" }}
+                  {{ description ? description : "Sin descripción" }}
                 </p>
               </v-col>
             </v-row>
@@ -62,7 +62,7 @@ import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
 })
 export default class TransactionItemList extends Vue {
   @Prop({ required: true, type: String }) readonly product!: string;
-  @Prop({ required: true, type: String }) readonly transaction_date!: string;
+  @Prop({ required: true }) readonly transaction_date!: any;
   @Prop({ required: true, type: Number }) readonly cost!: number;
   @Prop({ required: true, type: String }) readonly type!: string;
   @Prop({ required: true, type: String }) readonly status!: string;
@@ -71,9 +71,9 @@ export default class TransactionItemList extends Vue {
 
   //Computed
   get hasStatus(): any {
-    if (this.status === "Completado") return `success`;
+    if (this.status === "Completada") return `success`;
 
-    if (this.status === "Anulado") return "error";
+    if (this.status === "Anulada") return "error";
     else return "warning";
   }
 

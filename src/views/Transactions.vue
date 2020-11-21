@@ -3,7 +3,7 @@
     <v-row class="px-8" justify="space-around" align="center">
       <v-col cols="12" sm="12" md="3">
         <!-- <BalanceCard balance="50" actions /> -->
-        <BalanceCard balance="50" />
+        <BalanceCard :balance="balance" />
       </v-col>
       <v-col cols="12" sm="12" md="3" @click="isFormDisbursement">
         <!-- <BalanceCard balance="50" actions /> -->
@@ -265,7 +265,6 @@ import { required, email } from "vuelidate/lib/validators";
 })
 export default class Transactions extends Vue {
   private panel: Array<number> = [0];
-
   private drawerDisbursement = false;
   private drawerTransferToFriend = false;
   private drawerFund = false;
@@ -299,8 +298,29 @@ export default class Transactions extends Vue {
 
   created() {
     this.$store.dispatch("MyOperations");
-    // this.$store.state.operationState.getOperations
+    this.$store.dispatch("MyBalance");
   }
+
+  get balance(): any {
+    const balance = new Intl.NumberFormat("de-DE", {
+      style: "currency",
+      currency: "USD"
+    }).format(this.$store.getters.getBlance);
+    return balance;
+  }
+
+  // getter to complete operations
+  get doneOperations(): Array<any> {
+    console.info(this.$store.getters.getDoneOperations);
+    return this.$store.getters.getDoneOperations;
+  }
+  // getter to pending operations
+  get pendingOperations(): Array<any> {
+    console.info(this.$store.getters.getPendingOperations);
+    return this.$store.getters.getPendingOperations;
+  }
+
+  // Dispatch actions to new disbursement
   private newDisbursement() {
     console.info("ADD disbursement");
   }
@@ -308,16 +328,7 @@ export default class Transactions extends Vue {
     return !this.disbursement || !this.mountDisbursement ? true : false;
   }
 
-  get doneOperations(): Array<any> {
-    console.info(this.$store.getters.getDoneOperations);
-    return this.$store.getters.getDoneOperations;
-  }
-
-  get pendingOperations(): Array<any> {
-    console.info(this.$store.getters.getPendingOperations);
-    return this.$store.getters.getPendingOperations;
-  }
-
+  // Dispatch actions to transfer to friend
   private newSendToFriend() {
     console.info("ADD send to friend");
   }
@@ -329,6 +340,7 @@ export default class Transactions extends Vue {
       : false;
   }
 
+  // Dispatch actions to make a fund
   private newFund() {
     console.info("ADD fund");
   }
