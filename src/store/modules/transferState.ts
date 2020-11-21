@@ -22,6 +22,7 @@ const transferState = {
         })
         .catch(error => {
           console.info(error);
+          Vue.$toast.error(`Hubo un error al intentar transferir`);
         });
     }
   }
