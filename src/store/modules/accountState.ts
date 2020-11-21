@@ -1,7 +1,5 @@
-
 import { Get, Update } from "@/services/user.service";
-import { Add as CreateFound } from "@/services/found.service"
-
+import { Add as CreateFound } from "@/services/found.service";
 
 import {
   Get as GetPayMethods,
@@ -55,22 +53,21 @@ const accountState = {
         });
     },
     createFound({ commit }: any, { pasarela, monto, method }: any) {
-      console.log({ pasarela, monto, method })
-      pasarela = pasarela.toLowerCase()
+      console.log({ pasarela, monto, method });
+      pasarela = pasarela.toLowerCase();
       CreateFound({ pasarela, monto })
         .then((response: any) => {
-          const { id,redireccion } = response.data.data;
-          console.log(response)
+          const { id, redireccion } = response.data.data;
+          console.log(response);
           if (pasarela === "stripe" && id) {
-            method.redirectToCheckout({ sessionId: id })
+            method.redirectToCheckout({ sessionId: id });
             response.data.status === 200 &&
-            Vue.$toast.success(`tus datos se han actualizado`);
+              Vue.$toast.success(`tus datos se han actualizado`);
           } else if (pasarela === "paypal" && redireccion) {
-            window.open(redireccion,"_self")
+            window.open(redireccion, "_self");
             response.data.status === 200 &&
-            Vue.$toast.success(`tus datos se han actualizado`);
+              Vue.$toast.success(`tus datos se han actualizado`);
           }
-         
         })
         .catch(error => {
           console.info(error);
