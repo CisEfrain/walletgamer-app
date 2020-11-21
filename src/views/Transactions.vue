@@ -252,7 +252,6 @@ import PendingCard from "@/components/transactions/PendingCard.vue";
 
 import { Validate } from "vuelidate-property-decorators";
 import { required, email } from "vuelidate/lib/validators";
-
 @Component({
   components: {
     BalanceCard,
@@ -260,12 +259,12 @@ import { required, email } from "vuelidate/lib/validators";
     TransactionItemList,
     ActionsCard,
     PendingCard,
-    AsideForm
-  }
+    AsideForm,
+  },
 })
 export default class Transactions extends Vue {
   private panel: Array<number> = [0];
-
+  private stripe = (window as any).Stripe(process.env.VUE_APP_STRIPE_PK);
   private drawerDisbursement = false;
   private drawerTransferToFriend = false;
   private drawerFund = false;
@@ -331,6 +330,29 @@ export default class Transactions extends Vue {
 
   private newFund() {
     console.info("ADD fund");
+    this.$store.dispatch("createFound", {
+      pasarela: this.fund,
+      monto: this.mountFund,
+      method:this.stripe
+    });
+/*     fetch(process.env.VUE_APP_API + "/create-session", {
+      method: "POST",
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(async (sessionId) => this.stripe.redirectToCheckout({ sessionId }))
+      .then(function (result) {
+        // If redirectToCheckout fails due to a browser or network
+        // error, you should display the localized error message to your
+        // customer using error.message.
+        if (result.error) {
+          alert(result.error.message);
+        }
+      })
+      .catch(function (error) {
+        console.error("Error:", error);
+      }); */
   }
   get isFundDisabled(): boolean {
     return !this.fund || !this.mountFund ? true : false;

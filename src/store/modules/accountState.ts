@@ -1,4 +1,7 @@
 import { Get, Update } from "@/services/user.service";
+import { Add as CreateFound } from "@/services/found.service"
+
+
 import {
   Get as GetPayMethods,
   Delete,
@@ -50,6 +53,24 @@ const accountState = {
           console.info(error);
           Vue.$toast.error(`No se ha podido agregar el metodo de pago`);
         });
+    },
+    createFound({ commit }: any, { pasarela, monto, method }: any) {
+      console.log({ pasarela, monto, method })
+      pasarela = pasarela.toLowerCase()
+      CreateFound({ pasarela, monto })
+        .then((response: any) => {
+          const { id } = response.data.data;
+          console.log(response)
+
+          method.redirectToCheckout({ sessionId: id })
+          response.data.status === 200 &&
+            Vue.$toast.success(`tus datos se han actualizado`);
+        })
+        .catch(error => {
+          console.info(error);
+          Vue.$toast.error(`Tus datos no se han podido actualizadar`);
+        });
+      // method.redirectToCheckout({ sessionId: });
     },
     getExpenditureData({ commit, state }: any): void {
       console.info("From get expenditureData", state.userData.id);
