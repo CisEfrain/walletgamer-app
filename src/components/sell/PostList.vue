@@ -11,10 +11,10 @@
                 </h3>
               </v-col>
               <v-col cols="4" md="5" sm="6">
-                <h4>{{ cost }}$ {{ isGold }}</h4>
+                <h4>$ {{ formatCurrency }} {{ isGold }}</h4>
               </v-col>
               <v-col cols="4" md="3" sm="6">
-                <h4>Disponible: {{ formatCurrency }}</h4>
+                <h4>Disponible: {{ isGoldQuantity }}</h4>
               </v-col>
             </v-row>
           </v-expansion-panel-header>
@@ -81,8 +81,17 @@ export default class PostList extends Vue {
   }
 
   get formatCurrency() {
+    const cost = parseInt(this.cost);
+    return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
+      cost
+    );
+  }
+
+  get formatGoldQuantity() {
     const quantity = parseInt(this.quantity);
-    return new Intl.NumberFormat().format(quantity);
+    return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
+      quantity
+    );
   }
 
   get isActive() {
@@ -91,6 +100,10 @@ export default class PostList extends Vue {
 
   get isGold(): any {
     return this.product === "Gold" ? "Por cada 100 de oro" : null;
+  }
+
+  get isGoldQuantity(): string {
+    return this.product === "Gold" ? this.formatGoldQuantity : this.quantity;
   }
 }
 </script>

@@ -17,8 +17,8 @@
             <div>Clase: {{ characterClass }}</div>
             <v-chip width=""> Nivel: {{ level }} </v-chip>
           </v-col>
-          <v-col cols="3" md="1" sm="3" class="d-flex justify-center">
-            <h2>{{ formatPrice }}$</h2>
+          <v-col cols="3" md="2" sm="3" class="d-flex justify-center">
+            <h2>$ {{ formatPrice }}</h2>
           </v-col>
           <v-col class="d-flex justify-center align-center">
             <div class="">
@@ -54,7 +54,9 @@ export default class CharactersItemList extends Vue {
 
   get formatPrice() {
     const price = parseInt(this.price);
-    return new Intl.NumberFormat().format(price);
+    return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
+      price
+    );
   }
   private buyCharacter() {
     this.$emit("click");

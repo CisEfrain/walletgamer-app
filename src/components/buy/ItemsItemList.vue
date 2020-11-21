@@ -16,7 +16,7 @@
             </v-chip>
           </v-col>
           <v-col cols="3" md="3" sm="6" class="d-flex flex-column align-center">
-            <h2>{{ formatPrice }}$</h2>
+            <h2>$ {{ formatPrice }}</h2>
             <small>Disponible: {{ formatAvailable }}</small>
           </v-col>
           <v-col
@@ -57,7 +57,7 @@ export default class ItemsItemList extends Vue {
 
   get formatPrice() {
     const price = parseInt(this.price);
-    return new Intl.NumberFormat().format(price);
+    return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(price);
   }
   get formatAvailable() {
     return new Intl.NumberFormat().format(this.available);

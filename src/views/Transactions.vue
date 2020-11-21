@@ -302,22 +302,20 @@ export default class Transactions extends Vue {
   }
 
   get balance(): any {
-    const balance = new Intl.NumberFormat("de-DE", {
-      style: "currency",
-      currency: "USD"
-    }).format(this.$store.getters.getBlance);
-    return balance;
+    return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
+      this.$store.getters.getBlance
+    );
   }
 
   // getter to complete operations
   get doneOperations(): Array<any> {
     console.info(this.$store.getters.getDoneOperations);
-    return this.$store.getters.getDoneOperations;
+    return this.$store.getters.getDoneOperations.reverse();
   }
   // getter to pending operations
   get pendingOperations(): Array<any> {
     console.info(this.$store.getters.getPendingOperations);
-    return this.$store.getters.getPendingOperations;
+    return this.$store.getters.getPendingOperations.reverse();
   }
 
   // Dispatch actions to new disbursement
@@ -330,7 +328,14 @@ export default class Transactions extends Vue {
 
   // Dispatch actions to transfer to friend
   private newSendToFriend() {
-    console.info("ADD send to friend");
+    const transferToFriend = {
+      beneficiario: this.sendToFriend,
+      monto: this.mountSendToFriend
+    };
+    this.$store.dispatch("TransferToFriend", transferToFriend);
+    this.$store.dispatch("MyOperations");
+    this.$store.dispatch("MyBalance");
+    this.drawerTransferToFriend = false;
   }
   get isSendToFriendDisabled(): boolean {
     return this.sendToFriend.length < 7 ||

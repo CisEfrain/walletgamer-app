@@ -6,7 +6,7 @@
       </v-row>
       <v-row class="px-3 mt-3 mb-less" align="center">
         <v-col>
-          <h2 class="balance-currency">{{ balance }}</h2>
+          <h2 class="balance-currency">$ {{ balance }}</h2>
         </v-col>
       </v-row>
       <v-row v-show="hasActions">
