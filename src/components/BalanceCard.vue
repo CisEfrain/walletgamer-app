@@ -2,7 +2,7 @@
   <v-row class="d-flex justify-center">
     <BaseCardContainer class="balance-height-card">
       <v-row class="px-6 pt-4 mb-less" align="center">
-        <h3 class="title">Saldo Disponible</h3>
+        <h3 class="main-title">Saldo Disponible</h3>
       </v-row>
       <v-row class="px-3 mt-3 mb-less" align="center">
         <v-col>
@@ -48,7 +48,7 @@ export default class BalanceCard extends Vue {
 <style lang="sass" scoped>
 
 .card-container
-  font-family: "Nunito Sans", "Helvetica Neue", Helvetica, Arial
+  font-family: $body-font-family, sans-serif !important
   border-radius: 2em
   padding: 4px 16px
   min-width: 90%
@@ -59,7 +59,7 @@ export default class BalanceCard extends Vue {
   box-shadow: 0px 5px 18px -12px rgba(0, 0, 0, 0.8)
 
 .balance-currency
-  font-size: 44px
+  font-size: 32px
   color: $card-link
 
 .mb-less

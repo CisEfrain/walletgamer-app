@@ -12,6 +12,7 @@
           dense
           class="select-field"
           @change="filterGold"
+          background-color="white"
         ></v-select>
       </v-col>
       <v-col class="d-flex" cols="3" sm="3">
@@ -25,6 +26,7 @@
           dense
           class="select-field"
           @change="filterGold"
+          background-color="white"
         ></v-select>
       </v-col>
     </v-row>

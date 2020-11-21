@@ -26,6 +26,7 @@
           @input="$v.faction.$touch()"
           @blur="$v.faction.$touch()"
           required
+          background-color="white"
           rounded
           color="rgba(184,12,70,.6)"
           dense

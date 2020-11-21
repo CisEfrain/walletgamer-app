@@ -54,8 +54,8 @@ export default class BaseButton extends Vue {
 </script>
 
 <style lang="sass" scoped>
-.button 
-  font-family: "Nunito Sans", "Helvetica Neue", Helvetica, Arial, sans-serif
+.button
+  font-family:$body-font-family, sans-serif !important
   font-weight: 600
   border: 0
   border-radius: 3em
@@ -67,43 +67,42 @@ export default class BaseButton extends Vue {
   min-width: 140px
   color: rgb(71, 69, 69)
 
-.button--primary 
+.button--primary
   color: rgb(252, 248, 248)
   background: rgb(223,83,83)
   background: linear-gradient(90deg, rgba(223,83,83,1) 0%, rgba(184,12,70,1) 84%)
 
-.button--secondary 
+.button--secondary
   color: rgba(184,12,70,1)
   background-color: transparent
   box-shadow: rgba(184,12,70,1) 0px 0px 0px 1.5px inset
 
 
-.button--dark 
+.button--dark
   color: white
   background: rgb(54,53,53)
   background: linear-gradient(90deg, rgba(54,53,53,1) 0%, rgba(41,38,38,1) 91%)
 
 
-.button--light 
+.button--light
   color: rgb(71, 69, 69)
   background: rgb(226,217,217)
   background: linear-gradient(90deg, rgba(226,217,217,1) 0%, rgba(233,189,204,1) 84%)
 
 
-.button--small 
+.button--small
   font-size: 12px
   padding: 8px
   min-width: 100px
 
 
-.button--medium 
+.button--medium
   font-size: 14px
   padding: 12px 20px
 
 
-.button--full 
+.button--full
   width: 100%
   text-align: center
   padding: 12px 24px
-
 </style>

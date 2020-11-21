@@ -14,7 +14,8 @@
           color="btn-gradient"
           class="button button--primary button--medium mt-4 px-6"
           @click="hasDialog"
-        >Confirmar</v-btn>
+          >Confirmar</v-btn
+        >
       </v-row>
     </BaseCardContainer>
   </v-dialog>

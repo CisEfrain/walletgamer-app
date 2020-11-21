@@ -1,7 +1,7 @@
 <template>
   <v-container class="mt-8 px-12">
     <v-row class="px-4">
-      <h2 class="title">Medios de desembolso</h2>
+      <h2 class="main-title">Medios de desembolso</h2>
     </v-row>
 
     <v-row align="center" justify="center" class="mt-6">
@@ -18,6 +18,7 @@
           rounded
           color="rgba(184,12,70,.6)"
           dense
+          background-color="white"
         ></v-select>
       </v-col>
       <v-col class="d-flex" cols="6" sm="6" md="3">

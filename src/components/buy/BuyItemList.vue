@@ -12,6 +12,7 @@
           class="select-field"
           @change="filterItem"
           v-model="itemSelected"
+          background-color="white"
         ></v-select>
       </v-col>
       <v-col class="d-flex" cols="3" sm="3">
@@ -25,6 +26,7 @@
           class="select-field"
           @change="filterItem"
           v-model="factionSelected"
+          background-color="white"
         ></v-select>
       </v-col>
     </v-row>

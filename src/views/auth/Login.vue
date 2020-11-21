@@ -4,7 +4,7 @@
       <img class="logo" src="../../assets/logo.png" alt="Logo Admin" />
     </v-row>
     <v-row class="mt-12" align="center" justify="center">
-      <h3 class="mt-12 title">Ingreso a tu cuenta Gamer</h3>
+      <h3 class="mt-12 main-title">Ingreso a tu cuenta Gamer</h3>
     </v-row>
 
     <hr class="custom-divider mt-4 mb-4" />

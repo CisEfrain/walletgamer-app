@@ -4,7 +4,7 @@
       <img class="logo" src="../../assets/logo.png" alt="Logo Admin" />
     </v-row>
     <v-row class="mt-12" align="center" justify="center">
-      <h3 class="mt-12 title">Registro de Gamers</h3>
+      <h3 class="mt-12 main-title">Registro de Gamers</h3>
     </v-row>
 
     <div class="custom-divider mt-1 mb-4"></div>

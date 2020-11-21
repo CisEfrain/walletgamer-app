@@ -12,6 +12,7 @@
           class="select-field"
           @change="filterCharacter"
           v-model="realmSelected"
+          background-color="white"
         ></v-select>
       </v-col>
       <v-col class="d-flex" cols="3" sm="3">
@@ -25,6 +26,7 @@
           class="select-field"
           @change="filterCharacter"
           v-model="factionSelected"
+          background-color="white"
         ></v-select>
       </v-col>
       <v-col class="d-flex" cols="3" sm="2">
@@ -38,6 +40,7 @@
           class="select-field"
           @change="filterCharacter"
           v-model="classSelected"
+          background-color="white"
         ></v-select>
       </v-col>
       <v-col class="d-flex" cols="3" sm="2">
@@ -51,6 +54,7 @@
           class="select-field"
           @change="filterCharacter"
           v-model="levelSelected"
+          background-color="white"
         ></v-select>
       </v-col>
     </v-row>

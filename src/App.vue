@@ -23,15 +23,27 @@ export default Vue.extend({
 });
 </script>
  <style lang="sass">
+
+@import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800;900&display=swap')
 @import './scss/variables.scss'
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;800&display=swap')
+
+.v-application
+  font-family: $body-font-family, sans-serif !important
+
+.v-application .headline, .v-application .title
+    line-height: 2rem
+    font-family: $body-font-family, sans-serif !important
 
 #app
   background-color: #f3f3f3
-  font-family: "Nunito Sans", sans-serif
+  font-family: $body-font-family, sans-serif !important
+
+*
+  font-family: $body-font-family, sans-serif !important
 
 .title
   color: $title
+  font-family: $body-font-family, sans-serif !important
   font-weight: 600
 
 .v-container

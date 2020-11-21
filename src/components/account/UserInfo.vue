@@ -1,7 +1,7 @@
 <template>
   <v-container class="mt-8 px-12">
     <v-row class="px-4">
-      <h2 class="title">Mis datos</h2>
+      <h2 class="main-title">Mis datos</h2>
     </v-row>
     <v-row align="center" justify="space-between" class="mt-6 mb-less">
       <v-col class="d-flex" cols="6" sm="6" md="3">

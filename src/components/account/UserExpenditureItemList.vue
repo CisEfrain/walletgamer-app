@@ -4,7 +4,7 @@
       <BaseCardContainer class="py-2">
         <v-row class="px-4" align="center" justify="center">
           <v-col cols="3" sm="6" md="2">
-            <h4 class="title">{{ alias }}</h4>
+            <h4 class="main-title">{{ alias }}</h4>
           </v-col>
           <v-col class="d-flex" cols="3" sm="6" md="2">
             <v-chip color="blue-grey darken-3" dark>

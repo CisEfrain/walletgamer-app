@@ -37,7 +37,7 @@
 
           <v-stepper-items>
             <v-stepper-content step="1">
-              <h3 class="mb-4 title text-center">
+              <h3 class="mb-4 main-title text-center">
                 Ingresa los detalles de tu compra de
                 {{ $store.state.activeProduct }} World Warcraft Classic
               </h3>
@@ -139,7 +139,7 @@
               </v-row>
               <v-row justify="center">
                 <v-col cols="12">
-                  <h3 class="title text-center">
+                  <h3 class="main-title text-center">
                     Muy bien, ahora espera que
                     <b>Carlos Gomez</b> te haya transferido los 500 de Oro
                   </h3>
@@ -179,7 +179,7 @@
               </v-row>
               <v-row justify="center">
                 <v-col cols="12">
-                  <h3 class="title text-center">
+                  <h3 class="main-title text-center">
                     <b>Carlos Gomez</b> ha notificado la transferencia de 500 de
                     Oro a tu cuenta
                   </h3>
@@ -246,13 +246,13 @@
                 <v-col cols="12">
                   <h3
                     v-if="!$store.state.paymentState.errorReported"
-                    class="title text-center"
+                    class="main-title text-center"
                   >
                     Perfecto..!!! hemos terminado la operación
                   </h3>
                   <h3
                     v-if="$store.state.paymentState.errorReported"
-                    class="title text-center"
+                    class="main-title text-center"
                   >
                     Tu operación está en mediación
                   </h3>
@@ -271,7 +271,7 @@
     </v-row>
     <v-row>
       <v-col cols="12 mb-0 pb-0">
-        <h3 class="title">Historial de la operación</h3>
+        <h3 class="main-title">Historial de la operación</h3>
       </v-col>
     </v-row>
     <v-row justify="start" class="mt-0 pt-0">
