@@ -13,6 +13,7 @@
           required
           rounded
           color="rgba(184,12,70,.6)"
+          background-color="white"
           dense
         ></v-select>
       </v-col>
@@ -28,6 +29,7 @@
           required
           rounded
           color="rgba(184,12,70,.6)"
+          background-color="white"
           dense
         ></v-select>
       </v-col>

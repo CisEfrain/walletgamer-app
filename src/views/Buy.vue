@@ -5,11 +5,11 @@
         to payment
       </a>
     </h2>
-    <v-row align="center" justify="center">
-      <h3 class="mt-12 mb-4 title">¿Qué te interesa comprar?</h3>
+    <v-row align="center" justify="start">
+      <h3 class="mt-12 mb-4 main-title">¿Qué te interesa comprar?</h3>
     </v-row>
 
-    <v-row class="d-flex justify-center">
+    <v-row align="center" class="responsive-card ml-1">
       <ProductCard
         v-for="(product, $index) in productList"
         :key="$index"
@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 
 import ProductCard from "@/components/ProductCard.vue";
 import BuyGoldList from "@/components/buy/BuyGoldList.vue";

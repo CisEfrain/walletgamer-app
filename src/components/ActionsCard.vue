@@ -9,7 +9,7 @@
       </v-row>
       <v-row class="pt-4" align="center">
         <v-col class="text-center">
-          <h3 class="title">{{ actions }}</h3>
+          <h3 class="main-title">{{ actions }}</h3>
         </v-col>
       </v-row>
       <!-- <v-row v-show="hasActions">
@@ -51,7 +51,7 @@ export default class ActionsCard extends Vue {
 <style lang="sass" scoped>
 
 .card-container
-  font-family: "Nunito Sans", "Helvetica Neue", Helvetica, Arial
+  font-family:$body-font-family, sans-serif !important
   border-radius: 2em
   padding: 4px 16px
   min-width: 90%

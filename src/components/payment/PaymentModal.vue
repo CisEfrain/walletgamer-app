@@ -7,7 +7,7 @@
     <BaseCardContainer>
       <v-spacer></v-spacer>
       <v-row justify="center">
-        <v-col cols="10" md="7" class="my-4 text-center title">
+        <v-col cols="10" md="7" class="my-4 text-center main-title">
           <h6 style="line-height:1.2rem; ">
             Paga seguro con tu tarjeta
             de crédito mediante Stripe

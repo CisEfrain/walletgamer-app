@@ -5,11 +5,11 @@
         to sellment
       </a>
     </h2>
-    <v-row align="center" justify="center">
-      <h3 class="mt-12 mb-4 title text-center">¿Qué te interesa vender?</h3>
+    <v-row align="center" justify="start">
+      <h3 class="mt-12 mb-4 main-title text-center">¿Qué te interesa vender?</h3>
     </v-row>
 
-    <v-row class="d-flex align-content-center justify-center mb-1">
+    <v-row align="center" justify="start" class="mb-1 ml-1">
       <ProductCard
         v-for="(product, $index) in productList"
         :key="$index"
@@ -81,7 +81,7 @@
     </div>
 
     <div v-else class="mt-10">
-      <h3 class="title">Ingresa las caracteristicas de tu publicación</h3>
+      <h3 class="main-title">Ingresa las caracteristicas de tu publicación</h3>
       <transition name="slide-fade">
         <keep-alive>
           <component

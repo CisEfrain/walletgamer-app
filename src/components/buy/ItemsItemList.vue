@@ -4,7 +4,7 @@
       <BaseCardContainer>
         <v-row class="px-4" align="center" justify="space-between">
           <v-col cols="3" md="2" sm="12" class="text-center">
-            <h4 class="title">{{ user }}</h4>
+            <h4 class="main-title">{{ user }}</h4>
             <small>Rango: {{ rank }}</small>
           </v-col>
           <v-col class="text-center" cols="3" md="3" sm="6">

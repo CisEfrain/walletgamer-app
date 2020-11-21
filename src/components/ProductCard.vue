@@ -1,8 +1,8 @@
 <template>
-  <v-col cols="4" md="4" sm="12" class="d-flex justify-center">
+  <v-col cols="4" md="3" sm="12" class="responsive-card">
     <v-card
       :class="isActive"
-      class="mx-3 d-flex flex-column align-center pb-4 card-radius"
+      class="d-flex flex-column align-center pb-4 card-radius"
       width="240"
       elevation="4"
       @click="isSelected()"
@@ -45,6 +45,7 @@ export default class ProductCard extends Vue {
   color: #fff
   margin-bottom: -14px
   font-weight: 800
+  font-family: $body-font-family, sans-serif !important
 
 .card-radius
   border-radius: 28px
@@ -56,4 +57,9 @@ export default class ProductCard extends Vue {
 
 .active-card
   background: $card-link
+
+@media (max-width: 768px)
+  .responsive-card
+    display: flex
+    justify-content: center
 </style>

@@ -37,7 +37,7 @@
 
           <v-stepper-items>
             <v-stepper-content step="1">
-              <h3 class="mb-4 title text-center">
+              <h3 class="mb-4 main-title text-center">
                 Ingresa los detalles de tu venta de
                 {{ $store.state.activeProduct }} World Warcraft Classic
               </h3>
@@ -139,7 +139,7 @@
               </v-row>
               <v-row justify="center">
                 <v-col cols="12">
-                  <h3 class="title text-center">
+                  <h3 class="main-title text-center">
                     Enhorabuena, haz vendido 500 de oro a
                     <b>Fulano de tal</b>
                   </h3>
@@ -198,7 +198,7 @@
               </v-row>
               <v-row justify="center">
                 <v-col cols="12">
-                  <h3 class="title text-center">
+                  <h3 class="main-title text-center">
                     Muy bien, espera que Fulano de tal confirme la transferencia
                     de 500 de oro
                   </h3>
@@ -249,7 +249,7 @@
                   cols="12"
                   v-if="!$store.state.sellmentState.errorReportedSell"
                 >
-                  <h3 class="title text-center">
+                  <h3 class="main-title text-center">
                     Perfecto..!!! hemos terminado la operación
                   </h3>
                   <p class="text-center">
@@ -261,7 +261,7 @@
                   cols="12"
                   v-if="$store.state.sellmentState.errorReportedSell"
                 >
-                  <h3 class="title text-center">
+                  <h3 class="main-title text-center">
                     Tu operación está en mediación
                   </h3>
                   <p class="text-center">
@@ -276,7 +276,7 @@
     </v-row>
     <v-row>
       <v-col cols="12 mb-0 pb-0">
-        <h3 class="title">Historial de la operación</h3>
+        <h3 class="main-title">Historial de la operación</h3>
       </v-col>
     </v-row>
     <v-row justify="start" class="mt-0 pt-0">

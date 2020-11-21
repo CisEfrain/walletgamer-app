@@ -15,6 +15,7 @@
           rounded
           color="rgba(184,12,70,.6)"
           dense
+          background-color="white"
         ></v-select>
       </v-col>
       <v-col class="d-flex">
@@ -28,6 +29,7 @@
           @blur="$v.faction.$touch()"
           required
           rounded
+          background-color="white"
           color="rgba(184,12,70,.6)"
           dense
         ></v-select>
@@ -44,6 +46,7 @@
           required
           rounded
           color="rgba(184,12,70,.6)"
+          background-color="white"
           dense
         ></v-select>
       </v-col>
