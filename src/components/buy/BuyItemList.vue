@@ -33,7 +33,7 @@
       v-for="(itemPost, $index) in showFiltered"
       :key="itemPost.id"
       :user="itemPost.usuario.nombre"
-      :rank="itemPost.rango || 'Pollo'"
+      :rank="itemPost.usuario.rango || 'Pollo'"
       :faction="itemPost.faccion"
       :price="itemPost.precio"
       :item="itemPost.descripcion"

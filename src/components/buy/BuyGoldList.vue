@@ -33,7 +33,7 @@
       v-for="(goldPost, $index) in showFiltered"
       :key="goldPost.id"
       :user="goldPost.usuario.nombre"
-      :rank="goldPost.rango || 'Pollo'"
+      :rank="goldPost.usuario.rango || 'Pollo'"
       :kingdom="goldPost.reino"
       :faction="goldPost.faccion"
       :price="goldPost.precio"
@@ -70,7 +70,7 @@ export default class BuyGoldList extends Vue {
   }
 
   get postGoldList(): Array<unknown> {
-    return this.$store.getters.getGoldPostList;
+    return this.$store.getters.getGoldPostList.reverse();
   }
 
   get showFiltered(): any {
