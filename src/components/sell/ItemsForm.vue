@@ -99,7 +99,7 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/camelcase */
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import { Validate } from "vuelidate-property-decorators";
 import { required, minLength, minValue } from "vuelidate/lib/validators";
 
@@ -108,13 +108,13 @@ export default class ItemsForm extends Vue {
   @Validate({ required }) item = null;
   @Validate({ required }) faction = null;
   @Validate({ required, minLength: minLength(1), minValue: minValue(1) })
-  quantity = null;
+  quantity!: number | string;
   @Validate({ required, minLength: minLength(1) }) price = null;
 
   public comision: any;
   public getPrice = 0;
 
-  get totalPrice(): any {
+  get totalPrice(): unknown {
     return new Intl.NumberFormat().format(this.getPrice);
   }
   private calculateComision(e: any): void {
@@ -128,7 +128,7 @@ export default class ItemsForm extends Vue {
     this.comision = this.$store.getters.getItemsPostData;
     return this.$store.getters.getItemsPostData;
   }
-  get netPrice(): number {
+  get netPrice(): any {
     return Object.is(NaN, this.getPrice) ? 0 : this.totalPrice;
   }
 
@@ -164,7 +164,7 @@ export default class ItemsForm extends Vue {
     this.$v.$reset();
     this.item = null;
     this.faction = null;
-    this.quantity = null;
+    this.quantity = "";
     this.price = null;
   }
 
@@ -191,7 +191,7 @@ export default class ItemsForm extends Vue {
     if (!this.$v.quantity.$dirty) return errors;
     !this.$v.quantity.minLength && errors.push("Minimo de caracteres 1");
     !this.$v.quantity.required && errors.push("El campo es requerido");
-    !this.$v.quantity.minValue && errors.push("Minimo 1 item")
+    !this.$v.quantity.minValue && errors.push("Minimo 1 item");
     return errors;
   }
   get priceErrors(): Array<string> {
