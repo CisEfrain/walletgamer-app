@@ -1,7 +1,7 @@
 import { GetOperations } from "@/services/operation.service";
 const operationState = {
   state: () => ({
-    operations: []
+    operations: [],
   }),
   mutations: {
     resetData(state: any): void {
@@ -21,7 +21,7 @@ const operationState = {
     MyOperations({ commit }: any): void {
       GetOperations()
         .then((response: any) => {
-          console.info("from get general data", response);
+          console.info("from my operations data", response);
           commit("setOperationData", response.data.data);
         })
         .catch(error => {
@@ -30,10 +30,20 @@ const operationState = {
     }
   },
   getters: {
-    getOperations: (state: { data: any }) => {
-      const res = state.data.operations;
+    getOperations: (state: { operations: any }) => {
+      const res = state.operations;
       console.log("my operations ", res);
       return res;
+    },
+    getDoneOperations: (state: { operations: Array<any>  }) => {
+      return state.operations.filter(
+        (operation: any) => operation.transaccione.estado !== "Pendiente"
+      );
+    },
+    getPendingOperations: (state: { operations: Array<any>  }) => {
+      return state.operations.filter(
+        (operation: any) => operation.transaccione.estado === "Pendiente"
+      );
     }
   }
 };

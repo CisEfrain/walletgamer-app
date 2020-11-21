@@ -5,25 +5,28 @@
         <v-expansion-panel class="bg-transparent">
           <v-expansion-panel-header>
             <v-row align="center" justify="start">
-              <v-col cols="4" md="2" sm="4" class="text-center">
-                <p>ID: {{ transaction_id }}</p>
-                <h4>{{ transaction_date }}</h4>
+              <v-col cols="4" md="2" sm="8" class="text-center">
+                <h4>{{ formatDate }}</h4>
               </v-col>
-              <v-col cols="6" md="2" sm="3" class="">
+              <v-col cols="6" md="2" sm="4" class="">
                 <v-chip class="info">
                   {{ type }}
                 </v-chip>
               </v-col>
-              <v-col cols="6" md="4" sm="5">
+              <v-col class="text-center" cols="6" md="4" sm="8">
                 <h3 class="transaction-title mt-1">{{ product }}</h3>
+                <p>
+                  ID:
+                  <small>{{ transaction_id }}</small>
+                </p>
               </v-col>
-              <v-col cols="6" md="2" sm="6">
-                <h3>{{ cost }} $</h3>
+              <v-col class="text-center" cols="6" md="2" sm="4">
+                <h2>{{ cost }} $</h2>
               </v-col>
               <v-col
                 cols="12"
                 md="2"
-                sm="6"
+                sm="12"
                 class="d-flex justify-center align-center"
               >
                 <v-chip :class="hasStatus">
@@ -35,15 +38,10 @@
           <v-expansion-panel-content>
             <v-row class="px-4" align="center" justify="space-between">
               <v-col cols="12" md="6" sm="6">
-                <p>Descripción...</p>
-                <!-- <p>Reino: {{ realm }}</p>
-                <p>Facción: {{ faction }}</p> -->
+                <p>
+                  {{ description.length > 1 ? description : "Sin descripción" }}
+                </p>
               </v-col>
-              <!-- <v-col cols="12" md="6" sm="6" class="d-flex justify-end">
-                <v-btn text small color="error"
-                  ><b>Ver detalles de la operación</b></v-btn
-                >
-              </v-col> -->
             </v-row>
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -65,18 +63,22 @@ import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
 export default class TransactionItemList extends Vue {
   @Prop({ required: true, type: String }) readonly product!: string;
   @Prop({ required: true, type: String }) readonly transaction_date!: string;
-  @Prop({ required: true, type: String }) readonly cost!: string;
+  @Prop({ required: true, type: Number }) readonly cost!: number;
   @Prop({ required: true, type: String }) readonly type!: string;
   @Prop({ required: true, type: String }) readonly status!: string;
   @Prop({ required: true, type: String }) readonly transaction_id!: string;
-  // @Prop({ required: true, type: String }) readonly faction!: string;
+  @Prop({ type: String }) readonly description!: string;
 
   //Computed
   get hasStatus(): any {
-    if (this.status === "Completa") return `success`;
+    if (this.status === "Completado") return `success`;
 
-    if (this.status === "Anulada") return "error";
+    if (this.status === "Anulado") return "error";
     else return "warning";
+  }
+
+  get formatDate(): string {
+    return new Date(this.transaction_date).toLocaleDateString();
   }
 }
 </script>

@@ -27,24 +27,20 @@
 
     <v-row class="px-5" justify="center">
       <v-col cols="12">
-        <v-expansion-panels v-model="panel" multiple flat>
-          <PendingCard
-            product="Gold World of Warcraft"
-            transaction_date="10/12/2020"
-            transaction_id="00225588"
-            cost="20"
-            status="Completa"
-            type="Venta"
-          />
-          <PendingCard
-            product="Gold World of Warcraft"
-            transaction_date="10/12/2020"
-            transaction_id="00225599"
-            cost="20"
-            type="Venta"
-            status="Anulada"
-          />
-        </v-expansion-panels>
+        <PendingCard
+          v-for="pendingOperation in pendingOperations"
+          :key="pendingOperation.id"
+          product="Gold World of Warcraft"
+          :transaction_date="
+            pendingOperation.transaccione.createdAt
+              .slice(0, 10)
+              .replace(/-/g, '/')
+          "
+          :transaction_id="pendingOperation.transaccione.identificador"
+          :cost="pendingOperation.transaccione.monto"
+          :status="pendingOperation.transaccione.estado"
+          :type="pendingOperation.tipo"
+        />
       </v-col>
     </v-row>
 
@@ -58,12 +54,15 @@
       <v-col cols="12">
         <v-expansion-panels v-model="panel" multiple flat>
           <TransactionItemList
+            v-for="doneOperation in doneOperations"
+            :key="doneOperation.id"
             product="Gold World of Warcraft"
-            transaction_date="10/12/2020"
-            transaction_id="00225588"
-            cost="20"
-            status="Completa"
-            type="Venta"
+            :transaction_date="doneOperation.transaccione.createdAt"
+            :transaction_id="doneOperation.transaccione.identificador"
+            :cost="doneOperation.transaccione.monto"
+            :status="doneOperation.transaccione.estado"
+            :type="doneOperation.tipo"
+            :description="doneOperation.transaccione.descripcion"
           />
         </v-expansion-panels>
       </v-col>
@@ -307,6 +306,16 @@ export default class Transactions extends Vue {
   }
   get isDisbursementDisabled(): boolean {
     return !this.disbursement || !this.mountDisbursement ? true : false;
+  }
+
+  get doneOperations(): Array<any> {
+    console.info(this.$store.getters.getDoneOperations);
+    return this.$store.getters.getDoneOperations;
+  }
+
+  get pendingOperations(): Array<any> {
+    console.info(this.$store.getters.getPendingOperations);
+    return this.$store.getters.getPendingOperations;
   }
 
   private newSendToFriend() {
