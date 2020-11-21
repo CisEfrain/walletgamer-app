@@ -41,8 +41,7 @@ const accountState = {
   },
   actions: {
     setNewExpenditureData({ commit, state }: any, payload: any): void {
-      console.info(state.userData.id);
-      Add(payload, state.userData.id)
+      Add(payload)
         .then((response: any) => {
           console.info("from setnewexpenditure", response);
           response.data.status === 200 &&

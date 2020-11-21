@@ -21,11 +21,10 @@ import axios from "@/services/Base.service";
 const resource = "pasarelas";
 
 
-export const Add = async (data: any, userId: number):Promise<any> => {
-	console.info(userId)
+export const Add = async (data: any):Promise<any> => {
 	const jwt = localStorage.getItem("jwt")
 	const header = {headers:{ Authorization: "Bearer " + jwt }};
-	return await axios.post(`${resource}/${userId}`,data, header);
+	return await axios.post(`${resource}`,data, header);
 }
 
 export const Get = async ():Promise<any> => {

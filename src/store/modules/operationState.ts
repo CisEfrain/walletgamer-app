@@ -1,7 +1,8 @@
-import { GetOperations } from "@/services/operation.service";
+import { GetOperations, GetBalance } from "@/services/operation.service";
 const operationState = {
   state: () => ({
     operations: [],
+    balance: 0
   }),
   mutations: {
     resetData(state: any): void {
@@ -9,6 +10,9 @@ const operationState = {
     },
     setOperationData(state: any, payload: any): void {
       state.operations = payload;
+    },
+    setBalance(state: any, payload:any): void {
+      state.balance = payload;
     }
   },
   actions: {
@@ -23,6 +27,16 @@ const operationState = {
         .then((response: any) => {
           console.info("from my operations data", response);
           commit("setOperationData", response.data.data);
+        })
+        .catch(error => {
+          console.info(error);
+        });
+    },
+    MyBalance({ commit }: any): void {
+      GetBalance()
+        .then((response: any) => {
+          console.info("from my balance data", response);
+          commit("setBalance", response.data.data.saldo);
         })
         .catch(error => {
           console.info(error);
@@ -44,6 +58,9 @@ const operationState = {
       return state.operations.filter(
         (operation: any) => operation.transaccione.estado === "Pendiente"
       );
+    },
+    getBlance: (state: { balance: number }) => {
+      return state.balance;
     }
   }
 };

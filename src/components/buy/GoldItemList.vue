@@ -14,7 +14,7 @@
             </v-chip>
           </v-col>
           <v-col cols="3" md="4" sm="6">
-            <h5>{{ formatPrice }}$ por cada 100 de gold</h5>
+            <h5>$ {{ formatPrice }} por cada 100 de gold</h5>
             <small>Disponible: {{ formatAvailable }}</small>
           </v-col>
           <v-col
@@ -54,7 +54,7 @@ export default class GoldItemList extends Vue {
 
   get formatPrice() {
     const price = parseInt(this.price);
-    return new Intl.NumberFormat().format(price);
+    return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(price);
   }
   get formatAvailable() {
     return new Intl.NumberFormat().format(this.available);

@@ -19,7 +19,7 @@
             </p>
           </v-col>
           <v-col class="text-center" cols="6" md="2" sm="4">
-            <h2>{{ cost }} $</h2>
+            <h2>$ {{ formatedCost }}</h2>
           </v-col>
         </v-row>
       </BaseCardContainer>
@@ -50,6 +50,12 @@ export default class PendingCard extends Vue {
 
     if (this.status === "Error") return "error";
     else return "error";
+  }
+
+  get formatedCost(): string {
+    return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
+      this.cost
+    );
   }
 
   get hasTransactionId(): boolean {

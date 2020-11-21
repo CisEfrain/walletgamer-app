@@ -3,7 +3,7 @@
     <v-row class="px-8" justify="space-around" align="center">
       <v-col cols="12" sm="12" md="3">
         <!-- <BalanceCard balance="50" actions /> -->
-        <BalanceCard balance="50" />
+        <BalanceCard :balance="balance" />
       </v-col>
       <v-col cols="12" sm="12" md="3" @click="isFormDisbursement">
         <!-- <BalanceCard balance="50" actions /> -->
@@ -19,7 +19,12 @@
       </v-col>
     </v-row>
 
-    <v-row class="px-8 mt-6" align="center" justify="space-between">
+    <v-row
+      class="px-8 mt-6"
+      align="center"
+      justify="space-between"
+      v-if="pendingOperations.length > 0"
+    >
       <v-col cols="12" sm="12" md="6">
         <h3 class="title">Mis Operaciones en curso</h3>
       </v-col>
@@ -44,7 +49,12 @@
       </v-col>
     </v-row>
 
-    <v-row class="px-8 mt-6" align="center" justify="space-between">
+    <v-row
+      class="px-8 mt-6"
+      align="center"
+      justify="space-between"
+      v-if="doneOperations.length > 0"
+    >
       <v-col cols="12" sm="12" md="6">
         <h3 class="title">Historial de operaciones</h3>
       </v-col>
@@ -298,8 +308,27 @@ export default class Transactions extends Vue {
 
   created() {
     this.$store.dispatch("MyOperations");
-    // this.$store.state.operationState.getOperations
+    this.$store.dispatch("MyBalance");
   }
+
+  get balance(): any {
+    return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
+      this.$store.getters.getBlance
+    );
+  }
+
+  // getter to complete operations
+  get doneOperations(): Array<any> {
+    console.info(this.$store.getters.getDoneOperations);
+    return this.$store.getters.getDoneOperations.reverse();
+  }
+  // getter to pending operations
+  get pendingOperations(): Array<any> {
+    console.info(this.$store.getters.getPendingOperations);
+    return this.$store.getters.getPendingOperations.reverse();
+  }
+
+  // Dispatch actions to new disbursement
   private newDisbursement() {
     console.info("ADD disbursement");
   }
@@ -307,18 +336,16 @@ export default class Transactions extends Vue {
     return !this.disbursement || !this.mountDisbursement ? true : false;
   }
 
-  get doneOperations(): Array<any> {
-    console.info(this.$store.getters.getDoneOperations);
-    return this.$store.getters.getDoneOperations;
-  }
-
-  get pendingOperations(): Array<any> {
-    console.info(this.$store.getters.getPendingOperations);
-    return this.$store.getters.getPendingOperations;
-  }
-
+  // Dispatch actions to transfer to friend
   private newSendToFriend() {
-    console.info("ADD send to friend");
+    const transferToFriend = {
+      beneficiario: this.sendToFriend,
+      monto: this.mountSendToFriend
+    };
+    this.$store.dispatch("TransferToFriend", transferToFriend);
+    this.$store.dispatch("MyOperations");
+    this.$store.dispatch("MyBalance");
+    this.drawerTransferToFriend = false;
   }
   get isSendToFriendDisabled(): boolean {
     return this.sendToFriend.length < 7 ||
@@ -328,6 +355,7 @@ export default class Transactions extends Vue {
       : false;
   }
 
+  // Dispatch actions to make a fund
   private newFund() {
     console.info("ADD fund");
     this.$store.dispatch("createFound", {

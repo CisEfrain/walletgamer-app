@@ -22,7 +22,12 @@ import UserExpenditure from "@/components/account/UserExpenditure.vue";
     UserExpenditure
   }
 })
-export default class Account extends Vue {}
+export default class Account extends Vue {
+  created(){
+    this.$store.dispatch("setUserData");
+    this.$store.dispatch("getExpenditureData");
+  }
+}
 </script>
 
 <style></style>

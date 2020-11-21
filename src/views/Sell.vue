@@ -189,7 +189,7 @@ export default class Sell extends Vue {
   }
 
   get postList(): any {
-    return this.$store.getters.getPostList;
+    return this.$store.getters.getPostList.reverse();
   }
 
   get productListSelected(): any {

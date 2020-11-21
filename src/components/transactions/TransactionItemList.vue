@@ -21,7 +21,7 @@
                 </p>
               </v-col>
               <v-col class="text-center" cols="6" md="2" sm="4">
-                <h2>{{ cost }} $</h2>
+                <h2>$ {{ formatedCost }}</h2>
               </v-col>
               <v-col
                 cols="12"
@@ -39,7 +39,7 @@
             <v-row class="px-4" align="center" justify="space-between">
               <v-col cols="12" md="6" sm="6">
                 <p>
-                  {{ description.length > 1 ? description : "Sin descripción" }}
+                  {{ description ? description : "Sin descripción" }}
                 </p>
               </v-col>
             </v-row>
@@ -62,7 +62,7 @@ import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
 })
 export default class TransactionItemList extends Vue {
   @Prop({ required: true, type: String }) readonly product!: string;
-  @Prop({ required: true, type: String }) readonly transaction_date!: string;
+  @Prop({ required: true }) readonly transaction_date!: any;
   @Prop({ required: true, type: Number }) readonly cost!: number;
   @Prop({ required: true, type: String }) readonly type!: string;
   @Prop({ required: true, type: String }) readonly status!: string;
@@ -71,10 +71,16 @@ export default class TransactionItemList extends Vue {
 
   //Computed
   get hasStatus(): any {
-    if (this.status === "Completado") return `success`;
+    if (this.status === "Completada") return `success`;
 
-    if (this.status === "Anulado") return "error";
+    if (this.status === "Anulada") return "error";
     else return "warning";
+  }
+
+  get formatedCost(): string {
+    return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
+      this.cost
+    );
   }
 
   get formatDate(): string {
