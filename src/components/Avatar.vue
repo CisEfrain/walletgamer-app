@@ -3,9 +3,9 @@
     <v-row class="px-4" align="center">
       <v-col>
         <img
-          class="align-center rounded-circle ml-5"
-          width="70px"
-          height="70px"
+          class="align-center rounded-circle ml-7"
+          width="68px"
+          height="68px"
           :src="getImgUrl(user.rango)"
         />
       </v-col>

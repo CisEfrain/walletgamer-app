@@ -36,11 +36,7 @@
           v-for="pendingOperation in pendingOperations"
           :key="pendingOperation.id"
           product="Gold World of Warcraft"
-          :transaction_date="
-            pendingOperation.transaccione.createdAt
-              .slice(0, 10)
-              .replace(/-/g, '/')
-          "
+          :transaction_date="pendingOperation.transaccione.createdAt"
           :transaction_id="pendingOperation.transaccione.identificador"
           :cost="pendingOperation.transaccione.monto"
           :status="pendingOperation.transaccione.estado"
@@ -107,7 +103,7 @@
               dense
             ></v-text-field>
             <v-select
-              :items="payMethods"
+              :items="myPayMethods"
               label="¿Donde lo quieres recibir?"
               outlined
               v-model="$v.disbursement.$model"
@@ -118,6 +114,11 @@
               rounded
               color="rgba(184,12,70,.6)"
               class="text-field text-center"
+              :hint="`${disbursement.alias} - [${disbursement.nombre}]`"
+              item-text="alias"
+              item-value="id"
+              return-object
+              single-line
               dense
             ></v-select>
             <v-btn
@@ -221,7 +222,7 @@
               dense
             ></v-text-field>
             <v-select
-              :items="payMethods"
+              :items="myPayMethods"
               label="¿De donde quieres fondear?"
               outlined
               v-model="$v.fund.$model"
@@ -232,6 +233,11 @@
               rounded
               color="rgba(184,12,70,.6)"
               class="text-center"
+              :hint="`${fund.alias} - [${fund.nombre}]`"
+              item-text="alias"
+              item-value="id"
+              return-object
+              single-line
               dense
             ></v-select>
             <v-btn
@@ -278,10 +284,9 @@ export default class Transactions extends Vue {
   private drawerDisbursement = false;
   private drawerTransferToFriend = false;
   private drawerFund = false;
-  private payMethods: Array<string> = ["Paypal", "Stripe"];
 
   //New disbursement
-  @Validate({ required }) disbursement = "";
+  @Validate({ required }) disbursement = { id: ""};
   @Validate({ required })
   mountDisbursement!: number | bigint;
 
@@ -311,6 +316,16 @@ export default class Transactions extends Vue {
     this.$store.dispatch("MyBalance");
   }
 
+  get myPayMethods(): Array<any> {
+    const payAliases = this.$store.getters.getExpenditure.map((item: any) => ({
+      nombre: item.nombre,
+      alias: item.alias,
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      id: item.id
+    }));
+    return payAliases;
+  }
+
   get balance(): string {
     return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
       this.$store.getters.getBlance
@@ -331,6 +346,16 @@ export default class Transactions extends Vue {
   // Dispatch actions to new disbursement
   private newDisbursement() {
     console.info("ADD disbursement");
+    const disbursement = {
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      pasarela_id: this.disbursement.id,
+      monto: this.mountDisbursement
+    };
+    console.info(disbursement);
+    this.$store.dispatch("AddDisbursement", disbursement);
+    this.$store.dispatch("MyOperations");
+    this.$store.dispatch("MyBalance");
+    this.drawerDisbursement = false;
   }
   get isDisbursementDisabled(): boolean {
     return !this.disbursement || !this.mountDisbursement ? true : false;

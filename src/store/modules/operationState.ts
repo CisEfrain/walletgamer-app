@@ -1,4 +1,7 @@
 import { GetOperations, GetBalance } from "@/services/operation.service";
+import { Disbursement } from "@/services/disbursement.service";
+import Vue from "vue";
+
 const operationState = {
   state: () => ({
     operations: [],
@@ -11,7 +14,7 @@ const operationState = {
     setOperationData(state: any, payload: any): void {
       state.operations = payload;
     },
-    setBalance(state: any, payload:any): void {
+    setBalance(state: any, payload: any): void {
       state.balance = payload;
     }
   },
@@ -41,6 +44,18 @@ const operationState = {
         .catch(error => {
           console.info(error);
         });
+    },
+    AddDisbursement({ commit }: any, payload: any): void {
+      Disbursement(payload)
+        .then((response: any) => {
+          console.info("from disbursement", response);
+          response.data.status === 200 &&
+            Vue.$toast.success(`Desembolso solicitado con éxito!`);
+        })
+        .catch(error => {
+          console.info(error);
+          Vue.$toast.error(`Hubo un error al intentar solicitar el desembolso`);
+        });
     }
   },
   getters: {
@@ -49,12 +64,12 @@ const operationState = {
       console.log("my operations ", res);
       return res;
     },
-    getDoneOperations: (state: { operations: Array<any>  }) => {
+    getDoneOperations: (state: { operations: Array<any> }) => {
       return state.operations.filter(
         (operation: any) => operation.transaccione.estado !== "Pendiente"
       );
     },
-    getPendingOperations: (state: { operations: Array<any>  }) => {
+    getPendingOperations: (state: { operations: Array<any> }) => {
       return state.operations.filter(
         (operation: any) => operation.transaccione.estado === "Pendiente"
       );
