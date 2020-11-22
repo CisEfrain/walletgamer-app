@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row class="mt-4">
-      <img class="logo" src="../../assets/logo.png" alt="Logo Admin" />
+      <img class="logo-gamer" src="../../assets/logo.png" alt="Logo Admin" />
     </v-row>
     <v-row class="mt-12" align="center" justify="center">
       <h3 class="mt-12 main-title">Reestablecer contraseña</h3>

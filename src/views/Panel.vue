@@ -1,10 +1,10 @@
 <template>
-  <v-app id="inspire">
+  <v-app id="inspire" class="bg-grey">
     <v-navigation-drawer width="216px" app v-model="drawer">
       <v-list>
         <v-list-item>
           <v-list-item-content class="mb-5">
-            <img class="logo" src="../assets/logo.png" alt="Logo Admin" />
+            <img class="logo-panel" src="../assets/logo.png" alt="Logo Admin" />
           </v-list-item-content>
         </v-list-item>
         <Avatar />
@@ -14,7 +14,9 @@
               <v-icon>mdi-account-details</v-icon>
             </v-list-item-action>-->
             <v-list-item-content>
-              <v-list-item-title>Operaciones</v-list-item-title>
+              <v-list-item-title class="text-uppercase"
+                >Operaciones</v-list-item-title
+              >
             </v-list-item-content>
           </v-list-item>
         </router-link>
@@ -24,7 +26,9 @@
               <v-icon>mdi-shopping</v-icon>
             </v-list-item-action>-->
             <v-list-item-content>
-              <v-list-item-title>Vender</v-list-item-title>
+              <v-list-item-title class="text-uppercase"
+                >Vender</v-list-item-title
+              >
             </v-list-item-content>
           </v-list-item>
         </router-link>
@@ -34,7 +38,9 @@
               <v-icon>mdi-account-check</v-icon>
             </v-list-item-action>-->
             <v-list-item-content>
-              <v-list-item-title>Comprar</v-list-item-title>
+              <v-list-item-title class="text-uppercase"
+                >Comprar</v-list-item-title
+              >
             </v-list-item-content>
           </v-list-item>
         </router-link>
@@ -54,7 +60,9 @@
               <v-icon>mdi-cog</v-icon>
             </v-list-item-action>-->
             <v-list-item-content>
-              <v-list-item-title>Mi cuenta</v-list-item-title>
+              <v-list-item-title class="text-uppercase"
+                >Mi cuenta</v-list-item-title
+              >
             </v-list-item-content>
           </v-list-item>
         </router-link>
@@ -64,7 +72,9 @@
               <v-icon>mdi-cog</v-icon>
             </v-list-item-action>-->
             <v-list-item-content>
-              <v-list-item-title>Ayuda</v-list-item-title>
+              <v-list-item-title class="text-uppercase"
+                >Ayuda</v-list-item-title
+              >
             </v-list-item-content>
           </v-list-item>
         </router-link>
@@ -73,15 +83,13 @@
             <v-icon>mdi-power-settings</v-icon>
           </v-list-item-action>-->
           <v-list-item-content>
-            <v-list-item-title>Salir</v-list-item-title>
+            <v-list-item-title class="text-uppercase">Salir</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
-    <v-container class="bg-grey ">
-      <router-view />
-    </v-container>
+    <router-view class="bg-grey" />
     <v-fab-transition>
       <v-btn
         fab

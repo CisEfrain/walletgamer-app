@@ -22,7 +22,7 @@ export default Vue.extend({
   })
 });
 </script>
- <style lang="sass">
+<style lang="sass">
 
 @import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800;900&display=swap')
 @import './scss/variables.scss'
@@ -62,6 +62,4 @@ a
 
 .buy-stepper .v-stepper__step--active > .v-stepper__step__step
   background: $danger !important
-
-  
 </style>

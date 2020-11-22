@@ -269,8 +269,8 @@ import { required, email } from "vuelidate/lib/validators";
     TransactionItemList,
     ActionsCard,
     PendingCard,
-    AsideForm,
-  },
+    AsideForm
+  }
 })
 export default class Transactions extends Vue {
   private panel: Array<number> = [0];
@@ -311,7 +311,7 @@ export default class Transactions extends Vue {
     this.$store.dispatch("MyBalance");
   }
 
-  get balance(): any {
+  get balance(): string {
     return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
       this.$store.getters.getBlance
     );
@@ -361,9 +361,9 @@ export default class Transactions extends Vue {
     this.$store.dispatch("createFound", {
       pasarela: this.fund,
       monto: this.mountFund,
-      method:this.stripe
+      method: this.stripe
     });
-/*     fetch(process.env.VUE_APP_API + "/create-session", {
+    /*     fetch(process.env.VUE_APP_API + "/create-session", {
       method: "POST",
     })
       .then(function (response) {

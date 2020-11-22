@@ -3,14 +3,14 @@
     <v-row class="px-4" align="center">
       <v-col>
         <img
-          class="align-center rounded-circle ml-4"
-          width="64px"
-          height="64px"
+          class="align-center rounded-circle ml-5"
+          width="70px"
+          height="70px"
           :src="getImgUrl(user.rango)"
         />
       </v-col>
       <v-col class="d-flex flex-column mr-less">
-        <h3 class="name text-uppercase mt-2">{{ user.nombre }}</h3>
+        <h2 class="name text-uppercase mt-2">{{ user.nombre }}</h2>
         <p class="rank">{{ user.rango ? user.rango : "Pollo" }}</p>
       </v-col>
     </v-row>
@@ -42,7 +42,7 @@ export default class Avatar extends Vue {
 
 <style lang="sass" scoped>
 .mr-less
- margin-left: -1.7em
+ margin-left: -2.1em
 
 .card-container
   font-family: "Nunito Sans", "Helvetica Neue", Helvetica, Arial
@@ -76,7 +76,7 @@ p,small,h4,h3
 .name
  color: $font-main-color
  font-weight: 400
- font-size: .9em
+ font-size: 1.1em
 
 .success
   background-color: $success
