@@ -3,7 +3,7 @@
     <v-row class="px-4" align="center">
       <v-col>
         <img
-          class="align-center rounded-circle ml-7"
+          class="align-center rounded-circle ml-6"
           width="68px"
           height="68px"
           :src="getImgUrl(user.rango)"
@@ -42,7 +42,7 @@ export default class Avatar extends Vue {
 
 <style lang="sass" scoped>
 .mr-less
- margin-left: -2.1em
+ margin-left: -2em
 
 .card-container
   font-family: "Nunito Sans", "Helvetica Neue", Helvetica, Arial
