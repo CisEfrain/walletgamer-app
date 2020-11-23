@@ -43,6 +43,19 @@
           :type="pendingOperation.tipo"
         />
       </v-col>
+      <div class="text-center">
+        <v-pagination
+          v-show="totalPendingPages > 1"
+          v-model="pendingPage"
+          :length="totalPendingPages"
+          color="#E4445B"
+          prev-icon="mdi-menu-left"
+          next-icon="mdi-menu-right"
+          total-visible="10"
+          @input="handlePaginatePending"
+        >
+        </v-pagination>
+      </div>
     </v-row>
 
     <v-row
@@ -72,6 +85,19 @@
           />
         </v-expansion-panels>
       </v-col>
+      <div class="text-center">
+        <v-pagination
+          v-show="totalDonePages > 1"
+          v-model="donePage"
+          :length="totalDonePages"
+          color="#E4445B"
+          prev-icon="mdi-menu-left"
+          next-icon="mdi-menu-right"
+          total-visible="10"
+          @input="handlePaginateDone"
+        >
+        </v-pagination>
+      </div>
     </v-row>
 
     <!-- Side form for "Desembolso" -->
@@ -316,12 +342,18 @@ export default class Transactions extends Vue {
   private handlePaginateDone(e): void {
     console.info(e);
     this.donePage = e;
-    this.$store.dispatch("getPosts", { size: 4, page: e - 1 });
+    this.$store.dispatch("MyDoneOperations", { size: 4, page: e - 1 });
+  }
+  get totalDonePages(): any {
+    return Math.ceil(this.$store.getters.getTotalDoneOperations / 4);
   }
   private handlePaginatePending(e): void {
     console.info(e);
-    this.pengindPage = e;
-    this.$store.dispatch("getPosts", { size: 4, page: e - 1 });
+    this.pendingPage = e;
+    this.$store.dispatch("MyPendingOperations", { size: 4, page: e - 1 });
+  }
+  get totalPendingPages(): any {
+    return Math.ceil(this.$store.getters.getTotalPendingOperations / 4);
   }
 
   created() {
@@ -368,7 +400,8 @@ export default class Transactions extends Vue {
     };
     console.info(disbursement);
     this.$store.dispatch("AddDisbursement", disbursement);
-    this.$store.dispatch("MyOperations");
+    this.$store.dispatch("MyDoneOperations", { size: 4, page: 0 });
+    this.$store.dispatch("MyPendingOperations", { size: 4, page: 0 });
     this.$store.dispatch("MyBalance");
     this.drawerDisbursement = false;
   }
@@ -383,7 +416,8 @@ export default class Transactions extends Vue {
       monto: this.mountSendToFriend
     };
     this.$store.dispatch("TransferToFriend", transferToFriend);
-    this.$store.dispatch("MyOperations");
+    this.$store.dispatch("MyDoneOperations", { size: 4, page: 0 });
+    this.$store.dispatch("MyPendingOperations", { size: 4, page: 0 });
     this.$store.dispatch("MyBalance");
     this.drawerTransferToFriend = false;
   }
@@ -403,6 +437,8 @@ export default class Transactions extends Vue {
       monto: this.mountFund,
       method: this.stripe
     });
+    this.$store.dispatch("MyDoneOperations", { size: 4, page: 0 });
+    this.$store.dispatch("MyPendingOperations", { size: 4, page: 0 });
     /*     fetch(process.env.VUE_APP_API + "/create-session", {
       method: "POST",
     })

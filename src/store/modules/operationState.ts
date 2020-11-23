@@ -89,8 +89,14 @@ const operationState = {
     getDoneOperations: (state: { doneOperation: any }) => {
       return state.doneOperation.rows;
     },
+    getTotalDoneOperations: (state: { pendingOperation: any }) => {
+      return state.pendingOperation.count;
+    },
     getPendingOperations: (state: { pendingOperation: any }) => {
       return state.pendingOperation.rows;
+    },
+    getTotalPendingOperations: (state: { pendingOperation: any }) => {
+      return state.pendingOperation.count;
     },
     getBalance: (state: { balance: number }) => {
       return state.balance;
