@@ -43,6 +43,19 @@
       :available="goldPost.cantidad"
       @click="buyGold($index, goldPost.id)"
     />
+    <div class="text-center">
+      <v-pagination
+        v-show="goldPages > 1"
+        v-model="goldPage"
+        :length="goldPages"
+        color="#E4445B"
+        prev-icon="mdi-menu-left"
+        next-icon="mdi-menu-right"
+        total-visible="10"
+        @input="handlePagination"
+      >
+      </v-pagination>
+    </div>
   </v-container>
 </template>
 
@@ -62,6 +75,7 @@ export default class BuyGoldList extends Vue {
   private realmSelected = "";
   private factionSelected = "";
   private goldList: Array<unknown> = [];
+  public goldPage = 1;
 
   get factionList(): Array<string> {
     return this.$store.getters.getFactionList;
@@ -72,7 +86,21 @@ export default class BuyGoldList extends Vue {
   }
 
   get postGoldList(): Array<unknown> {
-    return this.$store.getters.getGoldPostList.reverse();
+    return this.$store.getters.getGoldPostList;
+  }
+
+  created() {
+    this.$store.dispatch("getGoldPosts", { size: 4, page: 0 });
+  }
+
+  get goldPages(): number {
+    return Math.ceil(this.$store.getters.getGoldCount / 4);
+  }
+
+  private handlePagination(e): void {
+    console.info(e);
+    this.goldPage = e;
+    this.$store.dispatch("getGoldPosts", { size: 4, page: e - 1 });
   }
 
   get showFiltered(): any {

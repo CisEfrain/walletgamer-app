@@ -42,6 +42,19 @@
       :available="itemPost.cantidad"
       @click="buyItem($index, itemPost.id)"
     />
+    <div class="text-center">
+      <v-pagination
+        v-show="itemPages > 1"
+        v-model="itemPage"
+        :length="itemPages"
+        color="#E4445B"
+        prev-icon="mdi-menu-left"
+        next-icon="mdi-menu-right"
+        total-visible="10"
+        @input="handlePagination"
+      >
+      </v-pagination>
+    </div>
   </v-container>
 </template>
 
@@ -75,9 +88,24 @@ export default class BuyItemList extends Vue {
   private itemSelected = "";
   private factionSelected = "";
   private itemList: Array<unknown> = [];
+  public itemPage = 1;
 
   get postItemList(): any {
-    return this.$store.getters.getItemPostList.reverse();
+    return this.$store.getters.getItemPostList;
+  }
+
+   created() {
+    this.$store.dispatch("getItemPosts", { size: 4, page: 0 });
+  }
+
+  get itemPages(): number {
+    return Math.ceil(this.$store.getters.getItemCount / 4);
+  }
+
+  private handlePagination(e): void {
+    console.info(e);
+    this.itemPage = e;
+    this.$store.dispatch("getItemPosts", { size: 4, page: e - 1 });
   }
 
   get showFiltered(): any {

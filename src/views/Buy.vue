@@ -52,8 +52,8 @@ export default class Buy extends Vue {
     this.currentProduct = tab;
   }
 
-  mounted() {
-    this.$store.dispatch("getAllPosts");
+  created() {
+    //this.$store.dispatch("getAllPosts");
   }
 
   get productListSelected(): any {

@@ -71,6 +71,19 @@
       :level="characterPost.nivel"
       @click="buyGold($index, goldPost.id)"
     />
+    <div class="text-center">
+      <v-pagination
+        v-show="characterPages > 1"
+        v-model="characterPage"
+        :length="characterPages"
+        color="#E4445B"
+        prev-icon="mdi-menu-left"
+        next-icon="mdi-menu-right"
+        total-visible="10"
+        @input="handlePagination"
+      >
+      </v-pagination>
+    </div>
   </v-container>
 </template>
 
@@ -124,16 +137,30 @@ export default class BuyCharacterList extends Vue {
     return this.$store.getters.getClassList;
   }
 
-
   private level: Array<number> = [15, 30, 45, 60];
   private realmSelected = "";
   private classSelected = "";
   private levelSelected = 0;
   private factionSelected = "";
   private characterList: Array<unknown> = [];
+  public characterPage = 1;
+
+  created() {
+    this.$store.dispatch("getCharacterPosts", { size: 4, page: 0 });
+  }
 
   get postCharacterList(): Array<unknown> {
-    return this.$store.getters.getCharacterPostList.reverse();
+    return this.$store.getters.getCharacterPostList;
+  }
+
+  get characterPages(): number {
+    return Math.ceil(this.$store.getters.getCharacterCount / 4);
+  }
+
+  private handlePagination(e): void {
+    console.info(e);
+    this.characterPage = e;
+    this.$store.dispatch("getCharacterPosts", { size: 4, page: e - 1 });
   }
 
   get showFiltered(): any {

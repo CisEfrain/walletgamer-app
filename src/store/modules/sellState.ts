@@ -1,14 +1,23 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { GetMe, Delete, Update, GetAll, Add } from "@/services/post.service";
+import {
+  GetMe,
+  Delete,
+  Update,
+  GetAll,
+  Add,
+  GetCharacters,
+  GetGold,
+  GetItems
+} from "@/services/post.service";
 import Vue from "vue";
 
 const sellState = {
   state: () => ({
     postList: [],
     allPostList: [],
-    goldPost: {},
-    characterPost: {},
-    itemPost: {}
+    goldPosts: [],
+    characterPosts: [],
+    itemPosts: []
   }),
   mutations: {
     /**
@@ -19,13 +28,17 @@ const sellState = {
       console.log("Post:", payload);
       state.goldPost = payload;
     },
-    setCharacterPost(state: any, payload: any): void {
+    setCharacterPosts(state: any, payload: any): void {
       console.log("Character Post:", payload);
-      state.characterPost = payload;
+      state.characterPosts = payload;
     },
-    setItemPost(state: any, payload: any): void {
+    setItemPosts(state: any, payload: any): void {
       console.log("Item Post:", payload);
-      state.itemPost = payload;
+      state.itemPosts = payload;
+    },
+    setGoldPosts(state: any, payload: any): void {
+      console.log("Item Post:", payload);
+      state.goldPosts = payload;
     },
     getPost(state: any, payload: any): void {
       console.log("getMePost:", payload);
@@ -61,6 +74,42 @@ const sellState = {
         .then((response: any) => {
           console.info("from get post", response);
           commit("getPost", response.data.data);
+        })
+        .catch(error => {
+          console.info(error);
+          Vue.$toast.error(`No se han cargado tus publicaciónes`);
+        });
+    },
+    getGoldPosts({ commit }: any, { size, page }: any): void {
+      console.info(size, page);
+      GetGold(size, page)
+        .then((response: any) => {
+          console.info("from gold post", response);
+          commit("setGoldPosts", response.data.data);
+        })
+        .catch(error => {
+          console.info(error);
+          Vue.$toast.error(`No se han cargado tus publicaciónes`);
+        });
+    },
+    getCharacterPosts({ commit }: any, { size, page }: any): void {
+      console.info(size, page);
+      GetCharacters(size, page)
+        .then((response: any) => {
+          console.info("from character post", response);
+          commit("setCharacterPosts", response.data.data);
+        })
+        .catch(error => {
+          console.info(error);
+          Vue.$toast.error(`No se han cargado tus publicaciónes`);
+        });
+    },
+    getItemPosts({ commit }: any, { size, page }: any): void {
+      console.info(size, page);
+      GetItems(size, page)
+        .then((response: any) => {
+          console.info("from item post", response);
+          commit("setItemPosts", response.data.data);
         })
         .catch(error => {
           console.info(error);
@@ -121,21 +170,23 @@ const sellState = {
     getAllPostList: (state: { allPostList: any }) => {
       return state.allPostList;
     },
-    getGoldPostList: (state: { allPostList: any }) => {
-      return state.allPostList.filter(
-        (goldPost: any) => goldPost.tipo === "Gold" && goldPost.activo === 1
-      );
+    getGoldPostList: (state: { goldPosts: any }) => {
+      return state.goldPosts.rows;
     },
-    getCharacterPostList: (state: { allPostList: any }) => {
-      return state.allPostList.filter(
-        (characterPost: any) =>
-          characterPost.tipo === "Personaje" && characterPost.activo === 1
-      );
+    getGoldCount: (state: { goldPosts: any }) => {
+      return state.goldPosts.count;
     },
-    getItemPostList: (state: { allPostList: any }) => {
-      return state.allPostList.filter(
-        (itemPost: any) => itemPost.tipo === "Item" && itemPost.activo === 1
-      );
+    getCharacterPostList: (state: { characterPosts: any }) => {
+      return state.characterPosts.rows;
+    },
+    getCharacterCount: (state: { characterPosts: any }) => {
+      return state.characterPosts.count;
+    },
+    getItemPostList: (state: { itemPosts: any }) => {
+      return state.itemPosts.rows;
+    },
+    getItemCount: (state: { itemPosts: any }) => {
+      return state.itemPosts.count;
     }
   }
 };

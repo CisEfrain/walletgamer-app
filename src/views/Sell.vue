@@ -21,7 +21,7 @@
     </v-row>
 
     <div class="mt-10" justify="center" v-if="currentProduct == 'Post'">
-      <h3 class="title mb-6" v-show="postList.lenght > 0">Mis publicaciones</h3>
+      <h3 class="title mb-6" v-show="postList.length > 0">Mis publicaciones</h3>
       <v-expansion-panels class="container" v-model="panel" multiple flat>
         <PostList
           v-for="(post, $index) in postList"

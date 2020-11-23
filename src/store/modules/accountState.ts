@@ -22,8 +22,7 @@ const accountState = {
     setNewExpenditureData(state: any, payload: any): void {
       state.newExpenditureData = payload;
     },
-    getExpenditureData(state: any, payload: any): void {
-      console.info("from getExpenditure:", payload);
+    setExpenditureData(state: any, payload: any): void {
       state.expenditureData = payload;
     },
     setUserData(state: any, payload: any): void {
@@ -39,7 +38,7 @@ const accountState = {
     }
   },
   actions: {
-    setNewExpenditureData({ commit, state }: any, payload: any): void {
+    setNewExpenditureData({ commit }: any, payload: any): void {
       Add(payload)
         .then((response: any) => {
           console.info("from setnewexpenditure", response);
@@ -75,19 +74,14 @@ const accountState = {
         });
       // method.redirectToCheckout({ sessionId: });
     },
-    getExpenditureData({ commit, state }: any): void {
-      console.info("From get expenditureData", state.userData.id);
+    getExpenditureData({ commit }: any): void {
       GetPayMethods()
         .then((response: any) => {
-          console.info("get expenditure:", response);
-          const {
-            data: { data }
-          } = response;
-          commit("getExpenditureData", data);
+          console.info("get expenditure:", response.data.data);
+          commit("setExpenditureData", response.data.data);
         })
         .catch(error => {
           console.info(error);
-          Vue.$toast.error(`No se han podido cargar tus metodos de pago`);
         });
     },
     deleteExpenditureData({ commit }: any, payload: any): void {

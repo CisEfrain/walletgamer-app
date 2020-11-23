@@ -364,6 +364,7 @@ export default class Transactions extends Vue {
   }
 
   get myPayMethods(): Array<any> {
+    console.info(this.$store.getters.getExpenditure, 'GetPayMethods')
     const payAliases = this.$store.getters.getExpenditure.map((item: any) => ({
       nombre: item.nombre,
       alias: item.alias,

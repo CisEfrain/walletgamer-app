@@ -26,6 +26,22 @@ export const GetMe = async (size:any, page: any):Promise<unknown> => {
 		return await axios.get(`${resource}/me?size=${size}&page=${page}`, header);
 }
 
+export const GetGold = async (size:any, page: any):Promise<unknown> => {
+	const jwt = localStorage.getItem("jwt")
+	const header = {headers:{ Authorization: "Bearer " + jwt }};
+	return await axios.get(`${resource}?size=${size}&page=${page}&type=Gold&active=1`, header);
+}
+export const GetCharacters = async (size:any, page: any):Promise<unknown> => {
+	const jwt = localStorage.getItem("jwt")
+	const header = {headers:{ Authorization: "Bearer " + jwt }};
+	return await axios.get(`${resource}?size=${size}&page=${page}&type=Personaje&active=1`, header);
+}
+export const GetItems = async (size:any, page: any):Promise<unknown> => {
+	const jwt = localStorage.getItem("jwt")
+	const header = {headers:{ Authorization: "Bearer " + jwt }};
+	return await axios.get(`${resource}?size=${size}&page=${page}&type=Item&active=1`, header);
+}
+
 export const GetAll = async ():Promise<unknown> => {
 	const jwt = localStorage.getItem("jwt")
 	const header = {headers:{ Authorization: "Bearer " + jwt }};
