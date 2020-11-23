@@ -118,7 +118,6 @@ export default class UserExpenditure extends Vue {
   @Validate({ required, minLength: minLength(4) }) description = null;
   @Validate({ required, minLength: minLength(5), email }) emailReceptor = null;
   @Validate({ required, minLength: minLength(3) }) aliasId = null;
-  private typesExpenditure: Array<string> = ["Paypal", "Stripe", "GamerCoin"];
   public page = 1;
   //public expenditureList: Array<string> = [];
 

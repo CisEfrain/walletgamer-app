@@ -364,7 +364,7 @@ export default class Transactions extends Vue {
   }
 
   get myPayMethods(): Array<any> {
-    console.info(this.$store.getters.getExpenditure, 'GetPayMethods')
+    console.info(this.$store.getters.getExpenditure, "GetPayMethods");
     const payAliases = this.$store.getters.getExpenditure.map((item: any) => ({
       nombre: item.nombre,
       alias: item.alias,
@@ -416,9 +416,8 @@ export default class Transactions extends Vue {
       beneficiario: this.sendToFriend,
       monto: this.mountSendToFriend
     };
-    this.$store.dispatch("TransferToFriend", transferToFriend);
     this.$store.dispatch("MyDoneOperations", { size: 4, page: 0 });
-    this.$store.dispatch("MyPendingOperations", { size: 4, page: 0 });
+    this.$store.dispatch("TransferToFriend", transferToFriend);
     this.$store.dispatch("MyBalance");
     this.drawerTransferToFriend = false;
   }
