@@ -28,11 +28,11 @@ const sellState = {
       state.itemPost = payload;
     },
     getPost(state: any, payload: any): void {
-      console.log("getPost:", payload);
+      console.log("getMePost:", payload);
       state.postList = payload;
     },
     getAllPosts(state: any, payload: any): void {
-      console.log("getPost:", payload);
+      console.log("getAllPost:", payload);
       state.allPostList = payload;
     },
     deletePost(state: any, payload: any): void {
