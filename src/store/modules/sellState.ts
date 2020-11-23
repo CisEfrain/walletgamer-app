@@ -38,7 +38,7 @@ const sellState = {
     deletePost(state: any, payload: any): void {
       // state.userData
       const { index } = payload;
-      state.postList.splice(index, 1);
+      state.postList.rows.splice(index, 1);
     }
   },
   actions: {
@@ -55,15 +55,16 @@ const sellState = {
           Vue.$toast.error(`No se ha podido realizar tu publicación`);
         });
     },
-    getPosts({ commit }: any): void {
-      GetMe()
+    getPosts({ commit }: any, { size, page }: any): void {
+      console.info(size, page);
+      GetMe(size, page)
         .then((response: any) => {
           console.info("from get post", response);
           commit("getPost", response.data.data);
         })
         .catch(error => {
           console.info(error);
-          Vue.$toast.error(`No se ha podido realizar tu publicación`);
+          Vue.$toast.error(`No se han cargado tus publicaciónes`);
         });
     },
     getAllPosts({ commit }: any): void {
@@ -112,7 +113,10 @@ const sellState = {
   },
   getters: {
     getPostList: (state: { postList: any }) => {
-      return state.postList.reverse();
+      return state.postList.rows;
+    },
+    getTotalItems: (state: { postList: any }) => {
+      return state.postList.count;
     },
     getAllPostList: (state: { allPostList: any }) => {
       return state.allPostList;

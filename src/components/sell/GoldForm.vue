@@ -112,7 +112,7 @@ export default class GoldForm extends Vue {
   quantity = null;
   @Validate({ required, minLength: minLength(1) }) price:
     | number
-    | undefined 
+    | undefined
     | string = "";
   public comision: any;
   public getPrice = 0;
@@ -150,7 +150,7 @@ export default class GoldForm extends Vue {
       usuarios_id: this.$store.state.accountState.userData.id
     };
     this.$store.dispatch("addPost", newGoldPost);
-    this.$store.dispatch("getPosts");
+    this.$store.dispatch("getPosts", { size: 4, page: 0 });
     this.clearForm();
   }
   private clearForm(): void {

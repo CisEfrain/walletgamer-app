@@ -146,7 +146,6 @@ export default class CharactersForm extends Vue {
     return this.$store.getters.getClassList;
   }
 
-
   get totalPrice(): any {
     return new Intl.NumberFormat().format(this.getPrice);
   }
@@ -174,7 +173,7 @@ export default class CharactersForm extends Vue {
       usuarios_id: this.$store.state.accountState.userData.id
     };
     this.$store.dispatch("addPost", newCharacterPost);
-    this.$store.dispatch("getPosts");
+    this.$store.dispatch("getPosts", { size: 4, page: 0 });
     console.log(newCharacterPost);
     this.clearForm();
   }

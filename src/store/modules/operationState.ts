@@ -1,11 +1,17 @@
-import { GetOperations, GetBalance } from "@/services/operation.service";
+import {
+  GetPendingOperations,
+  GetDoneOperations,
+  GetBalance
+} from "@/services/operation.service";
 import { Disbursement } from "@/services/disbursement.service";
 import Vue from "vue";
 
 const operationState = {
   state: () => ({
     operations: [],
-    balance: 0
+    balance: 0,
+    doneOperation: [],
+    pendingOperation: []
   }),
   mutations: {
     resetData(state: any): void {
@@ -13,6 +19,12 @@ const operationState = {
     },
     setOperationData(state: any, payload: any): void {
       state.operations = payload;
+    },
+    setDoneOperationData(state: any, payload: any): void {
+      state.doneOperation = payload;
+    },
+    setPendingOperationData(state: any, payload: any): void {
+      state.pendingOperation = payload;
     },
     setBalance(state: any, payload: any): void {
       state.balance = payload;
@@ -25,11 +37,21 @@ const operationState = {
     resetProdut({ commit }: any, payload: any): void {
       commit("resetProduct", payload);
     },
-    MyOperations({ commit }: any): void {
-      GetOperations()
+    MyDoneOperations({ commit }: any, { size, page }): void {
+      GetDoneOperations(size, page)
         .then((response: any) => {
-          console.info("from my operations data", response);
-          commit("setOperationData", response.data.data);
+          console.info("from my done operations data", response);
+          commit("setDoneOperationData", response.data.data);
+        })
+        .catch(error => {
+          console.info(error);
+        });
+    },
+    MyPendingOperations({ commit }: any, { size, page }): void {
+      GetPendingOperations(size, page)
+        .then((response: any) => {
+          console.info("from my operations pending data", response);
+          commit("setPendingOperationData", response.data.data);
         })
         .catch(error => {
           console.info(error);
@@ -64,17 +86,13 @@ const operationState = {
       console.log("my operations ", res);
       return res;
     },
-    getDoneOperations: (state: { operations: Array<any> }) => {
-      return state.operations.filter(
-        (operation: any) => operation.transaccione.estado !== "Pendiente"
-      );
+    getDoneOperations: (state: { doneOperation: any }) => {
+      return state.doneOperation.rows;
     },
-    getPendingOperations: (state: { operations: Array<any> }) => {
-      return state.operations.filter(
-        (operation: any) => operation.transaccione.estado === "Pendiente"
-      );
+    getPendingOperations: (state: { pendingOperation: any }) => {
+      return state.pendingOperation.rows;
     },
-    getBlance: (state: { balance: number }) => {
+    getBalance: (state: { balance: number }) => {
       return state.balance;
     }
   }

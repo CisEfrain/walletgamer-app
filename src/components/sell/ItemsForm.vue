@@ -156,7 +156,7 @@ export default class ItemsForm extends Vue {
       usuarios_id: this.$store.state.accountState.userData.id
     };
     this.$store.dispatch("addPost", newItemPost);
-    this.$store.dispatch("getPosts");
+    this.$store.dispatch("getPosts",{ size: 4, page: 0 });
     console.log(newItemPost);
     this.clearForm();
   }

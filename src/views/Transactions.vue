@@ -23,7 +23,7 @@
       class="px-8 mt-6"
       align="center"
       justify="space-between"
-      v-if="pendingOperations.length > 0"
+      v-if="pendingOperations"
     >
       <v-col cols="12" sm="12" md="6">
         <h3 class="main-title">Mis Operaciones en curso</h3>
@@ -49,7 +49,7 @@
       class="px-8 mt-6"
       align="center"
       justify="space-between"
-      v-if="doneOperations.length > 0"
+      v-if="doneOperations"
     >
       <v-col cols="12" sm="12" md="6">
         <h3 class="main-title">Historial de operaciones</h3>
@@ -279,14 +279,16 @@ import { required, email } from "vuelidate/lib/validators";
   }
 })
 export default class Transactions extends Vue {
-  private panel: Array<number> = [0];
+  private panel: Array<number> = [];
   private stripe = (window as any).Stripe(process.env.VUE_APP_STRIPE_PK);
   private drawerDisbursement = false;
   private drawerTransferToFriend = false;
   private drawerFund = false;
+  public donePage = 1;
+  public pendingPage = 1;
 
   //New disbursement
-  @Validate({ required }) disbursement = { id: ""};
+  @Validate({ required }) disbursement = { id: "" };
   @Validate({ required })
   mountDisbursement!: number | bigint;
 
@@ -311,9 +313,22 @@ export default class Transactions extends Vue {
     console.info("clicked from trans", this.drawerFund);
   }
 
+  private handlePaginateDone(e): void {
+    console.info(e);
+    this.donePage = e;
+    this.$store.dispatch("getPosts", { size: 4, page: e - 1 });
+  }
+  private handlePaginatePending(e): void {
+    console.info(e);
+    this.pengindPage = e;
+    this.$store.dispatch("getPosts", { size: 4, page: e - 1 });
+  }
+
   created() {
-    this.$store.dispatch("MyOperations");
+    this.$store.dispatch("MyDoneOperations", { size: 4, page: 0 });
+    this.$store.dispatch("MyPendingOperations", { size: 4, page: 0 });
     this.$store.dispatch("MyBalance");
+    this.$store.dispatch("getExpenditureData");
   }
 
   get myPayMethods(): Array<any> {
@@ -328,19 +343,19 @@ export default class Transactions extends Vue {
 
   get balance(): string {
     return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
-      this.$store.getters.getBlance
+      this.$store.getters.getBalance
     );
   }
 
   // getter to complete operations
   get doneOperations(): Array<any> {
     console.info(this.$store.getters.getDoneOperations);
-    return this.$store.getters.getDoneOperations.reverse();
+    return this.$store.getters.getDoneOperations;
   }
   // getter to pending operations
   get pendingOperations(): Array<any> {
     console.info(this.$store.getters.getPendingOperations);
-    return this.$store.getters.getPendingOperations.reverse();
+    return this.$store.getters.getPendingOperations;
   }
 
   // Dispatch actions to new disbursement

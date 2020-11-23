@@ -20,10 +20,10 @@ export const Add = async (data: any):Promise<unknown> => {
 	return await axios.post(`${resource}`,data, header);
 }
 
-export const GetMe = async ():Promise<unknown> => {
+export const GetMe = async (size:any, page: any):Promise<unknown> => {
 		const jwt = localStorage.getItem("jwt")
 		const header = {headers:{ Authorization: "Bearer " + jwt }};
-		return await axios.get(`${resource}/me`, header);
+		return await axios.get(`${resource}/me?size=${size}&page=${page}`, header);
 }
 
 export const GetAll = async ():Promise<unknown> => {
