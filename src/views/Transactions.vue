@@ -294,6 +294,8 @@ import PendingCard from "@/components/transactions/PendingCard.vue";
 
 import { Validate } from "vuelidate-property-decorators";
 import { required, email } from "vuelidate/lib/validators";
+import SocketIo from "socket.io-client";
+
 @Component({
   components: {
     BalanceCard,
@@ -301,12 +303,13 @@ import { required, email } from "vuelidate/lib/validators";
     TransactionItemList,
     ActionsCard,
     PendingCard,
-    AsideForm
-  }
+    AsideForm,
+  },
 })
 export default class Transactions extends Vue {
   private panel: Array<number> = [];
   private stripe = (window as any).Stripe(process.env.VUE_APP_STRIPE_PK);
+  io: any = SocketIo;
   private drawerDisbursement = false;
   private drawerTransferToFriend = false;
   private drawerFund = false;
@@ -361,6 +364,11 @@ export default class Transactions extends Vue {
     this.$store.dispatch("MyPendingOperations", { size: 4, page: 0 });
     this.$store.dispatch("MyBalance");
     this.$store.dispatch("getExpenditureData");
+    // Socket.on("connect", () => {});
+    const Socket = this.io("http://localhost:8080");
+    Socket.on("connect", () => {
+      console.log("conectado a socket")
+    });
   }
 
   get myPayMethods(): Array<any> {
@@ -369,7 +377,7 @@ export default class Transactions extends Vue {
       nombre: item.nombre,
       alias: item.alias,
       // eslint-disable-next-line @typescript-eslint/camelcase
-      id: item.id
+      id: item.id,
     }));
     return payAliases;
   }
@@ -397,7 +405,7 @@ export default class Transactions extends Vue {
     const disbursement = {
       // eslint-disable-next-line @typescript-eslint/camelcase
       pasarela_id: this.disbursement.id,
-      monto: this.mountDisbursement
+      monto: this.mountDisbursement,
     };
     console.info(disbursement);
     this.$store.dispatch("AddDisbursement", disbursement);
@@ -414,7 +422,7 @@ export default class Transactions extends Vue {
   private newSendToFriend() {
     const transferToFriend = {
       beneficiario: this.sendToFriend,
-      monto: this.mountSendToFriend
+      monto: this.mountSendToFriend,
     };
     this.$store.dispatch("MyDoneOperations", { size: 4, page: 0 });
     this.$store.dispatch("TransferToFriend", transferToFriend);
@@ -435,28 +443,10 @@ export default class Transactions extends Vue {
     this.$store.dispatch("createFound", {
       pasarela: this.fund,
       monto: this.mountFund,
-      method: this.stripe
+      method: this.stripe,
     });
     this.$store.dispatch("MyDoneOperations", { size: 4, page: 0 });
     this.$store.dispatch("MyPendingOperations", { size: 4, page: 0 });
-    /*     fetch(process.env.VUE_APP_API + "/create-session", {
-      method: "POST",
-    })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(async (sessionId) => this.stripe.redirectToCheckout({ sessionId }))
-      .then(function (result) {
-        // If redirectToCheckout fails due to a browser or network
-        // error, you should display the localized error message to your
-        // customer using error.message.
-        if (result.error) {
-          alert(result.error.message);
-        }
-      })
-      .catch(function (error) {
-        console.error("Error:", error);
-      }); */
   }
   get isFundDisabled(): boolean {
     return !this.fund || !this.mountFund ? true : false;
