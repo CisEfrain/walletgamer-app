@@ -130,7 +130,7 @@ const sellState = {
     //       );
     //     });
     // },
-    updatePost(payload: any): void {
+    updatePost({ commit }: any, payload: any): void {
       const { id } = payload;
       console.info("from update actions", payload);
       Update(payload, id)

@@ -114,10 +114,12 @@ export default class Sell extends Vue {
     this.$store.dispatch("getPosts", { size: 4, page: this.page });
   }
   private disablePost(post: any): void {
+    console.info(post)
     const payload = {
       activo: post.activo === 1 ? --post.activo : ++post.activo,
       id: post.id
     };
+    console.info(post, payload)
     this.$store.dispatch("updatePost", payload);
   }
 
