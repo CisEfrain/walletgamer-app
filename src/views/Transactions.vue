@@ -283,8 +283,8 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Vue } from "vue-property-decorator";
-
 import BalanceCard from "@/components/BalanceCard.vue";
 import AsideForm from "@/components/transactions/AsideForm.vue";
 import ActionsCard from "@/components/ActionsCard.vue";
@@ -303,8 +303,8 @@ import SocketIo from "socket.io-client";
     TransactionItemList,
     ActionsCard,
     PendingCard,
-    AsideForm,
-  },
+    AsideForm
+  }
 })
 export default class Transactions extends Vue {
   private panel: Array<number> = [];
@@ -360,14 +360,15 @@ export default class Transactions extends Vue {
   }
 
   created() {
-    this.$store.dispatch("MyDoneOperations", { size: 4, page: 0 });
-    this.$store.dispatch("MyPendingOperations", { size: 4, page: 0 });
     this.$store.dispatch("MyBalance");
     this.$store.dispatch("getExpenditureData");
+    this.$store.dispatch("MyDoneOperations", { size: 4, page: 0 });
+    this.$store.dispatch("MyPendingOperations", { size: 4, page: 0 });
+
     // Socket.on("connect", () => {});
     const Socket = this.io("http://localhost:8080");
     Socket.on("connect", () => {
-      console.log("conectado a socket")
+      console.log("conectado a socket");
     });
   }
 
@@ -377,7 +378,7 @@ export default class Transactions extends Vue {
       nombre: item.nombre,
       alias: item.alias,
       // eslint-disable-next-line @typescript-eslint/camelcase
-      id: item.id,
+      id: item.id
     }));
     return payAliases;
   }
@@ -405,7 +406,7 @@ export default class Transactions extends Vue {
     const disbursement = {
       // eslint-disable-next-line @typescript-eslint/camelcase
       pasarela_id: this.disbursement.id,
-      monto: this.mountDisbursement,
+      monto: this.mountDisbursement
     };
     console.info(disbursement);
     this.$store.dispatch("AddDisbursement", disbursement);
@@ -422,7 +423,7 @@ export default class Transactions extends Vue {
   private newSendToFriend() {
     const transferToFriend = {
       beneficiario: this.sendToFriend,
-      monto: this.mountSendToFriend,
+      monto: this.mountSendToFriend
     };
     this.$store.dispatch("MyDoneOperations", { size: 4, page: 0 });
     this.$store.dispatch("TransferToFriend", transferToFriend);
@@ -443,7 +444,7 @@ export default class Transactions extends Vue {
     this.$store.dispatch("createFound", {
       pasarela: this.fund,
       monto: this.mountFund,
-      method: this.stripe,
+      method: this.stripe
     });
     this.$store.dispatch("MyDoneOperations", { size: 4, page: 0 });
     this.$store.dispatch("MyPendingOperations", { size: 4, page: 0 });

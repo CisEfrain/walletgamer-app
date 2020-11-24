@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   GetPendingOperations,
   GetDoneOperations,
@@ -67,7 +68,7 @@ const operationState = {
           console.info(error);
         });
     },
-    AddDisbursement({ commit }: any, payload: any): void {
+    AddDisbursement(payload: any): void {
       Disbursement(payload)
         .then((response: any) => {
           console.info("from disbursement", response);
@@ -81,11 +82,11 @@ const operationState = {
     }
   },
   getters: {
-    getOperations: (state: { operations: any }) => {
-      const res = state.operations;
-      console.log("my operations ", res);
-      return res;
-    },
+    // getOperations: (state: { operations: any }) => {
+    //   const res = state.operations;
+    //   console.log("my operations ", res);
+    //   return res;
+    // },
     getDoneOperations: (state: { doneOperation: any }) => {
       return state.doneOperation.rows;
     },

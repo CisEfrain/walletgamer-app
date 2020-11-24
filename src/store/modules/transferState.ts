@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Transfer } from "@/services/transfer.service";
 import Vue from "vue";
 const transferState = {

@@ -6,7 +6,12 @@ export default {
   argTypes: {
     backgroundColor: { control: "color" },
     size: { control: { type: "select", options: ["small", "medium", "full"] } },
-    color: { control: { type: "select", options: ["primary", "secondary", "dark", "light"] } }
+    color: {
+      control: {
+        type: "select",
+        options: ["primary", "secondary", "dark", "light"]
+      }
+    }
   }
 };
 

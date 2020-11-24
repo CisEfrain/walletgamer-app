@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   GetMe,
   Delete,
   Update,
-  GetAll,
+  // GetAll,
   Add,
   GetCharacters,
   GetGold,
@@ -14,7 +15,7 @@ import Vue from "vue";
 const sellState = {
   state: () => ({
     postList: [],
-    allPostList: [],
+    // allPostList: [],
     goldPosts: [],
     characterPosts: [],
     itemPosts: []
@@ -44,10 +45,10 @@ const sellState = {
       console.log("getMePost:", payload);
       state.postList = payload;
     },
-    getAllPosts(state: any, payload: any): void {
-      console.log("getAllPost:", payload);
-      state.allPostList = payload;
-    },
+    // getAllPosts(state: any, payload: any): void {
+    //   console.log("getAllPost:", payload);
+    //   state.allPostList = payload;
+    // },
     deletePost(state: any, payload: any): void {
       // state.userData
       const { index } = payload;
@@ -116,21 +117,21 @@ const sellState = {
           Vue.$toast.error(`No se han cargado tus publicaciónes`);
         });
     },
-    getAllPosts({ commit }: any): void {
-      GetAll()
-        .then((response: any) => {
-          console.info("from get all post", response);
-          commit("getAllPosts", response.data.data);
-        })
-        .catch(error => {
-          console.info(error);
-          Vue.$toast.error(
-            `Ha ocurrido un error al intentar obtener las publicaciones`
-          );
-        });
-    },
-    updatePost({ commit }: any, payload: any): void {
-      const { id, activo } = payload;
+    // getAllPosts({ commit }: any): void {
+    //   GetAll()
+    //     .then((response: any) => {
+    //       console.info("from get all post", response);
+    //       commit("getAllPosts", response.data.data);
+    //     })
+    //     .catch(error => {
+    //       console.info(error);
+    //       Vue.$toast.error(
+    //         `Ha ocurrido un error al intentar obtener las publicaciones`
+    //       );
+    //     });
+    // },
+    updatePost(payload: any): void {
+      const { id } = payload;
       console.info("from update actions", payload);
       Update(payload, id)
         .then((response: any) => {

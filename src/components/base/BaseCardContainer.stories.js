@@ -19,9 +19,7 @@ const Template = (args, { argTypes }) => ({
 });
 
 export const Default = Template.bind({});
-Default.args = {
-};
-
+Default.args = {};
 
 export const Dark = Template.bind({});
 Dark.args = {
