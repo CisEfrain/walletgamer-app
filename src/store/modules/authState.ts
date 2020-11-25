@@ -24,6 +24,7 @@ const authState = {
   },
   actions: {
     setLogin({ commit }: any, payload: any): void {
+      const loader = Vue.$loading.show();
       Login(payload)
         .then((response: any) => {
           if (response.status === 200) {
@@ -35,6 +36,7 @@ const authState = {
                 }
               }
             } = response;
+            loader.hide();
             localStorage.setItem("jwt", jwt);
             Vue.$toast.success(`Bienvenid@ ${nombre}`);
             commit("setLogin", { nombre, email, telefono });
@@ -43,6 +45,7 @@ const authState = {
         })
         .catch(error => {
           console.info(error);
+          loader.hide();
           Vue.$toast.error(
             "Parece que has colocado mal los datos o necesitas registrarte"
           );

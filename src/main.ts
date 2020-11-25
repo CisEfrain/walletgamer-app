@@ -8,10 +8,8 @@ import "vuetify/dist/vuetify.min.css";
 import Vuelidate from "vuelidate";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
-
-// import VueStripeCheckout from "vue-stripe-checkout";
-// Vue.use(VueStripeCheckout, "pk_test_51HUYgHFLYR3KSOT0qrJ9jtjLOZNaGWgNBmxSghB5PXmedAiaGNoyQSJrjUcAYAWBrf9ytsEMoQyMjgo9fFSPmsWn00Jpt950Fx");
-
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 Vue.use(Vuetify);
 Vue.use(Vuelidate);
 Vue.use(Toast, {
@@ -20,6 +18,7 @@ Vue.use(Toast, {
   newestOnTop: true,
   timeout: 5000
 });
+Vue.use(Loading)
 Vue.config.productionTip = false;
 
 new Vue({
