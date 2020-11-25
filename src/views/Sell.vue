@@ -107,19 +107,21 @@ export default class Sell extends Vue {
     this.$store.commit("resetProduct");
     this.$store.dispatch("getPosts", { size: 4, page: 0 });
   }
-  private deletePost(index: any, id: any): void {
+  private async deletePost(index: any, id: any): Promise<any> {
     const payload = { index, id };
     console.info("id", id, "index", index);
     this.$store.dispatch("deletePost", payload);
-    this.$store.dispatch("getPosts", { size: 4, page: this.page });
+    setTimeout(() => {
+      this.$store.dispatch("getPosts", { size: 4, page: 0 });
+    }, 400);
   }
   private disablePost(post: any): void {
-    console.info(post)
+    console.info(post);
     const payload = {
       activo: post.activo === 1 ? --post.activo : ++post.activo,
       id: post.id
     };
-    console.info(post, payload)
+    console.info(post, payload);
     this.$store.dispatch("updatePost", payload);
   }
 
