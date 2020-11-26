@@ -69,7 +69,8 @@
       :characterClass="characterPost.clase"
       :price="characterPost.precio"
       :level="characterPost.nivel"
-      @click="buyGold($index, goldPost.id)"
+      @click="buyCharacter($index, characterPost.id, characterPost)"
+      actions
     />
     <div class="text-center">
       <v-pagination
@@ -135,6 +136,13 @@ export default class BuyCharacterList extends Vue {
 
   get classList(): Array<string> {
     return this.$store.getters.getClassList;
+  }
+
+  private buyCharacter(index: any, id: any, characterPost: any) {
+    console.info(index, id);
+    console.info(index, id, characterPost);
+    this.$router.replace("/payment");
+    this.$store.dispatch("setProductToBuy", characterPost);
   }
 
   private level: Array<number> = [15, 30, 45, 60];

@@ -40,7 +40,8 @@
       :price="itemPost.precio"
       :item="itemPost.descripcion"
       :available="itemPost.cantidad"
-      @click="buyItem($index, itemPost.id)"
+      @click="buyItem($index, itemPost.id, itemPost)"
+      actions
     />
     <div class="text-center">
       <v-pagination
@@ -80,7 +81,6 @@ export default class BuyItemList extends Vue {
     "Tueno furioso"
   ];
 
-
   get factionList(): Array<string> {
     return this.$store.getters.getFactionList;
   }
@@ -94,7 +94,7 @@ export default class BuyItemList extends Vue {
     return this.$store.getters.getItemPostList;
   }
 
-   created() {
+  created() {
     this.$store.dispatch("getItemPosts", { size: 4, page: 0 });
   }
 
@@ -121,8 +121,11 @@ export default class BuyItemList extends Vue {
     });
   }
 
-  private buyItem(index: any, id: any) {
+  private buyItem(index: any, id: any, itemPost: any) {
     console.info(index, id);
+    console.info(index, id, itemPost);
+    this.$router.replace("/payment");
+    this.$store.dispatch("setProductToBuy", itemPost);
   }
 }
 </script>

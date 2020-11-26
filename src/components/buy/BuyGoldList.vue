@@ -41,7 +41,8 @@
       :price="goldPost.precio"
       :product="goldPost.tipo"
       :available="goldPost.cantidad"
-      @click="buyGold($index, goldPost.id)"
+      @click="buyGold($index, goldPost.id, goldPost)"
+      actions
     />
     <div class="text-center">
       <v-pagination
@@ -91,6 +92,12 @@ export default class BuyGoldList extends Vue {
 
   created() {
     this.$store.dispatch("getGoldPosts", { size: 4, page: 0 });
+  }
+
+  private buyGold(index: any, id: any, goldPost: any) {
+    console.info(index, id, goldPost);
+    this.$router.replace("/payment");
+    this.$store.dispatch("setProductToBuy", goldPost);
   }
 
   get goldPages(): number {

@@ -1,10 +1,5 @@
 <template>
   <v-container class="px-8">
-    <h2 class="custom-class">
-      <a href="/payment">
-        to payment
-      </a>
-    </h2>
     <v-row align="center" justify="start">
       <h3 class="mt-12 mb-4 main-title">¿Qué te interesa comprar?</h3>
     </v-row>

@@ -20,6 +20,7 @@
             <small>Disponible: {{ formatAvailable }}</small>
           </v-col>
           <v-col
+            v-if="hasActions"
             cols="3"
             md="3"
             sm="12"
@@ -54,10 +55,17 @@ export default class ItemsItemList extends Vue {
   @Prop({ type: String }) readonly price!: string;
   @Prop({ type: Number }) readonly available!: number;
   @Prop({ type: String }) readonly faction!: string;
+  @Prop({ type: Boolean, default: false }) readonly actions!: boolean;
+
+  get hasActions(): boolean {
+    return this.actions ? true : false;
+  }
 
   get formatPrice() {
     const price = parseInt(this.price);
-    return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(price);
+    return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
+      price
+    );
   }
   get formatAvailable() {
     return new Intl.NumberFormat().format(this.available);

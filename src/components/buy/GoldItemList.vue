@@ -14,17 +14,20 @@
             </v-chip>
           </v-col>
           <v-col cols="3" md="4" sm="6">
-            <h5>$ {{ formatPrice }} por cada 100 de gold</h5>
+            <h4>$ {{ formatPrice }} por cada 100 de gold</h4>
             <small>Disponible: {{ formatAvailable }}</small>
           </v-col>
           <v-col
+            v-if="hasActions"
             cols="3"
             md="2"
             sm="12"
             class="d-flex justify-center align-center"
           >
             <div>
-              <v-btn text large color="error"><b>Comprar</b></v-btn>
+              <v-btn @click="buyGold" text large color="error"
+                ><b>Comprar</b></v-btn
+              >
             </div>
           </v-col>
         </v-row>
@@ -51,15 +54,22 @@ export default class GoldItemList extends Vue {
   @Prop({ type: String }) readonly price!: string;
   @Prop({ type: Number }) readonly available!: number;
   @Prop({ type: String }) readonly faction!: string;
+  @Prop({ type: Boolean, default: false }) readonly actions!: boolean;
+
+  get hasActions(): boolean {
+    return this.actions ? true : false;
+  }
 
   get formatPrice() {
     const price = parseInt(this.price);
-    return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(price);
+    return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
+      price
+    );
   }
   get formatAvailable() {
     return new Intl.NumberFormat().format(this.available);
   }
-  private deletePost() {
+  private buyGold() {
     this.$emit("click");
   }
 }

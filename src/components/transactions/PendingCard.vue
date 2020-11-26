@@ -20,6 +20,9 @@
           </v-col>
           <v-col class="text-center" cols="6" md="2" sm="4">
             <h2>$ {{ formatedCost }}</h2>
+            <div class="">
+              <v-btn text large color="error"><b>Ver detalles</b></v-btn>
+            </div>
           </v-col>
         </v-row>
       </BaseCardContainer>

@@ -20,7 +20,7 @@
           <v-col cols="3" md="2" sm="3" class="d-flex justify-center">
             <h2>$ {{ formatPrice }}</h2>
           </v-col>
-          <v-col class="d-flex justify-center align-center">
+          <v-col v-if="hasActions" class="d-flex justify-center align-center">
             <div class="">
               <v-btn @click="buyCharacter" text large color="error"
                 ><b>Comprar</b></v-btn
@@ -51,6 +51,11 @@ export default class CharactersItemList extends Vue {
   @Prop({ type: Number }) readonly level!: number;
   @Prop({ type: String }) readonly price!: string;
   @Prop({ type: String }) readonly faction!: string;
+  @Prop({ type: Boolean, default: false }) readonly actions!: boolean;
+
+  get hasActions(): boolean {
+    return this.actions ? true : false;
+  }
 
   get formatPrice() {
     const price = parseInt(this.price);

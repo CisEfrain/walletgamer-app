@@ -30,7 +30,7 @@
       </v-col>
     </v-row>
 
-    <v-row class="px-5" justify="center">
+    <v-row class="px-10" justify="center">
       <v-col cols="12">
         <PendingCard
           v-for="pendingOperation in pendingOperations"
@@ -69,7 +69,7 @@
       </v-col>
     </v-row>
 
-    <v-row class="px-5" justify="center">
+    <v-row class="px-10" justify="center">
       <v-col cols="12">
         <v-expansion-panels v-model="panel" multiple flat>
           <TransactionItemList

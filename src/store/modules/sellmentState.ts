@@ -4,6 +4,7 @@ const sellmentState = {
     currentStepSell: 1,
     activeSell: {},
     stripeData: {},
+    productToBuy: {},
     errorReportedSell: false,
     isConfirmed: false
   }),
@@ -22,17 +23,19 @@ const sellmentState = {
     nextStepSell(state: any, payload?: any): void {
       if (!payload) {
         state.currentStepSell++;
-      } 
-      else {
+      } else {
         state.currentStepSell = 4;
         state.errorReportedSell = true;
       }
     },
-    setConfirmed(state:any): void {
-        setTimeout(() => {
-          state.isConfirmed = true
-        }, 3000); 
+    setConfirmed(state: any): void {
+      setTimeout(() => {
+        state.isConfirmed = true;
+      }, 3000);
     },
+    setProductToBuy(state: any, payload: any): void {
+      state.productToBuy = payload;
+    }
     //   openPayModal(state: any): void {
     //       state.PayModal = !state.PayModal;
     //   }
@@ -47,19 +50,25 @@ const sellmentState = {
     nextStepSell({ commit }: any, payload?: any): void {
       if (!payload) {
         commit("nextStepSell");
-      } 
-      else {
+      } else {
         commit("nextStepSell", true);
       }
     },
-    setConfirmed({commit}: any): void {
+    setConfirmed({ commit }: any): void {
       commit("setConfirmed");
+    },
+    setProductToBuy({ commit }: any, payload: any): void {
+      commit("setProductToBuy", payload);
     }
     //   openPayModal({ commit }: any): void {
     //       commit('openPayModal')
 
     //   }
   },
-  // getters: { ... }
+  getters: {
+    getProductToBuy: (state: { productToBuy: any }) => {
+      return state.productToBuy;
+    }
+  }
 };
 export default sellmentState;

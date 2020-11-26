@@ -2,7 +2,8 @@ import { GetData } from "@/services/general.service";
 const AppState = {
   state: () => ({
     activeProduct: "",
-    data: {}
+    data: {},
+    isFundForm: ""
   }),
   mutations: {
     /**
@@ -17,6 +18,9 @@ const AppState = {
     },
     setData(state: any, payload: any): void {
       state.data = payload;
+    },
+    setFundForm(state: any, payload: boolean): void {
+      state.isFundForm = payload;
     }
   },
   actions: {
@@ -35,6 +39,9 @@ const AppState = {
         .catch(error => {
           console.info(error);
         });
+    },
+    setFundForm({ commit }: any, payload: any): void {
+      commit("setFundForm", payload);
     }
   },
   getters: {
@@ -62,6 +69,9 @@ const AppState = {
     getPayMethodList: (state: { data: any }) => {
       const paymentMethods = Object.keys(state.data.pasarelas);
       return paymentMethods;
+    },
+    getFundForm: (state: { isFundForm: boolean }) => {
+      return state.isFundForm;
     }
   }
 };

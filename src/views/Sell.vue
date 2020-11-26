@@ -74,6 +74,7 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Vue } from "vue-property-decorator";
 
 import ProductCard from "@/components/ProductCard.vue";
@@ -92,7 +93,6 @@ import PostList from "@/components/sell/PostList.vue";
   }
 })
 export default class Sell extends Vue {
-  [x: string]: any;
   public productList: Array<string> = ["Gold", "Personaje", "Items"];
   public currentProduct: Array<string> = ["Post"];
   private panel: Array<number> = [];

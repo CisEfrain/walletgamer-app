@@ -371,7 +371,7 @@ export default class Sellment extends Vue {
     faction: "Horda",
     price: "20",
     product: "10.000",
-    available: "1.000.000"
+    available: 100
   };
   history = [
     {
