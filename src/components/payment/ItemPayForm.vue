@@ -52,7 +52,11 @@
     <v-row justify="center">
       <h4>Total a pagar: $ {{ netQuantity }}</h4>
     </v-row>
-    <v-row justify="center" v-if="balance > getQuantity">
+    <v-row
+      class="animated fadeIn fast"
+      justify="center"
+      v-if="balance >= getQuantity"
+    >
       <v-btn
         type="button"
         rounded
@@ -64,7 +68,7 @@
       >
     </v-row>
 
-    <div v-show="balance < getQuantity">
+    <div class="animated fadeIn fast" v-show="balance < getQuantity">
       <v-row class="mt-4" justify="center">
         <v-col class="commission_info text-center px-4 py-4" cols="4">
           <p>
@@ -82,6 +86,16 @@
           @click="isFormFund"
           >Fondear en segundos</v-btn
         >
+      </v-row>
+    </div>
+
+    <div class="animated fadeIn fast" v-show="quantity > productQuantity">
+      <v-row class="mt-4" justify="center">
+        <v-col class="commission_info text-center px-4 py-4" cols="4">
+          <p>
+            No puedes solicitar mas cantidad de lo disponible en el producto
+          </p>
+        </v-col>
       </v-row>
     </div>
     <!-- Side form for "Fondear" -->
@@ -164,6 +178,7 @@ export default class ItemPayForm extends Vue {
   @Validate({ required }) quantity = "";
   @Validate({ required, minLength: minLength(4) }) pj = "";
   @Validate({ required, sameAs: sameAs("pj") }) pjConfirm = "";
+  public productQuantity = this.itemList.cantidad;
   private stripe = (window as any).Stripe(process.env.VUE_APP_STRIPE_PK);
   io: any = SocketIo;
   //Fund
@@ -228,7 +243,8 @@ export default class ItemPayForm extends Vue {
     return !this.$v.quantity.required ||
       !this.$v.pj.minLength ||
       !this.$v.pjConfirm.$model ||
-      !this.$v.pjConfirm.sameAs
+      !this.$v.pjConfirm.sameAs ||
+      this.quantity > this.itemList.cantidad
       ? true
       : false;
   }

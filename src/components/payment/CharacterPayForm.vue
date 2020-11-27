@@ -35,7 +35,7 @@
     <v-row justify="center">
       <h4>Total a pagar: $ {{ totalPrice }}</h4>
     </v-row>
-    <v-row justify="center" v-if="balance > getQuantity">
+    <v-row justify="center" v-if="balance >= getQuantity">
       <v-btn
         type="button"
         rounded
@@ -47,7 +47,7 @@
       >
     </v-row>
 
-    <div v-show="balance < parseInt(totalPrice)">
+    <div class="animated fadeIn fast" v-show="balance < parseInt(totalPrice)">
       <v-row class="mt-4" justify="center">
         <v-col class="commission_info text-center px-4 py-4" cols="4">
           <p>
