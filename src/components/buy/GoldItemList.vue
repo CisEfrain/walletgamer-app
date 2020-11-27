@@ -1,7 +1,7 @@
 <template>
   <v-row class="d-flex justify-center">
     <v-col>
-      <BaseCardContainer>
+      <BaseCardContainer :class="ownerClass">
         <v-row class="px-4" align="center" justify="space-between">
           <v-col cols="3" md="2" sm="12" class="text-center">
             <h4 class="main-title">{{ user }}</h4>
@@ -18,7 +18,7 @@
             <small>Disponible: {{ formatAvailable }}</small>
           </v-col>
           <v-col
-            v-if="hasActions"
+            v-if="isOwner"
             cols="3"
             md="2"
             sm="12"
@@ -71,6 +71,12 @@ export default class GoldItemList extends Vue {
   }
   private buyGold() {
     this.$emit("click");
+  }
+  get isOwner(): boolean {
+    return this.user !== this.$store.getters.getUserData.nombre ? true : false;
+  }
+  get ownerClass(): string[] {
+    return !this.isOwner && ["ownerClass"];
   }
 }
 </script>

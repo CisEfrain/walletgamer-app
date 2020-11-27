@@ -101,30 +101,6 @@ import CharactersItemList from "@/components/buy/CharactersItemList.vue";
   }
 })
 export default class BuyCharacterList extends Vue {
-  private realm: Array<string> = [
-    "Aegwynn",
-    "Aerie Peak",
-    "Aggramar",
-    "Akama",
-    "Altar of Storms"
-  ];
-  private factions: Array<string> = [
-    "Horde",
-    "Alliance",
-    "Horde Force",
-    "Steamwheedle Cartel"
-  ];
-  private classes: Array<string> = [
-    "Warrior",
-    "Paladín",
-    "Pícaro",
-    "Hunter",
-    "Priest",
-    "Sorcerer",
-    "Mage",
-    "Monk",
-    "Demon Hunter"
-  ];
 
   get factionList(): Array<string> {
     return this.$store.getters.getFactionList;
