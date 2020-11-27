@@ -52,7 +52,7 @@
     <v-row justify="center">
       <h4>Total a pagar: $ {{ netQuantity }}</h4>
     </v-row>
-    <v-row justify="center">
+    <v-row justify="center" v-if="balance > getQuantity">
       <v-btn
         type="button"
         rounded

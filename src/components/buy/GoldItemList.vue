@@ -18,7 +18,7 @@
             <small>Disponible: {{ formatAvailable }}</small>
           </v-col>
           <v-col
-            v-if="isOwner"
+            v-if="isOwner && hasActions"
             cols="3"
             md="2"
             sm="12"

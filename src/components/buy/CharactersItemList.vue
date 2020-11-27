@@ -4,7 +4,7 @@
       <BaseCardContainer :class="ownerClass">
         <v-row class="px-4" align="center" justify="space-between">
           <v-col cols="3" md="2" sm="12" class="text-center">
-            <h4 class="main-title" >{{ user }}</h4>
+            <h4 class="main-title">{{ user }}</h4>
             <small>Rango: {{ rank }}</small>
           </v-col>
           <v-col cols="3" md="3" sm="5" class="text-center">
@@ -20,7 +20,10 @@
           <v-col cols="3" md="2" sm="3" class="d-flex justify-center">
             <h2>$ {{ formatPrice }}</h2>
           </v-col>
-          <v-col v-if="isOwner" class="d-flex justify-center align-center">
+          <v-col
+            v-if="isOwner && hasActions"
+            class="d-flex justify-center align-center"
+          >
             <div class="">
               <v-btn @click="buyCharacter" text large color="error"
                 ><b>Comprar</b></v-btn
@@ -56,7 +59,6 @@ export default class CharactersItemList extends Vue {
   get hasActions(): boolean {
     return this.actions ? true : false;
   }
-
 
   get formatPrice() {
     const price = parseInt(this.price);

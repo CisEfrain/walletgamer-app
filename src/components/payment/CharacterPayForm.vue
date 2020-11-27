@@ -3,14 +3,14 @@
     <v-row align="center" justify="center" class="mt-6">
       <v-col class="d-flex" cols="12" md="4">
         <v-text-field
-          label="Nombre de la cuenta receptora"
+          label="Correo receptor de los datos"
           outlined
           required
           rounded
-          v-model="$v.pj.$model"
-          :error-messages="pjErrors"
-          @input="$v.pj.$touch()"
-          @blur="$v.pj.$touch()"
+          v-model="$v.email.$model"
+          :error-messages="emailErrors"
+          @input="$v.email.$touch()"
+          @blur="$v.email.$touch()"
           color="rgba(184,12,70,.6)"
           dense
           class="select-field"
@@ -18,14 +18,14 @@
       </v-col>
       <v-col class="d-flex" cols="12" md="4">
         <v-text-field
-          label="Confirmar nombre de la cuenta receptora"
+          label="Confirmar correo receptor"
           outlined
           required
           rounded
-          v-model="$v.pjConfirm.$model"
-          :error-messages="pjConfirmErrors"
-          @input="$v.pjConfirm.$touch()"
-          @blur="$v.pjConfirm.$touch()"
+          v-model="$v.emailConfirm.$model"
+          :error-messages="emailConfirmErrors"
+          @input="$v.emailConfirm.$touch()"
+          @blur="$v.emailConfirm.$touch()"
           color="rgba(184,12,70,.6)"
           dense
           class="select-field"
@@ -35,7 +35,7 @@
     <v-row justify="center">
       <h4>Total a pagar: $ {{ totalPrice }}</h4>
     </v-row>
-    <v-row justify="center">
+    <v-row justify="center" v-if="balance > getQuantity">
       <v-btn
         type="button"
         rounded
@@ -137,15 +137,15 @@ import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
 import { Validate } from "vuelidate-property-decorators";
 import SocketIo from "socket.io-client";
 
-import { required, minLength, sameAs } from "vuelidate/lib/validators";
+import { required, minLength, sameAs, email } from "vuelidate/lib/validators";
 @Component({
   components: {
     BaseCardContainer
   }
 })
 export default class CharacterPayForm extends Vue {
-  @Validate({ required, minLength: minLength(4) }) pj = "";
-  @Validate({ required, sameAs: sameAs("pj") }) pjConfirm = "";
+  @Validate({ required, email, minLength: minLength(4) }) email = "";
+  @Validate({ required, email, sameAs: sameAs("email") }) emailConfirm = "";
   private stripe = (window as any).Stripe(process.env.VUE_APP_STRIPE_PK);
   io: any = SocketIo;
   //Fund
@@ -176,7 +176,7 @@ export default class CharacterPayForm extends Vue {
 
   private buy(): void {
     const buyProduct = {
-      pj: this.pj
+      email: this.email
     };
     console.info(buyProduct);
     this.$store.dispatch("nextStep");
@@ -195,15 +195,15 @@ export default class CharacterPayForm extends Vue {
 
   get form(): any {
     return {
-      pj: this.$v.pj.$model,
-      pjConfirm: this.$v.pjConfirm.$model
+      pj: this.$v.email.$model,
+      pjConfirm: this.$v.emailConfirm.$model
     };
   }
 
   get isStepOneDisabled(): boolean {
-    return !this.$v.pj.minLength ||
-      !this.$v.pjConfirm.$model ||
-      !this.$v.pjConfirm.sameAs
+    return !this.$v.email.minLength ||
+      !this.$v.emailConfirm.$model ||
+      !this.$v.emailConfirm.sameAs
       ? true
       : false;
   }
@@ -233,18 +233,20 @@ export default class CharacterPayForm extends Vue {
     //this.$store.dispatch("nextStep");
   }
 
-  get pjErrors(): Array<string> {
+  get emailErrors(): Array<string> {
     const errors: Array<string> = [];
-    if (!this.$v.pj.$dirty) return errors;
-    !this.$v.pj.minLength && errors.push("Minimo de caracteres 4");
-    !this.$v.pj.required && errors.push("El campo es requerido");
+    if (!this.$v.email.$dirty) return errors;
+    !this.$v.email.minLength && errors.push("Minimo de caracteres 4");
+    !this.$v.email.required && errors.push("El campo es requerido");
+    !this.$v.email.email && errors.push("Email no valido");
     return errors;
   }
-  get pjConfirmErrors(): Array<string> {
+  get emailConfirmErrors(): Array<string> {
     const errors: Array<string> = [];
-    if (!this.$v.pjConfirm.$dirty) return errors;
-    !this.$v.pjConfirm.required && errors.push("El campo es requerido");
-    !this.$v.pjConfirm.sameAs && errors.push("El nombre no coincide");
+    if (!this.$v.emailConfirm.$dirty) return errors;
+    !this.$v.emailConfirm.required && errors.push("El campo es requerido");
+    !this.$v.emailConfirm.sameAs && errors.push("El email no coincide");
+    !this.$v.emailConfirm.email && errors.push("Email no valido");
     return errors;
   }
 
