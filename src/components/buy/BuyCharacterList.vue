@@ -60,6 +60,7 @@
     </v-row>
 
     <CharactersItemList
+      class="animated fadeIn fast"
       v-for="(characterPost, $index) in showFiltered"
       :key="characterPost.id"
       :user="characterPost.usuario.nombre"
@@ -101,7 +102,6 @@ import CharactersItemList from "@/components/buy/CharactersItemList.vue";
   }
 })
 export default class BuyCharacterList extends Vue {
-
   get factionList(): Array<string> {
     return this.$store.getters.getFactionList;
   }

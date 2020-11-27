@@ -1,5 +1,5 @@
 <template>
-  <v-row class="mb-3">
+  <v-row class="animated fadeIn fast mb-3">
     <v-row class="px-4" align="center">
       <v-col>
         <img

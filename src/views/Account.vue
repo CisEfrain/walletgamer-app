@@ -1,10 +1,10 @@
 <template>
   <v-container class="px-8">
-    <v-row>
+    <v-row class="animated fadeIn fast">
       <UserInfo />
     </v-row>
 
-    <v-row>
+    <v-row class="animated fadeIn fast">
       <UserExpenditure />
     </v-row>
   </v-container>

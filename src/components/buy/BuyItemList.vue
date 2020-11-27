@@ -32,6 +32,7 @@
     </v-row>
 
     <ItemsItemList
+      class="animated fadeIn fast"
       v-for="(itemPost, $index) in showFiltered"
       :key="itemPost.id"
       :user="itemPost.usuario.nombre"

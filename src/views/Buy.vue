@@ -6,6 +6,7 @@
 
     <v-row align="center" class="responsive-card ml-1">
       <ProductCard
+        class="animated fadeIn fast px-8"
         v-for="(product, $index) in productList"
         :key="$index"
         :productTitle="product"

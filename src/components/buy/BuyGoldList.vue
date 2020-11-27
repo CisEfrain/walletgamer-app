@@ -32,6 +32,7 @@
     </v-row>
 
     <GoldItemList
+      class="animated fadeIn fast"
       v-for="(goldPost, $index) in showFiltered"
       :key="goldPost.id"
       :user="goldPost.usuario.nombre"

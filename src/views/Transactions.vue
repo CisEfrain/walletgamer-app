@@ -1,6 +1,10 @@
 <template>
   <v-container class="px-8">
-    <v-row class="px-8" justify="space-around" align="center">
+    <v-row
+      class="animated fadeIn fast px-8"
+      justify="space-around"
+      align="center"
+    >
       <v-col cols="12" sm="12" md="3">
         <!-- <BalanceCard balance="50" actions /> -->
         <BalanceCard :balance="balance" />
@@ -33,6 +37,7 @@
     <v-row class="px-10" justify="center">
       <v-col cols="12">
         <PendingCard
+          class="animated fadeIn fast"
           v-for="pendingOperation in pendingOperations"
           :key="pendingOperation.id"
           product="Gold World of Warcraft"
@@ -73,6 +78,7 @@
       <v-col cols="12">
         <v-expansion-panels v-model="panel" multiple flat>
           <TransactionItemList
+            class="animated fadeIn fast px-8"
             v-for="doneOperation in doneOperations"
             :key="doneOperation.id"
             product="Gold World of Warcraft"

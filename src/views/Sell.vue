@@ -13,6 +13,7 @@
 
     <v-row align="center" justify="start" class="mb-1 ml-1">
       <ProductCard
+        class="animated fadeIn fast px-8"
         v-for="(product, $index) in productList"
         :key="$index"
         :productTitle="product"
@@ -24,6 +25,7 @@
       <h3 class="title mb-6" v-show="postList.length > 0">Mis publicaciones</h3>
       <v-expansion-panels class="container" v-model="panel" multiple flat>
         <PostList
+          class="animated fadeIn fast"
           v-for="(post, $index) in postList"
           :key="post.id"
           :product="post.tipo"
