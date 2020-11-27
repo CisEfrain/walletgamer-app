@@ -118,16 +118,16 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/camelcase */
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import { Validate } from "vuelidate-property-decorators";
-import { required, minLength } from "vuelidate/lib/validators";
+import { required, minLength, maxValue } from "vuelidate/lib/validators";
 
 @Component
 export default class CharactersForm extends Vue {
   @Validate({ required }) realm = null;
   @Validate({ required }) faction = null;
   @Validate({ required }) pjClass = null;
-  @Validate({ required }) level = null;
+  @Validate({ required, maxValue: maxValue(60) }) level = null;
   @Validate({ required, minLength: minLength(1) }) price = null;
   private levelList: Array<number> = [15, 30, 45, 60];
 
@@ -190,7 +190,8 @@ export default class CharactersForm extends Vue {
       !this.faction ||
       !this.pjClass ||
       !this.level ||
-      !this.price
+      !this.price ||
+      !this.$v.level.maxValue
       ? true
       : false;
   }
@@ -222,6 +223,7 @@ export default class CharactersForm extends Vue {
     const errors: Array<string> = [];
     if (!this.$v.level.$dirty) return errors;
     !this.$v.level.required && errors.push("El campo es requerido");
+    !this.$v.level.maxValue && errors.push("Nivel máximo 60");
     return errors;
   }
   get priceErrors(): Array<string> {
