@@ -57,14 +57,13 @@
               <v-row justify="center">
                 <v-col cols="12">
                   <h3 class="main-title text-center">
-                    Muy bien, ahora espera que
-                    <b>Carlos Gomez</b> te haya transferido los 500 de Oro
+                    {{ getBuyInfoStatus.estado.principal }}
                   </h3>
                 </v-col>
 
                 <v-col cols="12">
                   <p class="text-center">
-                    No te preocupes, ya fue notificado de la operación
+                    {{ getBuyInfoStatus.estado.secundario }}
                   </p>
                 </v-col>
               </v-row>
@@ -222,12 +221,12 @@ export default class Payment extends Vue {
     );
   }
 
-// GET TYPE OF PRODUCT TO SHOW IT IN 1 STEP TITLE
+  // GET TYPE OF PRODUCT TO SHOW IT IN 1 STEP TITLE
   get getProductType(): string {
     return this.$store.getters.getProductToBuy.tipo;
   }
 
-//GET INFO FROM VENTAS/:ID TO RENDER
+  //GET INFO FROM VENTAS/:ID TO RENDER
   get getBuyInfoStatus(): any {
     return this.$store.getters.getBuyStatusInfo;
   }

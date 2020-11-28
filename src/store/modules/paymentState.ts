@@ -57,11 +57,11 @@ const paymentState = {
     // CALL ventas AND ventas/:id
     async setBuyProduct({ commit }: any, payload: any) {
       try {
-        const { data } = await BuyProduct(payload);
+        const {
+          data: { data }
+        } = await BuyProduct(payload);
         console.info(data);
-        const productData = await BuyProductConfirm(data.data.id);
-        console.info(productData);
-        commit("setBuyData", productData.data.data);
+        commit("setBuyData", data);
       } catch (error) {
         console.info(error);
       }
@@ -72,6 +72,6 @@ const paymentState = {
     getBuyStatusInfo: (state: { buyData: any }) => {
       return state.buyData;
     }
-   }
+  }
 };
 export default paymentState;
