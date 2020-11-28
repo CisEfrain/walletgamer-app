@@ -165,14 +165,14 @@ import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
 import { Validate } from "vuelidate-property-decorators";
 import SocketIo from "socket.io-client";
 
-import { required, minLength, sameAs } from "vuelidate/lib/validators";
+import { required, minLength, sameAs, minValue } from "vuelidate/lib/validators";
 @Component({
   components: {
     BaseCardContainer
   }
 })
 export default class GoldPayForm extends Vue {
-  @Validate({ required }) quantity = "";
+  @Validate({ required, minValue: minValue(100) }) quantity = "";
   @Validate({ required, minLength: minLength(4) }) pj = "";
   @Validate({ required, sameAs: sameAs("pj") }) pjConfirm = "";
   public productQuantity = this.itemList.cantidad;
@@ -243,6 +243,7 @@ export default class GoldPayForm extends Vue {
       !this.$v.pj.minLength ||
       !this.$v.pjConfirm.$model ||
       !this.$v.pjConfirm.sameAs ||
+      !this.$v.quantity.minValue ||
       this.quantity > this.itemList.cantidad
       ? true
       : false;
@@ -273,6 +274,7 @@ export default class GoldPayForm extends Vue {
     if (!this.$v.quantity.$dirty) return errors;
     // !this.$v.quantity.minLength && errors.push("Minimo de caracteres 4");
     !this.$v.quantity.required && errors.push("El campo es requerido");
+    !this.$v.quantity.minValue && errors.push("Minimo 100");
     return errors;
   }
   get pjErrors(): Array<string> {
