@@ -222,10 +222,12 @@ export default class Payment extends Vue {
     );
   }
 
+// GET TYPE OF PRODUCT TO SHOW IT IN 1 STEP TITLE
   get getProductType(): string {
     return this.$store.getters.getProductToBuy.tipo;
   }
 
+//GET INFO FROM VENTAS/:ID TO RENDER
   get getBuyInfoStatus(): any {
     return this.$store.getters.getBuyStatusInfo;
   }
