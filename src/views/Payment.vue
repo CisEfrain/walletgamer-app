@@ -54,16 +54,16 @@
                   <ConditionalItemCard class="conditionalCard" />
                 </v-col>
               </v-row>
-              <v-row justify="center">
+              <v-row justify="center" >
                 <v-col cols="12">
                   <h3 class="main-title text-center">
-                    {{ getBuyInfoStatus.estado.principal }}
+                    <!-- {{ getBuyInfoStatus.estado.principal }} -->
                   </h3>
                 </v-col>
 
                 <v-col cols="12">
                   <p class="text-center">
-                    {{ getBuyInfoStatus.estado.secundario }}
+                    <!-- {{ getBuyInfoStatus.estado.secundario }} -->
                   </p>
                 </v-col>
               </v-row>
