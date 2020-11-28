@@ -1,10 +1,13 @@
+import { BuyProduct } from "@/services/buy.service";
+
 const paymentState = {
   state: () => ({
     PayModal: false,
     currentStep: 1,
     activeBuy: {},
     stripeData: {},
-    errorReported: false
+    errorReported: false,
+    buyData: {}
   }),
   mutations: {
     /**
@@ -28,6 +31,10 @@ const paymentState = {
     },
     openPayModal(state: any): void {
       state.PayModal = !state.PayModal;
+    },
+    setBuyData(state: any, payload: any): void {
+      console.info(payload);
+      state.buyData = payload;
     }
   },
   actions: {
@@ -46,6 +53,23 @@ const paymentState = {
     },
     openPayModal({ commit }: any): void {
       commit("openPayModal");
+    },
+    async setBuyProduct({ commit }: any, payload: any) {
+      // BuyProduct(payload)
+      //   .then((response: any) => {
+      //     console.info("from buy", response);
+      //     // commit("getPost", response.data.data);
+      //   })
+      //   .catch(error => {
+      //     console.info(error);
+      //     // Vue.$toast.error(`No se han cargado tus publicaciónes`);
+      //   });
+      try {
+        const buyData = await BuyProduct(payload);
+        console.info(buyData);
+      } catch (error) {
+        console.info(error);
+      }
     }
   }
   // getters: { ... }

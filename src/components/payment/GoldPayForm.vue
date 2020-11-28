@@ -159,6 +159,7 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/camelcase */
 import { Component, Vue } from "vue-property-decorator";
 import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
 import { Validate } from "vuelidate-property-decorators";
@@ -205,11 +206,13 @@ export default class GoldPayForm extends Vue {
 
   private buy(): void {
     const buyProduct = {
-      cantidad: this.quantity,
-      pj: this.pj
+      cantidad: parseInt(this.quantity),
+      publicaciones_id: this.itemList.id,
+      personaje: this.pj
     };
     console.info(buyProduct);
-    this.$store.dispatch("nextStep");
+    this.$store.dispatch("setBuyProduct", buyProduct);
+    //this.$store.dispatch("nextStep");
   }
 
   get myPayMethods(): Array<any> {
@@ -265,17 +268,6 @@ export default class GoldPayForm extends Vue {
       price
     );
   }
-
-  Pay() {
-    console.log(this.form);
-    if (this.$v.$invalid) {
-      this.$v.$touch;
-      return;
-    }
-    //this.$store.dispatch("setStripeData", this.form);
-    //this.$store.dispatch("nextStep");
-  }
-
   get quantityErrors(): Array<string> {
     const errors: Array<string> = [];
     if (!this.$v.quantity.$dirty) return errors;
