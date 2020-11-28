@@ -1,7 +1,7 @@
 <template>
   <v-row class="d-flex justify-center px-16">
     <v-col>
-      <div v-if="itemList.tipo === 'Gold'">
+      <div v-if="itemList.tipo === 'oro'">
         <GoldItemList
           :key="itemList.id"
           :user="itemList.usuario.nombre"
@@ -13,7 +13,7 @@
           :available="itemList.cantidad"
         />
       </div>
-      <div v-if="itemList.tipo === 'Personaje'">
+      <div v-if="itemList.tipo === 'personaje'">
         <CharactersItemList
           :key="itemList.id"
           :user="itemList.usuario.nombre"
@@ -25,7 +25,7 @@
           :level="itemList.nivel"
         />
       </div>
-      <div v-if="itemList.tipo === 'Item'">
+      <div v-if="itemList.tipo === 'item'">
         <ItemsItemList
           :key="itemList.id"
           :user="itemList.usuario.nombre"

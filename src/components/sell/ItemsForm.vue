@@ -148,12 +148,11 @@ export default class ItemsForm extends Vue {
 
   private addItemPost(): void {
     const newItemPost = {
-      tipo: "Item",
+      tipo: this.$store.getters.getItemsPostData.id,
       faccion: this.faction,
       descripcion: this.item,
       cantidad: this.quantity,
-      precio: this.price,
-      usuarios_id: this.$store.state.accountState.userData.id
+      precio: this.price
     };
     this.$store.dispatch("addPost", newItemPost);
     this.$store.dispatch("getPosts",{ size: 4, page: 0 });

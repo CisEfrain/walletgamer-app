@@ -1,13 +1,13 @@
 <template>
   <v-row class="d-flex justify-center px-16">
     <v-col>
-      <div v-if="itemList.tipo === 'Gold'">
+      <div v-if="itemList.tipo === 'oro'">
         <GoldPayForm />
       </div>
-      <div v-if="itemList.tipo === 'Personaje'">
+      <div v-if="itemList.tipo === 'oro'">
         <CharacterPayForm />
       </div>
-      <div v-if="itemList.tipo === 'Item'">
+      <div v-if="itemList.tipo === 'item'">
         <ItemPayForm />
       </div>
     </v-col>
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import GoldPayForm from "@/components/payment/GoldPayForm.vue";
 import CharacterPayForm from "@/components/payment/CharacterPayForm.vue";
 import ItemPayForm from "@/components/payment/ItemPayForm.vue";

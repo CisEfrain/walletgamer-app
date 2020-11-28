@@ -6,8 +6,17 @@
           <v-expansion-panel-header>
             <v-row class="" align="center" justify="space-between">
               <v-col cols="4" md="4" sm="12">
-                <h3 class="transaction-title mt-2">
-                  {{ product }} World of WarCraft
+                <h3 v-if="product === 'oro'" class="transaction-title mt-2">
+                  {{ goldMessage }}
+                </h3>
+                <h3
+                  v-if="product === 'personaje'"
+                  class="transaction-title mt-2"
+                >
+                  {{ characterMessage }}
+                </h3>
+                <h3 v-if="product === 'item'" class="transaction-title mt-2">
+                  {{ itemMessage }}
                 </h3>
               </v-col>
               <v-col cols="4" md="5" sm="6">
@@ -61,7 +70,7 @@ import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
   }
 })
 export default class PostList extends Vue {
-  @Prop({ type: String }) readonly product: string | undefined;
+  @Prop({ type: String }) product: string | undefined;
   @Prop({ type: String }) readonly level: string | undefined;
   @Prop({ type: String }) readonly item: string | undefined;
   @Prop({ type: String }) readonly cost: string | undefined;
@@ -97,12 +106,31 @@ export default class PostList extends Vue {
     return new Intl.NumberFormat().format(this.quantity);
   }
 
+  get goldMessage() {
+    return this.product === "oro" && this.$store.getters.getGoldPostData.nombre;
+  }
+  get characterMessage() {
+    return (
+      this.product === "personaje" &&
+      this.$store.getters.getCharactersPostData.nombre
+    );
+  }
+  get itemMessage() {
+    return (
+      this.product === "item" && this.$store.getters.getItemsPostData.nombre
+    );
+  }
+
+  get productName() {
+    return this.goldMessage || this.characterMessage || this.itemMessage;
+  }
+
   get isActive() {
     return this.status == 1 ? true : false;
   }
 
   get isGold(): any {
-    return this.product === "Gold" ? "Por cada 100 de oro" : null;
+    return this.product === "oro" ? "Por cada 100 de oro" : null;
   }
 
   // get isGoldQuantity(): string {

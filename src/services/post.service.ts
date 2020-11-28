@@ -29,7 +29,7 @@ export const GetMe = async (size:any, page: any):Promise<unknown> => {
 export const GetGold = async (size:any, page: any):Promise<unknown> => {
 	const jwt = localStorage.getItem("jwt")
 	const header = {headers:{ Authorization: "Bearer " + jwt }};
-	return await axios.get(`${resource}?size=${size}&page=${page}&type=Gold&active=1`, header);
+	return await axios.get(`${resource}?size=${size}&page=${page}&type=oro&active=1`, header);
 }
 export const GetCharacters = async (size:any, page: any):Promise<unknown> => {
 	const jwt = localStorage.getItem("jwt")

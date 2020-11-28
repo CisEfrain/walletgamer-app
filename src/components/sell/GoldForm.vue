@@ -142,12 +142,11 @@ export default class GoldForm extends Vue {
   }
   private addGoldPost(): void {
     const newGoldPost = {
-      tipo: "Gold",
+      tipo: this.$store.getters.getGoldPostData.id,
       reino: this.realm,
       faccion: this.faction,
       cantidad: this.quantity,
-      precio: this.price,
-      usuarios_id: this.$store.state.accountState.userData.id
+      precio: this.price
     };
     this.$store.dispatch("addPost", newGoldPost);
     this.$store.dispatch("getPosts", { size: 4, page: 0 });

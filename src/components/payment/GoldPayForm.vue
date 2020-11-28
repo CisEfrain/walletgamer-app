@@ -13,6 +13,8 @@
           @blur="$v.quantity.$touch()"
           @keyup="calculateGoldQuantity(quantity)"
           type="number"
+          min="100"
+          step="100"
           color="rgba(184,12,70,.6)"
           dense
           class="select-field"

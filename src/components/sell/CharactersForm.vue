@@ -164,13 +164,12 @@ export default class CharactersForm extends Vue {
   }
   private addCharacterPost(): void {
     const newCharacterPost = {
-      tipo: "Personaje",
+      tipo: this.$store.getters.getCharactersPostData.id,
       reino: this.realm,
       faccion: this.faction,
       clase: this.pjClass,
       nivel: this.level,
-      precio: this.price,
-      usuarios_id: this.$store.state.accountState.userData.id
+      precio: this.price
     };
     this.$store.dispatch("addPost", newCharacterPost);
     this.$store.dispatch("getPosts", { size: 4, page: 0 });

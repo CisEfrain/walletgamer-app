@@ -14,7 +14,7 @@
             </v-chip>
           </v-col>
           <v-col cols="3" md="4" sm="6">
-            <h4>$ {{ formatPrice }} por cada 100 de gold</h4>
+            <h4>$ {{ formatPrice }} por cada 100 de oro</h4>
             <small>Disponible: {{ formatAvailable }}</small>
           </v-col>
           <v-col
