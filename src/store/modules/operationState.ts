@@ -88,13 +88,14 @@ const operationState = {
     //   return res;
     // },
     getDoneOperations: (state: { doneOperation: any }) => {
-      return state.doneOperation.rows;
+      return state.doneOperation.rows || [];
     },
     getTotalDoneOperations: (state: { doneOperation: any }) => {
       return state.doneOperation.count;
     },
     getPendingOperations: (state: { pendingOperation: any }) => {
-      return state.pendingOperation.rows;
+
+      return state.pendingOperation.rows || [];
     },
     getTotalPendingOperations: (state: { pendingOperation: any }) => {
       return state.pendingOperation.count;

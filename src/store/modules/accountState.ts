@@ -128,7 +128,7 @@ const accountState = {
   },
   getters: {
     getExpenditure: (state: { expenditureData: any }) => {
-      return state.expenditureData;
+      return state.expenditureData || [];
     },
     getUserData: (state: { userData: any }) => {
       return state.userData;

@@ -373,7 +373,7 @@ export default class Transactions extends Vue {
     this.donePage = e;
     this.$store.dispatch("MyDoneOperations", { size: 4, page: e - 1 });
   }
-  get totalDonePages(): any {
+  get totalDonePages(): number {
     return Math.ceil(this.$store.getters.getTotalDoneOperations / 4);
   }
   private handlePaginatePending(e): void {
@@ -381,16 +381,19 @@ export default class Transactions extends Vue {
     this.pendingPage = e;
     this.$store.dispatch("MyPendingOperations", { size: 4, page: e - 1 });
   }
-  get totalPendingPages(): any {
+  get totalPendingPages(): number {
+    console.log(this.$store.getters.getTotalPendingOperations)
     return Math.ceil(this.$store.getters.getTotalPendingOperations / 4);
   }
-
+  async beforeCreate(){
+    const loader = this.$loading.show();
+    await this.$store.dispatch("MyBalance");
+    await this.$store.dispatch("getExpenditureData");
+    await this.$store.dispatch("MyDoneOperations", { size: 4, page: 0 });
+    await this.$store.dispatch("MyPendingOperations", { size: 4, page: 0 });
+    loader.hide();
+  }
   created() {
-    this.$store.dispatch("MyBalance");
-    this.$store.dispatch("getExpenditureData");
-    this.$store.dispatch("MyDoneOperations", { size: 4, page: 0 });
-    this.$store.dispatch("MyPendingOperations", { size: 4, page: 0 });
-
     // Socket.on("connect", () => {});
     const Socket = this.io("http://localhost:8080");
     Socket.on("connect", () => {
@@ -400,7 +403,8 @@ export default class Transactions extends Vue {
 
   get myPayMethods(): Array<any> {
     console.info(this.$store.getters.getExpenditure, "GetPayMethods");
-    const payAliases = this.$store.getters.getExpenditure.map((item: any) => ({
+    const toMap = this.$store.getters.getExpenditure;
+    const payAliases = toMap.map((item: any) => ({
       nombre: item.nombre,
       alias: item.alias,
       // eslint-disable-next-line @typescript-eslint/camelcase
