@@ -47,7 +47,7 @@
     />
     <div class="text-center">
       <v-pagination
-        v-show="goldPages > 1"
+        v-if="goldPages > 1"
         v-model="goldPage"
         :length="goldPages"
         color="#E4445B"

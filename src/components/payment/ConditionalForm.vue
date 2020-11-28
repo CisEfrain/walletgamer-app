@@ -4,7 +4,7 @@
       <div v-if="itemList.tipo === 'oro'">
         <GoldPayForm />
       </div>
-      <div v-if="itemList.tipo === 'oro'">
+      <div v-if="itemList.tipo === 'personaje'">
         <CharacterPayForm />
       </div>
       <div v-if="itemList.tipo === 'item'">

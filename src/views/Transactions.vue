@@ -27,10 +27,20 @@
       class="px-8 mt-6"
       align="center"
       justify="space-between"
-      v-if="pendingOperations"
+      v-if="pendingOperations.length > 0"
     >
       <v-col cols="12" sm="12" md="6">
         <h3 class="main-title">Mis Operaciones en curso</h3>
+      </v-col>
+    </v-row>
+    <v-row
+      class="px-8 mt-6"
+      align="center"
+      justify="space-between"
+      v-if="pendingOperations.length < 1"
+    >
+      <v-col cols="12" sm="12" md="6">
+        <h3 class="main-title">No tienes operaciones en curso</h3>
       </v-col>
     </v-row>
 
@@ -50,7 +60,7 @@
       </v-col>
       <div class="text-center">
         <v-pagination
-          v-show="totalPendingPages > 1"
+          v-if="totalPendingPages > 1"
           v-model="pendingPage"
           :length="totalPendingPages"
           color="#E4445B"
@@ -67,10 +77,20 @@
       class="px-8 mt-6"
       align="center"
       justify="space-between"
-      v-if="doneOperations"
+      v-if="doneOperations.length > 1"
     >
       <v-col cols="12" sm="12" md="6">
         <h3 class="main-title">Historial de operaciones</h3>
+      </v-col>
+    </v-row>
+    <v-row
+      class="px-8 mt-6"
+      align="center"
+      justify="space-between"
+      v-if="doneOperations.length < 1"
+    >
+      <v-col cols="12" sm="12" md="6">
+        <h3 class="main-title">No tienes operaciones</h3>
       </v-col>
     </v-row>
 
@@ -93,7 +113,7 @@
       </v-col>
       <div class="text-center">
         <v-pagination
-          v-show="totalDonePages > 1"
+          v-if="totalDonePages > 1"
           v-model="donePage"
           :length="totalDonePages"
           color="#E4445B"

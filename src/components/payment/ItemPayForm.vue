@@ -50,7 +50,7 @@
       </v-col>
     </v-row>
     <v-row justify="center">
-      <h4>Total a pagar: $ {{ netQuantity }}</h4>
+      <h4>Total a pagar: $ {{ parseFloat(netQuantity).toFixed(2) }}</h4>
     </v-row>
     <v-row
       class="animated fadeIn fast"

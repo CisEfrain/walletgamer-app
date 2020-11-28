@@ -1,4 +1,4 @@
-import { BuyProduct } from "@/services/buy.service";
+import { BuyProduct, BuyProductConfirm } from "@/services/buy.service";
 
 const paymentState = {
   state: () => ({
@@ -55,23 +55,21 @@ const paymentState = {
       commit("openPayModal");
     },
     async setBuyProduct({ commit }: any, payload: any) {
-      // BuyProduct(payload)
-      //   .then((response: any) => {
-      //     console.info("from buy", response);
-      //     // commit("getPost", response.data.data);
-      //   })
-      //   .catch(error => {
-      //     console.info(error);
-      //     // Vue.$toast.error(`No se han cargado tus publicaciónes`);
-      //   });
       try {
-        const buyData = await BuyProduct(payload);
-        console.info(buyData);
+        const { data } = await BuyProduct(payload);
+        console.info(data);
+        const productData = await BuyProductConfirm(data.data.id);
+        console.info(productData);
+        commit("setBuyData", productData.data.data);
       } catch (error) {
         console.info(error);
       }
     }
-  }
-  // getters: { ... }
+  },
+  getters: { 
+    getBuyStatusInfo: (state: { buyData: any }) => {
+      return state.buyData;
+    }
+   }
 };
 export default paymentState;

@@ -52,7 +52,7 @@
       </v-col>
     </v-row>
     <v-row justify="center">
-      <h4>Total a pagar: $ {{ netQuantity }}</h4>
+      <h4>Total a pagar: $ {{ parseFloat(netQuantity).toFixed(2) }}</h4>
     </v-row>
 
     <v-row v-if="balance >= getQuantity" justify="center">
@@ -167,7 +167,12 @@ import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
 import { Validate } from "vuelidate-property-decorators";
 import SocketIo from "socket.io-client";
 
-import { required, minLength, sameAs, minValue } from "vuelidate/lib/validators";
+import {
+  required,
+  minLength,
+  sameAs,
+  minValue
+} from "vuelidate/lib/validators";
 @Component({
   components: {
     BaseCardContainer
@@ -208,13 +213,13 @@ export default class GoldPayForm extends Vue {
 
   private buy(): void {
     const buyProduct = {
-      cantidad: parseInt(this.quantity),
+      cantidad: parseInt(this.quantity) / 100,
       publicaciones_id: this.itemList.id,
       personaje: this.pj
     };
     console.info(buyProduct);
     this.$store.dispatch("setBuyProduct", buyProduct);
-    //this.$store.dispatch("nextStep");
+    this.$store.dispatch("nextStep");
   }
 
   get myPayMethods(): Array<any> {
@@ -271,6 +276,8 @@ export default class GoldPayForm extends Vue {
       price
     );
   }
+
+  // Buy gold form errors handler
   get quantityErrors(): Array<string> {
     const errors: Array<string> = [];
     if (!this.$v.quantity.$dirty) return errors;
@@ -301,7 +308,6 @@ export default class GoldPayForm extends Vue {
     !this.$v.fund.required && errors.push("El campo es requerido");
     return errors;
   }
-
   get mountFundErrors(): Array<string> {
     const errors: Array<string> = [];
     if (!this.$v.mountFund.$dirty) return errors;

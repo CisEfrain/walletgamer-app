@@ -75,7 +75,7 @@
     />
     <div class="text-center">
       <v-pagination
-        v-show="characterPages > 1"
+        v-if="characterPages > 1"
         v-model="characterPage"
         :length="characterPages"
         color="#E4445B"

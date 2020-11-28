@@ -46,7 +46,7 @@
     />
     <div class="text-center">
       <v-pagination
-        v-show="itemPages > 1"
+        v-if="itemPages > 1"
         v-model="itemPage"
         :length="itemPages"
         color="#E4445B"

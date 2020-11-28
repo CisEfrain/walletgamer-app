@@ -8,3 +8,9 @@ export const BuyProduct = async (product: any):Promise<any> => {
 		const header = {headers:{ Authorization: "Bearer " + jwt }};
 		return await axios.post(`${resource}`,product, header);
 }
+
+export const BuyProductConfirm = async (id: number):Promise<any> => {
+	const jwt = localStorage.getItem("jwt")
+	const header = {headers:{ Authorization: "Bearer " + jwt }};
+	return await axios.get(`${resource}/${id}`, header);
+}

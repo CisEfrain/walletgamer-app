@@ -226,6 +226,10 @@ export default class Payment extends Vue {
     return this.$store.getters.getProductToBuy.tipo;
   }
 
+  get getBuyInfoStatus(): any {
+    return this.$store.getters.getBuyStatusInfo;
+  }
+
   item: ItemBuyI = {
     user: "Diosdado Garcia",
     rank: "Elite",

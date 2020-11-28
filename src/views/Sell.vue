@@ -42,7 +42,7 @@
 
         <div class="text-center">
           <v-pagination
-            v-show="totalPages > 1"
+            v-if="totalPages > 1"
             v-model="page"
             :length="totalPages"
             color="#E4445B"

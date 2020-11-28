@@ -95,17 +95,9 @@ export default class PostList extends Vue {
       cost
     );
   }
-
-  // get formatGoldQuantity() {
-  //   const quantity = parseInt(this.quantity);
-  //   return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
-  //     quantity
-  //   );
-  // }
   get formatAvailable() {
     return new Intl.NumberFormat().format(this.quantity);
   }
-
   get goldMessage() {
     return this.product === "oro" && this.$store.getters.getGoldPostData.nombre;
   }
@@ -122,7 +114,7 @@ export default class PostList extends Vue {
   }
 
   get productName() {
-    return this.goldMessage || this.characterMessage || this.itemMessage;
+    return this.characterMessage || this.goldMessage || this.itemMessage;
   }
 
   get isActive() {
