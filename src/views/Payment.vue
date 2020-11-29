@@ -144,7 +144,9 @@ export default class Payment extends Vue {
   beforeCreate() {
     const { id } = this.$route.query;
     if (id) this.currentId = parseInt(id.toString());
-    if (this.currentProduct.id) this.currentId = this.currentProduct.id;
+    if (this.currentProduct 
+    && this.currentProduct.hasOnwProperty('id') 
+    && this.currentProduct.id) this.currentId = this.currentProduct.id;
     console.log("tenemos id ", id);
     this.$store.dispatch("getSellDataByID", id);
   }
