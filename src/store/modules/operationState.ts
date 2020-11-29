@@ -68,7 +68,8 @@ const operationState = {
           console.info(error);
         });
     },
-    AddDisbursement(payload: any): void {
+    AddDisbursement({ commit }: any, payload: any): void {
+      console.info(payload, "From add disbursement")
       Disbursement(payload)
         .then((response: any) => {
           console.info("from disbursement", response);

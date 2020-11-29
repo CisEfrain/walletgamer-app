@@ -66,7 +66,7 @@
           color="#E4445B"
           prev-icon="mdi-menu-left"
           next-icon="mdi-menu-right"
-          total-visible="10"
+          total-visible="6"
           @input="handlePaginatePending"
         >
         </v-pagination>
@@ -119,7 +119,7 @@
           color="#E4445B"
           prev-icon="mdi-menu-left"
           next-icon="mdi-menu-right"
-          total-visible="10"
+          total-visible="6"
           @input="handlePaginateDone"
         >
         </v-pagination>
@@ -274,7 +274,7 @@
               dense
             ></v-text-field>
             <v-select
-              :items="myPayMethods"
+              :items="platformPayMethods"
               label="¿De donde quieres fondear?"
               outlined
               v-model="$v.fund.$model"
@@ -285,7 +285,6 @@
               rounded
               color="rgba(184,12,70,.6)"
               class="text-center"
-              :hint="`${fund.alias} - [${fund.nombre}]`"
               item-text="alias"
               item-value="id"
               return-object
@@ -343,9 +342,9 @@ export default class Transactions extends Vue {
   public pendingPage = 1;
 
   //New disbursement
-  @Validate({ required }) disbursement = { id: "" };
-  @Validate({ required })
-  mountDisbursement!: number | bigint;
+  // eslint-disable-next-line no-undef
+  @Validate({ required }) disbursement: any = { id: 0 };
+  @Validate({ required }) mountDisbursement;
 
   //Send to friend
   @Validate({ required, email }) sendToFriend = "";
@@ -382,10 +381,10 @@ export default class Transactions extends Vue {
     this.$store.dispatch("MyPendingOperations", { size: 4, page: e - 1 });
   }
   get totalPendingPages(): number {
-    console.log(this.$store.getters.getTotalPendingOperations)
+    console.log(this.$store.getters.getTotalPendingOperations);
     return Math.ceil(this.$store.getters.getTotalPendingOperations / 4);
   }
-  async beforeCreate(){
+  async beforeCreate() {
     const loader = this.$loading.show();
     await this.$store.dispatch("MyBalance");
     await this.$store.dispatch("getExpenditureData");
@@ -402,15 +401,20 @@ export default class Transactions extends Vue {
   }
 
   get myPayMethods(): Array<any> {
-    console.info(this.$store.getters.getExpenditure, "GetPayMethods");
-    const toMap = this.$store.getters.getExpenditure;
-    const payAliases = toMap.map((item: any) => ({
+    console.info(this.$store.getters.getExpenditure, "GetMyPayMethods");
+    const payAliases = this.$store.getters.getExpenditure.map((item: any) => ({
       nombre: item.nombre,
       alias: item.alias,
       // eslint-disable-next-line @typescript-eslint/camelcase
       id: item.id
     }));
+    console.info(payAliases);
     return payAliases;
+  }
+
+  get platformPayMethods(): Array<any> {
+    console.info(this.$store.getters.getPayMethodList, "GetPlatformPayMethods");
+    return this.$store.getters.getPayMethodList;
   }
 
   get balance(): string {
@@ -436,13 +440,15 @@ export default class Transactions extends Vue {
     const disbursement = {
       // eslint-disable-next-line @typescript-eslint/camelcase
       pasarela_id: this.disbursement.id,
-      monto: this.mountDisbursement
+      monto: parseInt(this.mountDisbursement)
     };
     console.info(disbursement);
     this.$store.dispatch("AddDisbursement", disbursement);
-    this.$store.dispatch("MyDoneOperations", { size: 4, page: 0 });
-    this.$store.dispatch("MyPendingOperations", { size: 4, page: 0 });
-    this.$store.dispatch("MyBalance");
+    setTimeout(() => {
+      this.$store.dispatch("MyDoneOperations", { size: 4, page: 0 });
+      this.$store.dispatch("MyPendingOperations", { size: 4, page: 0 });
+      this.$store.dispatch("MyBalance");
+    }, 700);
     this.drawerDisbursement = false;
   }
   get isDisbursementDisabled(): boolean {
