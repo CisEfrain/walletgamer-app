@@ -149,7 +149,7 @@ export default class Payment extends Vue {
     this.$store.dispatch("getSellDataByID", id);
   }
   mounted() {
-    if (this.getCurrentStep < 4 && this.getCurrentStep > 1) {
+    if (this.getCurrentStep < 4) {
       window.setInterval(this.reloadData, 5000);
     }
   }
