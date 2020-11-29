@@ -56,13 +56,14 @@ const paymentState = {
       commit("openPayModal");
     },
     // CALL ventas AND ventas/:id
-    async setBuyProduct({ commit }: any, payload: any) {
+    async setBuyProduct({ commit, dispatch }: any, payload: any) {
       try {
         const {
           data: { data }
         } = await BuyProduct(payload);
         console.info(data);
         commit("setBuyData", data);
+        dispatch("nextStep");
       } catch (error) {
         console.info(error);
       }
@@ -93,6 +94,9 @@ const paymentState = {
     //GET BUY STATUS DATA FROM STATE WHEN API CALLS INFO STATUS
     getBuyStatusInfo: (state: { buyData: any }) => {
       return state.buyData;
+    },
+    getCurrentStep: (state: { currentStep: number }) => {
+      return state.currentStep;
     }
   }
 };

@@ -118,4 +118,16 @@ p,small
   font-size: 1.3em
   color: $danger
   margin-bottom: 8px
+
+.bg-transparent
+  background-color: transparent!important
+  border-radius: 40px
+
+.transaction-title
+  font-size: 1.3em
+  color: $danger
+  margin-bottom: 8px
+
+p
+  margin-bottom: 0
 </style>

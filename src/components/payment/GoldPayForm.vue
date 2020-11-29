@@ -219,7 +219,6 @@ export default class GoldPayForm extends Vue {
     };
     console.info(buyProduct);
     this.$store.dispatch("setBuyProduct", buyProduct);
-    this.$store.dispatch("nextStep");
   }
 
   get myPayMethods(): Array<any> {

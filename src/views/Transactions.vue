@@ -47,19 +47,19 @@
     <v-row class="px-10" justify="center">
       <v-col cols="12">
         <v-expansion-panels v-model="panel" multiple flat>
-        <PendingCard
-          class="animated fadeIn fast"
-          v-for="pendingOperation in pendingOperations"
-          :key="pendingOperation.id"
-          product="Gold World of Warcraft"
-          :transaction_date="pendingOperation.transaccione.createdAt"
-          :transaction_id="pendingOperation.transaccione.identificador"
-          :cost="pendingOperation.transaccione.monto"
-          :status="pendingOperation.transaccione.estado"
-          :type="pendingOperation.tipo"
-          :ventas="pendingOperation.ventas"
-        />
-          </v-expansion-panels>
+          <PendingCard
+            class="animated fadeIn fast"
+            v-for="pendingOperation in pendingOperations"
+            :key="pendingOperation.id"
+            product="Gold World of Warcraft"
+            :transaction_date="pendingOperation.transaccione.createdAt"
+            :transaction_id="pendingOperation.transaccione.identificador"
+            :cost="pendingOperation.transaccione.monto"
+            :status="pendingOperation.transaccione.estado"
+            :type="pendingOperation.tipo"
+            :ventas="pendingOperation.ventas"
+          />
+        </v-expansion-panels>
       </v-col>
       <div class="text-center" v-if="totalPendingPages > 1">
         <v-pagination
@@ -68,7 +68,7 @@
           color="#E4445B"
           prev-icon="mdi-menu-left"
           next-icon="mdi-menu-right"
-          total-visible="6"
+          total-visible="8"
           @input="handlePaginatePending"
         >
         </v-pagination>
