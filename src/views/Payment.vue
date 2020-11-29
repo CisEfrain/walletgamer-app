@@ -48,7 +48,11 @@
               <ConditionalForm />
             </v-stepper-content>
 
-            <v-stepper-content step="2">
+            <v-stepper-content
+              v-if="$store.getters.getCurrentStep === 2"
+              step="2"
+            >
+              <!-- <StepTwo /> -->
               <v-row justify="center">
                 <v-col md="12" class="d-flex justify-center px-16">
                   <ConditionalItemCard class="conditionalCard" />
@@ -57,13 +61,13 @@
               <v-row justify="center">
                 <v-col cols="12">
                   <h3 class="main-title text-center">
-                    <!-- {{ getBuyInfoStatus.estado.principal }} -->
+                    {{ getBuyInfoStatus.estado.principal }}
                   </h3>
                 </v-col>
 
                 <v-col cols="12">
                   <p class="text-center">
-                    <!-- {{ getBuyInfoStatus.estado.secundario }} -->
+                    {{ getBuyInfoStatus.estado.secundario }}
                   </p>
                 </v-col>
               </v-row>
@@ -167,7 +171,7 @@
         </v-stepper>
       </v-col>
     </v-row>
-    <!-- <v-row>
+    <v-row v-if="$store.getters.getCurrentStep > 1">
       <v-col cols="12 mb-0 pb-0">
         <h3 class="main-title">Historial de la operación</h3>
       </v-col>
@@ -181,7 +185,7 @@
           :description="item.description"
         />
       </v-col>
-    </v-row> -->
+    </v-row>
   </v-container>
 </template>
 
@@ -194,6 +198,7 @@ import GoldItemList from "@/components/buy/GoldItemList.vue";
 import OperationHistoryCard from "@/components/payment/OperationHistoryCard.vue";
 import ConditionalItemCard from "@/components/payment/ConditionalItemCard.vue";
 import ConditionalForm from "@/components/payment/ConditionalForm.vue";
+// import StepTwo from "@/components/payment/StepTwo.vue";
 
 @Component({
   components: {
@@ -202,18 +207,10 @@ import ConditionalForm from "@/components/payment/ConditionalForm.vue";
     OperationHistoryCard,
     ConditionalItemCard,
     ConditionalForm,
-  },
+    // StepTwo
+  }
 })
 export default class Payment extends Vue {
-  // private current_step = this.$store.state.paymentState.currentStep;
-
-  // checkout(): void {
-  //   console.log(this.form);
-  //   if (this.isStepOneDisabled) return;
-  //   this.$store.dispatch("setActiveBuy", this.form);
-  //   this.$store.dispatch("openPayModal");
-  // }
-
   get totalPrice(): any {
     const price = parseInt(this.$store.getters.getProductToBuy.precio);
     return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
@@ -221,44 +218,38 @@ export default class Payment extends Vue {
     );
   }
 
-  beforeCreate() {
-    const { id } = this.$route.query;
-    console.log("tenemos id ", id);
-    this.$store.dispatch('getSellDataByID',id)
-  }
-
   // GET TYPE OF PRODUCT TO SHOW IT IN 1 STEP TITLE
   get getProductType(): string {
     return this.$store.getters.getProductToBuy.tipo;
   }
 
-  //GET INFO FROM VENTAS/:ID TO RENDER
-  get getBuyInfoStatus(): any {
-    return this.$store.getters.getBuyStatusInfo;
-  }
-  
+  // //GET INFO FROM VENTAS/:ID TO RENDER
+  // private async getBuyInfoStatus(): any {
+  //   console.info(this.$store.getters.getBuyStatusInfo);
+  //   return await this.$store.getters.getBuyStatusInfo;
+  // }
 
-/*   item: ItemBuyI = {
+  item: ItemBuyI = {
     user: "Diosdado Garcia",
     rank: "Elite",
     kingdom: "Psuv",
     faction: "Horda",
     price: "20",
     product: "10.000",
-    available: 100,
+    available: 100
   };
   history = [
     {
       id: 1,
       date: "10/12/2020",
       type: "Pago completo",
-      description: "Haz pagado 20$ por tarjeta de crédito mediante stripe",
-    },
-  ]; */
+      description: "Haz pagado 20$ por tarjeta de crédito mediante stripe"
+    }
+  ];
 }
 </script>
 
 <style lang="sass" scoped>
 .conditionalCard
-  width: 100%
+  width:100%
 </style>
