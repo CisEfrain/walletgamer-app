@@ -66,9 +66,7 @@ const sellmentState = {
     //   }
   },
   getters: {
-    getProductToBuy: (state: { productToBuy: any }) => {
-      return state.productToBuy;
-    }
+
   }
 };
 export default sellmentState;

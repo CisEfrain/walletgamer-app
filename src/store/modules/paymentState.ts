@@ -8,7 +8,8 @@ const paymentState = {
     activeBuy: {},
     stripeData: {},
     errorReported: false,
-    buyData: {}
+    buyData: {},
+    productToBuy: {}
   }),
   mutations: {
     /**
@@ -22,13 +23,30 @@ const paymentState = {
     setActiveBuy(state: any, payload: any): void {
       state.activeBuy = payload;
     },
+    resetPaymentState(state: any, payload?: boolean): void {
+      if (payload) {
+        state.activeBuy = {};
+        state.PayModal = false;
+        state.currentStep = 1;
+        state.stripeData = {};
+        state.buyData = {};
+        state.productToBuy = {};
+      }
+    },
     nextStep(state: any, payload?: any): void {
+      const { step, error } = payload;
       if (!payload) {
         state.currentStep++;
-      } else {
+      } else if (step) {
+        state.currentStep = step;
+      } else if (error) {
         state.currentStep++;
         state.errorReported = true;
       }
+      // } else if() {
+      //   state.currentStep++;
+      //   state.errorReported = true;
+      // }
     },
     openPayModal(state: any): void {
       state.PayModal = !state.PayModal;
@@ -36,6 +54,9 @@ const paymentState = {
     setBuyData(state: any, payload: any): void {
       console.info(payload);
       state.buyData = payload;
+    },
+    setProductToBuy(state: any, payload: any): void {
+      state.productToBuy = payload;
     }
   },
   actions: {
@@ -45,12 +66,21 @@ const paymentState = {
     setActiveBuy({ commit }: any, payload: any): void {
       commit("setActiveBuy", payload);
     },
+    setProductToBuy({ commit }: any, payload: any): void {
+      commit("setProductToBuy", payload);
+    },
+    resetPaymentState({ commit }: any, payload?: boolean) {
+      commit("resetPaymentState", true);
+    },
     nextStep({ commit }: any, payload?: any): void {
       if (!payload) {
         commit("nextStep");
       } else {
-        commit("nextStep", true);
+        commit('nextStep', { step: payload })
       }
+      /* else {
+        commit("nextStep", true);
+      } */
     },
     openPayModal({ commit }: any): void {
       commit("openPayModal");
@@ -79,15 +109,18 @@ const paymentState = {
         console.info(error);
       }
     },
-    async getSellDataByID({ commit }: any, id: number) {
+    async getSellDataByID({ commit, dispatch }: any, id: number) {
       if (!id) return false;
-      getSellDataByID(id)
-        .then(res => {
-          console.log(res)
-        })
+      const {
+        data: { data }
+      } = await getSellDataByID(id)
         .catch(err => {
           console.log("getSellDataByID error ", err)
-        })
+        });
+      if (data && data.estado.paso) {
+        commit("setBuyData", data);
+        commit('nextStep', { step: data.estado.paso })
+      }
     }
   },
   getters: {
@@ -97,6 +130,9 @@ const paymentState = {
     },
     getCurrentStep: (state: { currentStep: number }) => {
       return state.currentStep;
+    },
+    getProductToBuy: (state: { productToBuy: any }) => {
+      return state.productToBuy;
     }
   }
 };

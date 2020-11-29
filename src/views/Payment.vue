@@ -48,7 +48,7 @@
               <ConditionalForm />
             </v-stepper-content>
 
-            <v-stepper-content  step="2">
+            <v-stepper-content step="2">
               <div v-if="getCurrentStep === 2">
                 <StepTwo />
               </div>
@@ -116,8 +116,8 @@ import StepThree from "@/components/payment/StepThree.vue";
     ConditionalItemCard,
     ConditionalForm,
     StepTwo,
-    StepThree
-  }
+    StepThree,
+  },
 })
 export default class Payment extends Vue {
   get totalPrice(): any {
@@ -136,33 +136,18 @@ export default class Payment extends Vue {
     return this.$store.getters.getCurrentStep;
   }
 
-  // //GET INFO FROM VENTAS/:ID TO RENDER
-  // private async getBuyInfoStatus(): any {
-  //   console.info(this.$store.getters.getBuyStatusInfo);
-  //   return await this.$store.getters.getBuyStatusInfo;
-  // }
-
-  item: ItemBuyI = {
-    user: "Diosdado Garcia",
-    rank: "Elite",
-    kingdom: "Psuv",
-    faction: "Horda",
-    price: "20",
-    product: "10.000",
-    available: 100
-  };
-  history = [
-    {
-      id: 1,
-      date: "10/12/2020",
-      type: "Pago completo",
-      description: "Haz pagado 20$ por tarjeta de crédito mediante stripe"
-    }
-  ];
+  beforeCreate() {
+    const { id } = this.$route.query;
+    console.log("tenemos id ", id);
+    this.$store.dispatch("getSellDataByID", id);
+  }
+  beforeDestroy() {
+    this.$store.dispatch("resetPaymentState",true);
+  }
 }
 </script>
 
 <style lang="sass" scoped>
 .conditionalCard
-  width:100%
+  width: 100%
 </style>
