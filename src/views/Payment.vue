@@ -119,8 +119,8 @@ import StepThree from "@/components/payment/StepThree.vue";
     ConditionalItemCard,
     ConditionalForm,
     StepTwo,
-    StepThree
-  }
+    StepThree,
+  },
 })
 export default class Payment extends Vue {
   currentId: number;
@@ -134,7 +134,7 @@ export default class Payment extends Vue {
   get getProductType(): string {
     return this.$store.getters.getProductToBuy.tipo;
   }
-  get currentProduct(){
+  get currentProduct() {
     return this.$store.getters.getProductToBuy;
   }
   get getCurrentStep(): number {
@@ -143,17 +143,21 @@ export default class Payment extends Vue {
 
   beforeCreate() {
     const { id } = this.$route.query;
-    if(id) this.currentId = parseInt(id.toString());
-    if(this.currentProduct.id) this.currentId = this.currentProduct.id;
+    if (id) this.currentId = parseInt(id.toString());
+    if (this.currentProduct.id) this.currentId = this.currentProduct.id;
     console.log("tenemos id ", id);
     this.$store.dispatch("getSellDataByID", id);
   }
   mounted() {
-    window.setInterval(this.reloadData, 5000);
+    if (this.getCurrentStep < 4 && this.getCurrentStep > 1) {
+      window.setInterval(this.reloadData, 5000);
+    }
   }
   async reloadData() {
     if (this.currentId) {
-      await this.$store.dispatch("getSellDataByID", this.currentId);
+      if (this.getCurrentStep < 4 && this.getCurrentStep > 1) {
+        await this.$store.dispatch("getSellDataByID", this.currentId);
+      }
     }
   }
   beforeDestroy() {
