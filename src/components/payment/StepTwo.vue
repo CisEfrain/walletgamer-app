@@ -19,15 +19,30 @@
       </v-col>
     </v-row>
 
-    <v-row justify="center">
+    <div class="animated fadeIn fast" v-if="productStatus.estado.intrucciones">
+      <v-row class="mt-4" justify="center">
+        <v-col class="instructions text-center px-4 py-4" cols="10">
+          <p>
+            {{ productStatus.estado.intrucciones }}
+          </p>
+        </v-col>
+      </v-row>
+    </div>
+
+    <v-row justify="center" v-if="productStatus.estado">
       <v-col class="text-center">
         <v-btn
           type="button"
           color="btn-gradient"
           rounded
           class="button button--primary button--medium mt-4 px-6"
-          @click="$store.dispatch('nextStep')"
-          >Confirmar</v-btn
+          @click="confirmBuy"
+        >
+          {{
+            productStatus.estado.botonContinuar
+              ? productStatus.estado.botonContinuar
+              : "Confirmar"
+          }}</v-btn
         >
       </v-col>
     </v-row>
@@ -56,9 +71,9 @@
 </template>
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-undef */
 import { Component, Vue } from "vue-property-decorator";
 import ProductCard from "@/components/ProductCard.vue";
-import { ItemBuyI } from "@/interfaces/product.interface";
 import GoldItemList from "@/components/buy/GoldItemList.vue";
 import OperationHistoryCard from "@/components/payment/OperationHistoryCard.vue";
 import ConditionalItemCard from "@/components/payment/ConditionalItemCard.vue";
@@ -98,27 +113,20 @@ export default class StepTwo extends Vue {
     this.productStatus = await this.$store.getters.getBuyStatusInfo;
   }
 
-  item: ItemBuyI = {
-    user: "Diosdado Garcia",
-    rank: "Elite",
-    kingdom: "Psuv",
-    faction: "Horda",
-    price: "20",
-    product: "10.000",
-    available: 100
-  };
-  history = [
-    {
-      id: 1,
-      date: "10/12/2020",
-      type: "Pago completo",
-      description: "Haz pagado 20$ por tarjeta de crédito mediante stripe"
-    }
-  ];
+  private confirmBuy(): void {
+    this.$store.dispatch("confirmBuyProduct", this.productStatus.id);
+  }
 }
 </script>
 
 <style lang="sass" scoped>
 .conditionalCard
   width:100%
+
+.instructions
+ color: $card-link
+ border: 1px solid $menu-items
+ background-color: $card-bg
+ border-radius: 15px
+ font-weight: 500
 </style>

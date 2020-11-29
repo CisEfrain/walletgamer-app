@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BuyProduct, BuyProductConfirm, getSellDataByID } from "@/services/buy.service";
+import {
+  BuyProduct,
+  BuyProductConfirm,
+  getSellDataByID
+} from "@/services/buy.service";
 
 const paymentState = {
   state: () => ({
@@ -76,7 +80,7 @@ const paymentState = {
       if (!payload) {
         commit("nextStep");
       } else {
-        commit('nextStep', { step: payload })
+        commit("nextStep", { step: payload });
       }
       /* else {
         commit("nextStep", true);
@@ -93,18 +97,18 @@ const paymentState = {
         } = await BuyProduct(payload);
         console.info(data);
         commit("setBuyData", data);
-        dispatch("nextStep");
+        dispatch("nextStep", data.estado.paso);
       } catch (error) {
         console.info(error);
       }
     },
-    async confirmBuyProduct({ commit }: any, payload: any) {
+    async confirmBuyProduct({ commit, dispatch }: any, payload: any) {
+      console.info(payload);
       try {
-        const {
-          data: { data }
-        } = await BuyProductConfirm(payload);
+        const { data } = await BuyProductConfirm(payload);
         console.info(data);
         commit("setBuyData", data);
+        dispatch("nextStep", data.estado.paso);
       } catch (error) {
         console.info(error);
       }
@@ -113,13 +117,14 @@ const paymentState = {
       if (!id) return false;
       const {
         data: { data }
-      } = await getSellDataByID(id)
-        .catch(err => {
-          console.log("getSellDataByID error ", err)
-        });
+      } = await getSellDataByID(id).catch(err => {
+        console.log("getSellDataByID error ", err);
+      });
+
+      console.info(data);
       if (data && data.estado.paso) {
         commit("setBuyData", data);
-        commit('nextStep', { step: data.estado.paso })
+        commit("nextStep", { step: data.estado.paso });
       }
     }
   },
