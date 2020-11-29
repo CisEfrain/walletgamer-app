@@ -105,7 +105,7 @@ const paymentState = {
     async confirmBuyProduct({ commit, dispatch }: any, payload: any) {
       console.info(payload);
       try {
-        const { data } = await BuyProductConfirm(payload);
+        const { data: { data } } = await BuyProductConfirm(payload);
         console.info(data);
         commit("setBuyData", data);
         dispatch("nextStep", data.estado.paso);

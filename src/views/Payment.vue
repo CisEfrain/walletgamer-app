@@ -67,7 +67,7 @@
                 </v-col>
               </v-row>
               <v-row justify="center">
-                <v-col cols="12">
+                <v-col cols="12" v-if="getCurrentStep === 4">
                   <h3
                     v-if="!$store.state.paymentState.errorReported"
                     class="main-title text-center"
