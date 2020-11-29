@@ -120,7 +120,11 @@ const paymentState = {
       } = await getSellDataByID(id).catch(err => {
         console.log("getSellDataByID error ", err);
       });
-
+      dispatch("setProductToBuy", {
+        item: data.publicacione,
+        estado:data.estado,
+        id:data.id
+      });
       console.info(data);
       if (data && data.estado.paso) {
         commit("setBuyData", data);

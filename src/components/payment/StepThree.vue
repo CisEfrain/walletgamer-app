@@ -8,24 +8,14 @@
     <v-row justify="center">
       <v-col cols="12">
         <h3 class="main-title text-center">
-          <b>Carlos Gomez</b> ha notificado la transferencia de 500 de Oro a tu
-          cuenta
+         {{state.principal}}
         </h3>
       </v-col>
 
       <v-col cols="12">
         <p class="text-center">
-          Realiza los siguientes pasos para confirmar la transferencia:
+          {{state.secundario}}
         </p>
-      </v-col>
-      <v-col cols="12" md="8">
-        <v-textarea
-          outlined
-          rounded
-          dense
-          clearable
-          clear-icon="cancel"
-        ></v-textarea>
       </v-col>
       <v-col cols="12">
         <p class="text-center">
@@ -40,8 +30,8 @@
         rounded
         color="btn-gradient"
         class="button button--primary button--medium mt-4 px-6"
-        @click="$store.dispatch('nextStep')"
-        >Confirmar</v-btn
+        @click="$store.dispatch('confirmBuyProduct', currentProduct.id)"
+        >Confirmar </v-btn
       >
 
       <v-btn
@@ -70,9 +60,9 @@ import ConditionalForm from "@/components/payment/ConditionalForm.vue";
     GoldItemList,
     OperationHistoryCard,
     ConditionalItemCard,
-    ConditionalForm
+    ConditionalForm,
     // StepTwo
-  }
+  },
 })
 export default class StepThree extends Vue {
   get totalPrice(): any {
@@ -82,14 +72,23 @@ export default class StepThree extends Vue {
     );
   }
   public productStatus = {};
-
+  private state = {};
+  private product = {};
   // GET TYPE OF PRODUCT TO SHOW IT IN 1 STEP TITLE
   get getProductType(): string {
     return this.$store.getters.getProductToBuy.tipo;
   }
+  get currentProduct() {
+    return this.$store.getters.getProductToBuy;
+  }
 
-  async mounted() {
+  async beforeCreated() {
     await this.getBuyInfoStatus();
+    console.log("currentProduct step 3 ", this.currentProduct);
+  }
+  async mounted() {
+    this.state = await this.currentProduct.estado;
+    this.product = await this.currentProduct.item;
   }
 
   // //GET INFO FROM VENTAS/:ID TO RENDER
@@ -101,5 +100,5 @@ export default class StepThree extends Vue {
 
 <style lang="sass" scoped>
 .conditionalCard
-  width:100%
+  width: 100%
 </style>
