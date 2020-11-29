@@ -75,7 +75,7 @@
                     {{ $store.getters.getProductToBuy.estado.principal }}
                   </h3>
                   <p class="text-center">
-                    {{  $store.getters.getProductToBuy.estado.secundario }}
+                    {{ $store.getters.getProductToBuy.estado.secundario }}
                   </p>
                   <h3
                     v-if="$store.state.paymentState.errorReported"
@@ -103,7 +103,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Vue } from "vue-property-decorator";
 import ProductCard from "@/components/ProductCard.vue";
-import { ItemBuyI } from "@/interfaces/product.interface";
+// import { ItemBuyI } from "@/interfaces/product.interface";
 import GoldItemList from "@/components/buy/GoldItemList.vue";
 import OperationHistoryCard from "@/components/payment/OperationHistoryCard.vue";
 import ConditionalItemCard from "@/components/payment/ConditionalItemCard.vue";
@@ -119,30 +119,41 @@ import StepThree from "@/components/payment/StepThree.vue";
     ConditionalItemCard,
     ConditionalForm,
     StepTwo,
-    StepThree,
-  },
+    StepThree
+  }
 })
 export default class Payment extends Vue {
+  currentId: number;
   get totalPrice(): any {
     const price = parseInt(this.$store.getters.getProductToBuy.precio);
     return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
       price
     );
   }
-
   // GET TYPE OF PRODUCT TO SHOW IT IN 1 STEP TITLE
   get getProductType(): string {
     return this.$store.getters.getProductToBuy.tipo;
   }
-
+  get currentProduct(){
+    return this.$store.getters.getProductToBuy;
+  }
   get getCurrentStep(): number {
     return this.$store.getters.getCurrentStep;
   }
 
   beforeCreate() {
     const { id } = this.$route.query;
+    this.currentId = parseInt(id.toString());
     console.log("tenemos id ", id);
     this.$store.dispatch("getSellDataByID", id);
+  }
+  mounted() {
+    window.setInterval(this.reloadData, 5000);
+  }
+  async reloadData() {
+    if (this.currentId) {
+      await this.$store.dispatch("getSellDataByID", this.currentId);
+    }
   }
   beforeDestroy() {
     this.$store.dispatch("resetPaymentState", true);
