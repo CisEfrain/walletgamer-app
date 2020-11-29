@@ -14,3 +14,9 @@ export const BuyProductConfirm = async (id: number):Promise<any> => {
 	const header = {headers:{ Authorization: "Bearer " + jwt }};
 	return await axios.get(`${resource}/${id}`, header);
 }
+
+export const getSellDataByID = async (id: number):Promise<any> => {
+	const jwt = localStorage.getItem("jwt")
+	const header = {headers:{ Authorization: "Bearer " + jwt }};
+	return await axios.get(`${resource}/${id}`, header);
+}

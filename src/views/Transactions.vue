@@ -46,6 +46,7 @@
 
     <v-row class="px-10" justify="center">
       <v-col cols="12">
+        <v-expansion-panels v-model="panel" multiple flat>
         <PendingCard
           class="animated fadeIn fast"
           v-for="pendingOperation in pendingOperations"
@@ -56,7 +57,9 @@
           :cost="pendingOperation.transaccione.monto"
           :status="pendingOperation.transaccione.estado"
           :type="pendingOperation.tipo"
+          :ventas="pendingOperation.ventas"
         />
+          </v-expansion-panels>
       </v-col>
       <div class="text-center" v-if="totalPendingPages > 1">
         <v-pagination

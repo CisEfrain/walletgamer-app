@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BuyProduct, BuyProductConfirm } from "@/services/buy.service";
+import { BuyProduct, BuyProductConfirm, getSellDataByID } from "@/services/buy.service";
 
 const paymentState = {
   state: () => ({
@@ -77,6 +77,16 @@ const paymentState = {
       } catch (error) {
         console.info(error);
       }
+    },
+    async getSellDataByID({ commit }: any, id: number) {
+      if (!id) return false;
+      getSellDataByID(id)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log("getSellDataByID error ", err)
+        })
     }
   },
   getters: {

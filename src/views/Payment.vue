@@ -54,7 +54,7 @@
                   <ConditionalItemCard class="conditionalCard" />
                 </v-col>
               </v-row>
-              <v-row justify="center" >
+              <v-row justify="center">
                 <v-col cols="12">
                   <h3 class="main-title text-center">
                     <!-- {{ getBuyInfoStatus.estado.principal }} -->
@@ -201,8 +201,8 @@ import ConditionalForm from "@/components/payment/ConditionalForm.vue";
     GoldItemList,
     OperationHistoryCard,
     ConditionalItemCard,
-    ConditionalForm
-  }
+    ConditionalForm,
+  },
 })
 export default class Payment extends Vue {
   // private current_step = this.$store.state.paymentState.currentStep;
@@ -221,6 +221,12 @@ export default class Payment extends Vue {
     );
   }
 
+  beforeCreate() {
+    const { id } = this.$route.query;
+    console.log("tenemos id ", id);
+    this.$store.dispatch('getSellDataByID',id)
+  }
+
   // GET TYPE OF PRODUCT TO SHOW IT IN 1 STEP TITLE
   get getProductType(): string {
     return this.$store.getters.getProductToBuy.tipo;
@@ -230,28 +236,29 @@ export default class Payment extends Vue {
   get getBuyInfoStatus(): any {
     return this.$store.getters.getBuyStatusInfo;
   }
+  
 
-  item: ItemBuyI = {
+/*   item: ItemBuyI = {
     user: "Diosdado Garcia",
     rank: "Elite",
     kingdom: "Psuv",
     faction: "Horda",
     price: "20",
     product: "10.000",
-    available: 100
+    available: 100,
   };
   history = [
     {
       id: 1,
       date: "10/12/2020",
       type: "Pago completo",
-      description: "Haz pagado 20$ por tarjeta de crédito mediante stripe"
-    }
-  ];
+      description: "Haz pagado 20$ por tarjeta de crédito mediante stripe",
+    },
+  ]; */
 }
 </script>
 
 <style lang="sass" scoped>
 .conditionalCard
-  width:100%
+  width: 100%
 </style>
