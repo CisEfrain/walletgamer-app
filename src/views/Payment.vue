@@ -143,7 +143,8 @@ export default class Payment extends Vue {
 
   beforeCreate() {
     const { id } = this.$route.query;
-    this.currentId = parseInt(id.toString());
+    if(id) this.currentId = parseInt(id.toString());
+    if(this.currentProduct.id) this.currentId = this.currentProduct.id;
     console.log("tenemos id ", id);
     this.$store.dispatch("getSellDataByID", id);
   }
@@ -157,6 +158,7 @@ export default class Payment extends Vue {
   }
   beforeDestroy() {
     this.$store.dispatch("resetPaymentState", true);
+    this.currentId = undefined;
   }
 }
 </script>

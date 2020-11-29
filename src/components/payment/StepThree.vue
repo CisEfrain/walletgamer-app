@@ -8,15 +8,29 @@
     <v-row justify="center">
       <v-col cols="12">
         <h3 class="main-title text-center">
-         {{state.principal}}
+          {{ state.principal }}
         </h3>
       </v-col>
 
       <v-col cols="12">
         <p class="text-center">
-          {{state.secundario}}
+          {{ state.secundario }}
         </p>
+        
+      <div
+        class="animated fadeIn fast"
+        v-if="state.intrucciones"
+      >
+        <v-row class="mt-4" justify="center">
+          <v-col class="instructions text-center px-4 py-4" cols="10">
+            <p>
+              {{ state.intrucciones }}
+            </p>
+          </v-col>
+        </v-row>
+      </div>
       </v-col>
+ 
       <v-col cols="12">
         <p class="text-center">
           Haz clic en el siguiente botón para confirmar la recepción
@@ -31,8 +45,8 @@
         color="btn-gradient"
         class="button button--primary button--medium mt-4 px-6"
         @click="$store.dispatch('confirmBuyProduct', currentProduct.id)"
-        >Confirmar </v-btn
-      >
+        >Confirmar
+      </v-btn>
 
       <v-btn
         rounded
@@ -100,5 +114,12 @@ export default class StepThree extends Vue {
 
 <style lang="sass" scoped>
 .conditionalCard
-  width: 100%
+  width:100%
+
+.instructions
+ color: $card-link
+ border: 1px solid $menu-items
+ background-color: $card-bg
+ border-radius: 15px
+ font-weight: 500
 </style>
