@@ -99,7 +99,8 @@ const paymentState = {
         dispatch("setProductToBuy", {
           item: data.publicacione,
           estado:data.estado,
-          id:data.id
+          id:data.id,
+          operaciones: data.operaciones
         });
         commit("setBuyData", data);
         dispatch("nextStep", data.estado.paso);
@@ -113,11 +114,12 @@ const paymentState = {
         const {
           data: { data }
         } = await BuyProductConfirm(payload);
-        console.info(data);
+        console.info(data, "confimProduc Action");
         dispatch("setProductToBuy", {
           item: data.publicacione,
           estado: data.estado,
-          id: data.id
+          id: data.id,
+          operaciones: data.operaciones
         });
         commit("setBuyData", data);
         dispatch("nextStep", data.estado.paso);
@@ -135,7 +137,8 @@ const paymentState = {
       dispatch("setProductToBuy", {
         item: data.publicacione,
         estado: data.estado,
-        id: data.id
+        id: data.id,
+        operaciones: data.operaciones
       });
       console.info(data);
       if (data && data.estado.paso) {

@@ -1,8 +1,13 @@
 <template>
   <div>
-    <v-row justify="center">
+    <v-row justify="center" v-if="!state.principal">
       <v-col md="12" class="d-flex justify-center px-16">
         <ConditionalItemCard class="conditionalCard" />
+      </v-col>
+    </v-row>
+    <v-row justify="center" v-if="state.principal">
+      <v-col md="12" class="d-flex justify-center px-16">
+        <ConditionalBuyCard class="conditionalCard" />
       </v-col>
     </v-row>
     <v-row justify="center">
@@ -29,7 +34,7 @@
       </v-row>
     </div>
 
-    <v-row justify="center" v-if="state">
+    <v-row justify="center" v-if="state.botonContinuar">
       <v-col class="text-center">
         <v-btn
           type="button"
@@ -74,7 +79,7 @@ import GoldItemList from "@/components/buy/GoldItemList.vue";
 import OperationHistoryCard from "@/components/payment/OperationHistoryCard.vue";
 import ConditionalItemCard from "@/components/payment/ConditionalItemCard.vue";
 import ConditionalForm from "@/components/payment/ConditionalForm.vue";
-// import StepTwo from "@/components/payment/StepTwo.vue";
+import ConditionalBuyCard from "@/components/payment/ConditionalBuyCard.vue";
 
 @Component({
   components: {
@@ -82,8 +87,8 @@ import ConditionalForm from "@/components/payment/ConditionalForm.vue";
     GoldItemList,
     OperationHistoryCard,
     ConditionalItemCard,
-    ConditionalForm
-    // StepTwo
+    ConditionalForm,
+    ConditionalBuyCard
   }
 })
 export default class StepTwo extends Vue {
@@ -93,7 +98,7 @@ export default class StepTwo extends Vue {
       price
     );
   }
-  public productStatus = {};
+  public productStatus = { id: 0 };
 
   // GET TYPE OF PRODUCT TO SHOW IT IN 1 STEP TITLE
   get getProductType(): string {

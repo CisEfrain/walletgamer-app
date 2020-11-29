@@ -3,6 +3,7 @@
     <v-row justify="center">
       <v-col md="12" class="d-flex justify-center px-16">
         <ConditionalItemCard class="conditionalCard" />
+        <ConditionalBuyCard v-if="state" class="conditionalCard" />
       </v-col>
     </v-row>
     <v-row justify="center">
@@ -16,21 +17,18 @@
         <p class="text-center">
           {{ state.secundario }}
         </p>
-        
-      <div
-        class="animated fadeIn fast"
-        v-if="state.intrucciones"
-      >
-        <v-row class="mt-4" justify="center">
-          <v-col class="instructions text-center px-4 py-4" cols="10">
-            <p>
-              {{ state.intrucciones }}
-            </p>
-          </v-col>
-        </v-row>
-      </div>
+
+        <div class="animated fadeIn fast" v-if="state.intrucciones">
+          <v-row class="mt-4" justify="center">
+            <v-col class="instructions text-center px-4 py-4" cols="10">
+              <p>
+                {{ state.intrucciones }}
+              </p>
+            </v-col>
+          </v-row>
+        </div>
       </v-col>
- 
+
       <v-col cols="12">
         <p class="text-center">
           Haz clic en el siguiente botón para confirmar la recepción
@@ -66,7 +64,7 @@ import GoldItemList from "@/components/buy/GoldItemList.vue";
 import OperationHistoryCard from "@/components/payment/OperationHistoryCard.vue";
 import ConditionalItemCard from "@/components/payment/ConditionalItemCard.vue";
 import ConditionalForm from "@/components/payment/ConditionalForm.vue";
-// import StepTwo from "@/components/payment/StepTwo.vue";
+import ConditionalBuyCard from "@/components/payment/ConditionalBuyCard.vue";
 
 @Component({
   components: {
@@ -75,8 +73,8 @@ import ConditionalForm from "@/components/payment/ConditionalForm.vue";
     OperationHistoryCard,
     ConditionalItemCard,
     ConditionalForm,
-    // StepTwo
-  },
+    ConditionalBuyCard
+  }
 })
 export default class StepThree extends Vue {
   get totalPrice(): any {
