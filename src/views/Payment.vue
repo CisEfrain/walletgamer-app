@@ -72,8 +72,11 @@
                     v-if="!$store.state.paymentState.errorReported"
                     class="main-title text-center"
                   >
-                    Perfecto..!!! hemos terminado la operación
+                    {{ $store.getters.getProductToBuy.estado.principal }}
                   </h3>
+                  <p class="text-center">
+                    {{  $store.getters.getProductToBuy.estado.secundario }}
+                  </p>
                   <h3
                     v-if="$store.state.paymentState.errorReported"
                     class="main-title text-center"
@@ -142,7 +145,7 @@ export default class Payment extends Vue {
     this.$store.dispatch("getSellDataByID", id);
   }
   beforeDestroy() {
-    this.$store.dispatch("resetPaymentState",true);
+    this.$store.dispatch("resetPaymentState", true);
   }
 }
 </script>
