@@ -40,9 +40,8 @@
           @change="disablePost(post)"
         />
 
-        <div class="text-center">
+        <div class="text-center" v-if="totalPages > 1">
           <v-pagination
-            v-if="totalPages > 1"
             v-model="page"
             :length="totalPages"
             color="#E4445B"

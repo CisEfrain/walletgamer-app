@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Get, Update } from "@/services/user.service";
 import { Add as CreateFound } from "@/services/found.service";
 
@@ -10,9 +11,10 @@ import Vue from "vue";
 
 const accountState = {
   state: () => ({
-    expenditureData: {},
+    expenditureData: [],
     userData: {},
-    newExpenditureData: {}
+    newExpenditureData: {},
+    newFund: {}
   }),
   mutations: {
     /**
@@ -35,6 +37,9 @@ const accountState = {
       // state.userData
       const { index } = payload;
       state.expenditureData.splice(index, 1);
+    },
+    setNewFund(state: any, payload: any): void {
+      state.newFund = payload;
     }
   },
   actions: {
@@ -67,6 +72,7 @@ const accountState = {
             response.data.status === 200 &&
               Vue.$toast.success(`tus datos se han actualizado`);
           }
+          commit("setNewFund", response);
         })
         .catch(error => {
           console.info(error);
@@ -128,7 +134,7 @@ const accountState = {
   },
   getters: {
     getExpenditure: (state: { expenditureData: any }) => {
-      return state.expenditureData || [];
+      return state.expenditureData;
     },
     getUserData: (state: { userData: any }) => {
       return state.userData;

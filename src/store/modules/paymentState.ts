@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BuyProduct, BuyProductConfirm } from "@/services/buy.service";
 
 const paymentState = {
@@ -60,6 +61,17 @@ const paymentState = {
         const {
           data: { data }
         } = await BuyProduct(payload);
+        console.info(data);
+        commit("setBuyData", data);
+      } catch (error) {
+        console.info(error);
+      }
+    },
+    async confirmBuyProduct({ commit }: any, payload: any) {
+      try {
+        const {
+          data: { data }
+        } = await BuyProductConfirm(payload);
         console.info(data);
         commit("setBuyData", data);
       } catch (error) {

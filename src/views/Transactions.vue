@@ -58,9 +58,8 @@
           :type="pendingOperation.tipo"
         />
       </v-col>
-      <div class="text-center">
+      <div class="text-center" v-if="totalPendingPages > 1">
         <v-pagination
-          v-if="totalPendingPages > 1"
           v-model="pendingPage"
           :length="totalPendingPages"
           color="#E4445B"
@@ -111,9 +110,8 @@
           />
         </v-expansion-panels>
       </v-col>
-      <div class="text-center">
+      <div class="text-center" v-if="totalDonePages > 1">
         <v-pagination
-          v-if="totalDonePages > 1"
           v-model="donePage"
           :length="totalDonePages"
           color="#E4445B"
