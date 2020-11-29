@@ -8,28 +8,28 @@
     <v-row justify="center">
       <v-col cols="12">
         <h3 class="main-title text-center">
-          {{ productStatus.estado.principal }}
+          {{ state.principal }}
         </h3>
       </v-col>
 
       <v-col cols="12">
         <p class="text-center">
-          {{ productStatus.estado.secundario }}
+          {{ state.secundario }}
         </p>
       </v-col>
     </v-row>
 
-    <div class="animated fadeIn fast" v-if="productStatus.estado.intrucciones">
+    <div class="animated fadeIn fast" v-if="state.intrucciones">
       <v-row class="mt-4" justify="center">
         <v-col class="instructions text-center px-4 py-4" cols="10">
           <p>
-            {{ productStatus.estado.intrucciones }}
+            {{ state.intrucciones }}
           </p>
         </v-col>
       </v-row>
     </div>
 
-    <v-row justify="center" v-if="productStatus.estado">
+    <v-row justify="center" v-if="state">
       <v-col class="text-center">
         <v-btn
           type="button"
@@ -38,16 +38,12 @@
           class="button button--primary button--medium mt-4 px-6"
           @click="confirmBuy"
         >
-          {{
-            productStatus.estado.botonContinuar
-              ? productStatus.estado.botonContinuar
-              : "Confirmar"
-          }}</v-btn
+          {{ state.botonContinuar ? state.botonContinuar : "Confirmar" }}</v-btn
         >
       </v-col>
     </v-row>
 
-    <v-row>
+    <!-- <v-row>
       <v-col cols="12 mb-0 pb-0">
         <h3 class="main-title">Historial de la operación</h3>
       </v-col>
@@ -66,7 +62,7 @@
           :description="item.mensaje"
         />
       </v-col>
-    </v-row>
+    </v-row> -->
   </div>
 </template>
 <script lang="ts">
@@ -104,8 +100,20 @@ export default class StepTwo extends Vue {
     return this.$store.getters.getProductToBuy.tipo;
   }
 
-  async mounted() {
+  private state = {};
+  private product = {};
+  // GET TYPE OF PRODUCT TO SHOW IT IN 1 STEP TITLE
+  get currentProduct() {
+    return this.$store.getters.getProductToBuy;
+  }
+
+  async beforeCreated() {
     await this.getBuyInfoStatus();
+    console.log("currentProduct step 2 ", this.currentProduct);
+  }
+  async mounted() {
+    this.state = await this.currentProduct.estado;
+    this.product = await this.currentProduct.item;
   }
 
   // //GET INFO FROM VENTAS/:ID TO RENDER

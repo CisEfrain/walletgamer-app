@@ -96,6 +96,11 @@ const paymentState = {
           data: { data }
         } = await BuyProduct(payload);
         console.info(data);
+        dispatch("setProductToBuy", {
+          item: data.publicacione,
+          estado:data.estado,
+          id:data.id
+        });
         commit("setBuyData", data);
         dispatch("nextStep", data.estado.paso);
       } catch (error) {
@@ -105,8 +110,15 @@ const paymentState = {
     async confirmBuyProduct({ commit, dispatch }: any, payload: any) {
       console.info(payload);
       try {
-        const { data: { data } } = await BuyProductConfirm(payload);
+        const {
+          data: { data }
+        } = await BuyProductConfirm(payload);
         console.info(data);
+        dispatch("setProductToBuy", {
+          item: data.publicacione,
+          estado: data.estado,
+          id: data.id
+        });
         commit("setBuyData", data);
         dispatch("nextStep", data.estado.paso);
       } catch (error) {
@@ -122,8 +134,8 @@ const paymentState = {
       });
       dispatch("setProductToBuy", {
         item: data.publicacione,
-        estado:data.estado,
-        id:data.id
+        estado: data.estado,
+        id: data.id
       });
       console.info(data);
       if (data && data.estado.paso) {
