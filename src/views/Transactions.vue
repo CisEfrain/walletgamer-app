@@ -320,7 +320,7 @@ import PendingCard from "@/components/transactions/PendingCard.vue";
 
 import { Validate } from "vuelidate-property-decorators";
 import { required, email } from "vuelidate/lib/validators";
-import SocketIo from "socket.io-client";
+// import SocketIo from "socket.io-client";
 
 @Component({
   components: {
@@ -335,7 +335,7 @@ import SocketIo from "socket.io-client";
 export default class Transactions extends Vue {
   private panel: Array<number> = [];
   private stripe = (window as any).Stripe(process.env.VUE_APP_STRIPE_PK);
-  io: any = SocketIo;
+  // io: any = SocketIo;
   private drawerDisbursement = false;
   private drawerTransferToFriend = false;
   private drawerFund = false;
@@ -395,10 +395,10 @@ export default class Transactions extends Vue {
   }
   created() {
     // Socket.on("connect", () => {});
-    const Socket = this.io("http://localhost:8080");
-    Socket.on("connect", () => {
-      console.log("conectado a socket");
-    });
+    // const Socket = this.io("http://localhost:8080");
+    // Socket.on("connect", () => {
+    //   console.log("conectado a socket");
+    // });
   }
 
   get myPayMethods(): Array<any> {
