@@ -118,7 +118,6 @@ import ConditionalBuyCard from "@/components/payment/ConditionalBuyCard.vue";
 import StepTwo from "@/components/payment/StepTwo.vue";
 import StepThree from "@/components/payment/StepThree.vue";
 
-
 @Component({
   components: {
     ProductCard,
@@ -128,8 +127,8 @@ import StepThree from "@/components/payment/StepThree.vue";
     ConditionalForm,
     StepTwo,
     StepThree,
-    ConditionalBuyCard
-  }
+    ConditionalBuyCard,
+  },
 })
 export default class Payment extends Vue {
   currentId: number;
@@ -150,7 +149,7 @@ export default class Payment extends Vue {
     return this.$store.getters.getCurrentStep;
   }
 
-  beforeCreate() {
+  async beforeCreate() {
     const { id } = this.$route.query;
     if (id) this.currentId = parseInt(id.toString());
     if (
@@ -160,7 +159,9 @@ export default class Payment extends Vue {
     )
       this.currentId = this.currentProduct.id;
     console.log("tenemos id ", id);
-    this.$store.dispatch("getSellDataByID", id);
+    const loader = this.$loading.show();
+    await this.$store.dispatch("getSellDataByID", id);
+    loader.hide();
   }
   mounted() {
     if (this.getCurrentStep < 4) {

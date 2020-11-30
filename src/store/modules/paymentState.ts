@@ -4,6 +4,7 @@ import {
   BuyProductConfirm,
   getSellDataByID
 } from "@/services/buy.service";
+import Vue from "vue";
 
 const paymentState = {
   state: () => ({
@@ -91,6 +92,7 @@ const paymentState = {
     },
     // CALL ventas AND ventas/:id
     async setBuyProduct({ commit, dispatch }: any, payload: any) {
+      const loader = Vue.$loading.show();
       try {
         const {
           data: { data }
@@ -104,12 +106,15 @@ const paymentState = {
         });
         commit("setBuyData", data);
         dispatch("nextStep", data.estado.paso);
+        loader.hide();
       } catch (error) {
         console.info(error);
+        loader.hide();
       }
     },
     async confirmBuyProduct({ commit, dispatch }: any, payload: any) {
       console.info(payload);
+      const loader = Vue.$loading.show();
       try {
         const {
           data: { data }
@@ -123,8 +128,10 @@ const paymentState = {
         });
         commit("setBuyData", data);
         dispatch("nextStep", data.estado.paso);
+        loader.hide();
       } catch (error) {
         console.info(error);
+        loader.hide();
       }
     },
     async getSellDataByID({ commit, dispatch }: any, id: number) {
