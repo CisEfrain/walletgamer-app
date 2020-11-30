@@ -38,7 +38,7 @@
             <v-stepper-content step="1">
               <h3 class="mb-4 main-title text-center">
                 Ingresa los detalles de tu compra de
-                {{ getProductType }} World Warcraft Classic
+                {{ productType ? productType : '' }} World Warcraft Classic
               </h3>
               <v-row>
                 <v-col class="d-flex justify-center px-16">
@@ -50,7 +50,7 @@
 
             <v-stepper-content step="2">
               <div v-if="getCurrentStep === 2">
-                <StepTwo />
+                <StepTwo @emitBuyId="receiveBuyId" />
               </div>
             </v-stepper-content>
 
@@ -66,8 +66,8 @@
                   <!-- <ConditionalItemCard class="conditionalCard" /> -->
                 </v-col>
               </v-row>
-              <v-row justify="center">
-                <v-col md="12" class="d-flex justify-center px-16">
+              <v-row v-if="getCurrentStep === 4" justify="center">
+                <v-col  md="12" class="d-flex justify-center px-16">
                   <ConditionalBuyCard class="conditionalCard" />
                 </v-col>
               </v-row>
@@ -138,10 +138,8 @@ export default class Payment extends Vue {
       price
     );
   }
-  // GET TYPE OF PRODUCT TO SHOW IT IN 1 STEP TITLE
-  get getProductType(): string {
-    return this.$store.getters.getProductToBuy.tipo;
-  }
+  productType:any = "";
+  interval;
   get currentProduct() {
     return this.$store.getters.getProductToBuy;
   }
@@ -152,23 +150,26 @@ export default class Payment extends Vue {
   async beforeCreate() {
     const { id } = this.$route.query;
     if (id) this.currentId = parseInt(id.toString());
-    if (
-      this.currentProduct &&
-      this.currentProduct.hasOnwProperty("id") &&
-      this.currentProduct.id
-    )
-      this.currentId = this.currentProduct.id;
-    console.log("tenemos id ", id);
+
+    console.log("this.cur",this.currentProduct)
+    console.log("tenemos id ",this.currentId);
     const loader = this.$loading.show();
     await this.$store.dispatch("getSellDataByID", id);
     loader.hide();
   }
   mounted() {
+    // solo tiene propiedad tipo la primera en el paso 1.
+    this.productType = this.$store.getters.getProductToBuy.tipo;
     if (this.getCurrentStep < 4) {
-      window.setInterval(this.reloadData, 5000);
+      this.interval = window.setInterval(this.reloadData, 5000);
     }
   }
+  receiveBuyId(id){
+    this.currentId = id;
+  }
   async reloadData() {
+    console.log("here reload init",this.currentId)
+
     if (this.currentId) {
       if (this.getCurrentStep < 4 && this.getCurrentStep > 1) {
         await this.$store.dispatch("getSellDataByID", this.currentId);
@@ -178,6 +179,7 @@ export default class Payment extends Vue {
   beforeDestroy() {
     this.$store.dispatch("resetPaymentState", true);
     this.currentId = undefined;
+    clearInterval(this.interval);
   }
 }
 </script>

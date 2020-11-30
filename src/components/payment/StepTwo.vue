@@ -119,6 +119,7 @@ export default class StepTwo extends Vue {
   async mounted() {
     this.state = await this.currentProduct.estado;
     this.product = await this.currentProduct.item;
+    this.$emit("emitBuyId", this.currentProduct.id);
   }
 
   // //GET INFO FROM VENTAS/:ID TO RENDER

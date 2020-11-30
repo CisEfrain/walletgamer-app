@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Transactions from "../views/Transactions.vue";
 import Panel from "../views/Panel.vue";
-
+import Payment from "@/views/Payment.vue";
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
@@ -28,8 +28,8 @@ const routes: Array<RouteConfig> = [
       {
         path: "/payment",
         name: "Payment",
-
-        component: () => import("../views/Payment.vue")
+        component: Payment
+        // component: () => import("../views/Payment.vue")
       },
       {
         path: "/sellment",
