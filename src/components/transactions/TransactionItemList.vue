@@ -37,7 +37,7 @@
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row class="px-4" align="center" justify="space-between">
-              <v-col cols="12" md="6" sm="6">
+              <v-col cols="12" md="12" sm="12">
                 <p>
                   {{ description ? description : "Sin descripción" }}
                 </p>

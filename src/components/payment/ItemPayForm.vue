@@ -163,6 +163,7 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/camelcase */
 import { Component, Vue } from "vue-property-decorator";
 import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
 import { Validate } from "vuelidate-property-decorators";
@@ -209,11 +210,12 @@ export default class ItemPayForm extends Vue {
 
   private buy(): void {
     const buyProduct = {
-      cantidad: this.quantity,
+      cantidad: parseInt(this.quantity),
+      publicaciones_id: this.itemList.id,
       pj: this.pj
     };
     console.info(buyProduct);
-    this.$store.dispatch("nextStep");
+    this.$store.dispatch("setBuyProduct", buyProduct);
   }
 
   get myPayMethods(): Array<any> {

@@ -37,6 +37,7 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 import BaseCardContainer from "@/components/base/BaseCardContainer.vue";

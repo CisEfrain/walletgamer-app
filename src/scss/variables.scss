@@ -74,3 +74,37 @@ $font-weight-title: 800;
 .fadeIn {
   animation-name: fadeIn;
 }
+
+.product-title{
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: -14px;
+  font-weight: 800;
+  font-family: $body-font-family, sans-serif !important;
+}
+  
+
+.card-radius{
+  border-radius: 28px!important;
+  cursor: pointer!important;
+  background-color: $bg-product-card!important;
+}
+  
+
+.card-radius:hover{
+  background: #d47777!important;
+}
+  
+.active-card{
+  background: $card-link!important;
+}
+  
+
+@media (max-width: 768px){
+  .responsive-card{
+    display: flex;
+    justify-content: center;
+  }
+}
+  
+    

@@ -1,10 +1,5 @@
 <template>
   <v-container class="px-8">
-    <h2 class="custom-class">
-      <a href="/sellment">
-        to sellment
-      </a>
-    </h2>
     <v-row align="center" justify="start">
       <h3 class="mt-12 mb-4 main-title text-center">
         ¿Qué te interesa vender?

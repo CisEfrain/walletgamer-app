@@ -29,22 +29,26 @@
             </v-row>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-row>
+            <v-row v-for="venta in ventas" :key="venta.id">
               <v-col
                 cols="12"
-                md="6"
+                md="4"
                 sm="6"
-                class="d-flex align-center"
-                v-for="venta in ventas"
-                :key="venta.id"
+                class="d-flex align-center justify-center"
               >
-                <p class="mb-0">
-                  {{ venta.cantidad }}
-                  {{ venta.estado }}
-                  {{ venta.personaje }}
-                </p>
+                <p class="mb-0"><b>Estado:</b> {{ venta.estado }}</p>
+              </v-col>
+              <v-col
+                cols="12"
+                md="4"
+                sm="6"
+                class="d-flex justify-center align-center"
+              >
+                <p class="mb-0"><b>Personaje:</b> {{ venta.personaje }}</p>
+              </v-col>
+              <v-col cols="12" md="4" sm="6" class="d-flex justify-end">
                 <v-btn @click="goToDetail(venta.id)" text large color="error">
-                  <b>Ver mas</b>
+                  <b>Detalles de la transacción</b>
                 </v-btn>
               </v-col>
             </v-row>
@@ -62,8 +66,8 @@ import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
 
 @Component({
   components: {
-    BaseCardContainer,
-  },
+    BaseCardContainer
+  }
 })
 export default class PendingCard extends Vue {
   @Prop({ required: true, type: String }) readonly product!: string;
@@ -87,7 +91,7 @@ export default class PendingCard extends Vue {
     );
   }
   goToDetail(id: number) {
-    if(!id) return false;
+    if (!id) return false;
     this.$router.push({ path: "payment", query: { id: id.toString() } });
   }
   created() {
