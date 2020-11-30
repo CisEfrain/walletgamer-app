@@ -1,11 +1,11 @@
 <template>
   <div>
-    <v-row justify="center" v-if="!state.principal">
+    <v-row justify="center">
       <v-col md="12" class="d-flex justify-center px-16">
-        <ConditionalItemCard class="conditionalCard" />
+        <!-- <ConditionalItemCard class="conditionalCard" /> -->
       </v-col>
     </v-row>
-    <v-row justify="center" v-if="state.principal">
+    <v-row justify="center">
       <v-col md="12" class="d-flex justify-center px-16">
         <ConditionalBuyCard class="conditionalCard" />
       </v-col>
@@ -127,7 +127,7 @@ export default class StepTwo extends Vue {
   }
 
   private confirmBuy(): void {
-    this.$store.dispatch("confirmBuyProduct", this.productStatus.id);
+    this.$store.dispatch("confirmBuyProduct", this.currentProduct.id);
   }
 }
 </script>

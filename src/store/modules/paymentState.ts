@@ -98,8 +98,8 @@ const paymentState = {
         console.info(data);
         dispatch("setProductToBuy", {
           item: data.publicacione,
-          estado:data.estado,
-          id:data.id,
+          estado: data.estado,
+          id: data.id,
           operaciones: data.operaciones
         });
         commit("setBuyData", data);

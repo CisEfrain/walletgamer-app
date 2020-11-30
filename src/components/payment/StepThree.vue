@@ -2,8 +2,12 @@
   <div>
     <v-row justify="center">
       <v-col md="12" class="d-flex justify-center px-16">
-        <ConditionalItemCard class="conditionalCard" />
-        <ConditionalBuyCard v-if="state" class="conditionalCard" />
+        <!-- <ConditionalItemCard class="conditionalCard" /> -->
+      </v-col>
+    </v-row>
+    <v-row justify="center">
+      <v-col md="12" class="d-flex justify-center px-16">
+        <ConditionalBuyCard class="conditionalCard" />
       </v-col>
     </v-row>
     <v-row justify="center">

@@ -1,5 +1,5 @@
 <template>
-  <v-row class="d-flex justify-center px-16">
+  <v-row v-if="itemList" class="d-flex justify-center px-16">
     <v-col>
       <div v-if="itemList.item.tipo === 'oro'">
         <GoldItemList
@@ -67,11 +67,7 @@ export default class ConditionalBuyCard extends Vue {
   @Prop({ type: String }) readonly characterClass!: string;
   @Prop({ type: Number }) readonly level!: number;
 
-  created() {
-    console.info(this.$store.getters.getProductToBuy.item.tipo);
-  }
-
-  get itemList(): any {
+  get itemList(): any[] {
     return this.$store.getters.getProductToBuy;
   }
 }

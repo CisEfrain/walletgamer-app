@@ -63,7 +63,12 @@
             <v-stepper-content step="4">
               <v-row justify="center">
                 <v-col md="12" class="d-flex justify-center px-16">
-                  <ConditionalItemCard class="conditionalCard" />
+                  <!-- <ConditionalItemCard class="conditionalCard" /> -->
+                </v-col>
+              </v-row>
+              <v-row justify="center">
+                <v-col md="12" class="d-flex justify-center px-16">
+                  <ConditionalBuyCard class="conditionalCard" />
                 </v-col>
               </v-row>
               <v-row justify="center">
@@ -108,8 +113,11 @@ import GoldItemList from "@/components/buy/GoldItemList.vue";
 import OperationHistoryCard from "@/components/payment/OperationHistoryCard.vue";
 import ConditionalItemCard from "@/components/payment/ConditionalItemCard.vue";
 import ConditionalForm from "@/components/payment/ConditionalForm.vue";
+import ConditionalBuyCard from "@/components/payment/ConditionalBuyCard.vue";
+
 import StepTwo from "@/components/payment/StepTwo.vue";
 import StepThree from "@/components/payment/StepThree.vue";
+
 
 @Component({
   components: {
@@ -120,7 +128,8 @@ import StepThree from "@/components/payment/StepThree.vue";
     ConditionalForm,
     StepTwo,
     StepThree,
-  },
+    ConditionalBuyCard
+  }
 })
 export default class Payment extends Vue {
   currentId: number;
@@ -144,9 +153,12 @@ export default class Payment extends Vue {
   beforeCreate() {
     const { id } = this.$route.query;
     if (id) this.currentId = parseInt(id.toString());
-    if (this.currentProduct 
-    && this.currentProduct.hasOnwProperty('id') 
-    && this.currentProduct.id) this.currentId = this.currentProduct.id;
+    if (
+      this.currentProduct &&
+      this.currentProduct.hasOnwProperty("id") &&
+      this.currentProduct.id
+    )
+      this.currentId = this.currentProduct.id;
     console.log("tenemos id ", id);
     this.$store.dispatch("getSellDataByID", id);
   }
