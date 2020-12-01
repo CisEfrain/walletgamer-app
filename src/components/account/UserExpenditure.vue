@@ -85,8 +85,9 @@
       </v-col>
     </v-row>
 
-    <v-row class="px-4 mt-4">
+    <v-row class="mt-4" justify="center">
       <UserExpenditureItemList
+        class="animated fadeIn fast container"
         v-for="(payment, $index) in expenditure"
         :alias="payment.alias"
         :pay_method="payment.nombre"

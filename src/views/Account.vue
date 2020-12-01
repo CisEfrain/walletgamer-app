@@ -1,7 +1,7 @@
 <template>
   <v-container class="px-8">
     <v-row class="animated fadeIn fast">
-      <UserInfo />
+      <UserInfo class="px-8" />
     </v-row>
 
     <v-row class="animated fadeIn fast">

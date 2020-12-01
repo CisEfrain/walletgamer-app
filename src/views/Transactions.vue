@@ -44,11 +44,11 @@
       </v-col>
     </v-row>
 
-    <v-row class="px-10" justify="center">
+    <v-row class="px-8" justify="center">
       <v-col cols="12">
         <v-expansion-panels v-model="panelPending" multiple flat>
           <PendingCard
-            class="animated fadeIn fast px-8"
+            class="animated fadeIn fast container"
             v-for="pendingOperation in pendingOperations"
             :key="pendingOperation.id"
             :product="pendingOperation.transaccione.descripcion"
@@ -96,11 +96,11 @@
       </v-col>
     </v-row>
 
-    <v-row class="px-10" justify="center">
+    <v-row class="px-8" justify="center">
       <v-col cols="12">
         <v-expansion-panels v-model="panel" multiple flat>
           <TransactionItemList
-            class="animated fadeIn fast px-8"
+            class="animated fadeIn fast container"
             v-for="doneOperation in doneOperations"
             :key="doneOperation.id"
             :product="doneOperation.transaccione.descripcion"

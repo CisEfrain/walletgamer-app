@@ -1,9 +1,9 @@
 <template>
-  <v-row class="d-flex justify-center">
-    <v-col>
+  <v-row justify="center">
+    <v-col cols="12">
       <BaseCardContainer class="py-2">
         <v-row class="px-4" align="center" justify="center">
-          <v-col cols="3" sm="6" md="2">
+          <v-col cols="12" sm="6" md="3">
             <h4 class="main-title">{{ alias }}</h4>
           </v-col>
           <v-col class="d-flex" cols="3" sm="6" md="2">
@@ -11,11 +11,11 @@
               <b>{{ pay_method }}</b>
             </v-chip>
           </v-col>
-          <v-col class="text-justify">
+          <v-col class="text-justify" cols="6" sm="12" md="4">
             <p>Email: {{ email }}</p>
             <p>Descripcion: {{ descripcion }}</p>
           </v-col>
-          <v-col class="d-flex justify-end align-center">
+          <v-col class="d-flex justify-end align-center" sm="6" md="3">
             <div>
               <v-btn @click="deleteMethod(id)" text large color="error"
                 ><b>Eliminar</b></v-btn
