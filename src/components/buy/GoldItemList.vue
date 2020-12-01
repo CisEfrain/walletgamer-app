@@ -14,7 +14,7 @@
             </v-chip>
           </v-col>
           <v-col v-if="isBuyCard" class="mt-2" cols="3" md="4" sm="6">
-            <h4 class="text-end">{{ available }} de oro</h4>
+            <h4 class="text-end">{{ available * 100 }} de oro</h4>
             <p class="text-end">${{ formatPrice }}</p>
           </v-col>
           <v-col v-if="isBuyCard === false" cols="3" md="4" sm="6">

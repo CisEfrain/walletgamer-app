@@ -41,13 +41,32 @@
               <v-col cols="4" md="3" sm="6" v-if="ventas.length > 0">
                 <p><b>Estado:</b> {{ status }}</p>
               </v-col>
-              <v-col cols="4" md="4" sm="6" v-if="ventas.length > 0">
+              <v-col
+                cols="4"
+                md="5"
+                sm="6"
+                class="text-center"
+                v-if="ventas.length > 0"
+              >
                 <p>
                   <b>Personje / Email Receptor: </b>{{ ventas[0].personaje }}
                 </p>
               </v-col>
-              <v-col cols="4" md="2" sm="5" v-if="ventas.length > 0">
-                <p><b>Cantidad:</b> {{ ventas[0].cantidad }}</p>
+              <v-col
+                cols="4"
+                md="4"
+                sm="5"
+                class="text-right"
+                v-if="ventas.length > 0"
+              >
+                <p>
+                  <b>Cantidad:</b>
+                  {{
+                    ventas[0].publicacione.tipo === "oro"
+                      ? `${ventas[0].cantidad * 100} de oro`
+                      : ventas[0].cantidad
+                  }}
+                </p>
               </v-col>
 
               <!-- FONDEO -->
@@ -105,7 +124,7 @@ export default class TransactionItemList extends Vue {
   get hasStatus(): any {
     if (this.status === "Completada") return `green accent-4`;
     if (this.status === "Error") return "deep-orange darken-1";
-    if (this.status === "Pendiente") return "orange";
+    if (this.status === "Pendiente") return "amber";
     else return "warning";
   }
 

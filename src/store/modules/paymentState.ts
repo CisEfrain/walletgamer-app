@@ -102,6 +102,7 @@ const paymentState = {
           item: data.publicacione,
           estado: data.estado,
           id: data.id,
+          cantidad: data.cantidad,
           operaciones: data.operaciones,
           historial: data.historials
         });
@@ -125,6 +126,7 @@ const paymentState = {
           item: data.publicacione,
           estado: data.estado,
           id: data.id,
+          cantidad: data.cantidad,
           operaciones: data.operaciones,
           historial: data.historials
         });
@@ -147,6 +149,7 @@ const paymentState = {
         item: data.publicacione,
         estado: data.estado,
         id: data.id,
+        cantidad: data.cantidad,
         operaciones: data.operaciones,
         historial: data.historials
       });

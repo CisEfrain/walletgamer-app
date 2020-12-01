@@ -47,7 +47,14 @@
                 </p>
               </v-col>
               <v-col cols="4" md="2" sm="5" v-if="ventas.length > 0">
-                <p><b>Cantidad:</b> {{ ventas[0].cantidad }}</p>
+                <p>
+                  <b>Cantidad:</b>
+                  {{
+                    ventas[0].publicacione.tipo === "oro"
+                      ? `${ventas[0].cantidad * 100} de oro`
+                      : ventas[0].cantidad
+                  }}
+                </p>
               </v-col>
 
               <!-- FONDEO -->
@@ -80,7 +87,7 @@
 
               <v-col cols="12" md="3" sm="7" class="text-right">
                 <v-btn
-                  @click="goToDetail(venta.id)"
+                  @click="goToDetail(ventas[0].id)"
                   text
                   color="error"
                   class="mb-3"
@@ -117,12 +124,13 @@ export default class PendingCard extends Vue {
   @Prop({ required: false, type: Array }) readonly ventas?: string;
   @Prop({ required: false }) readonly disbursement?: string;
   @Prop({ required: false }) readonly fund?: string;
+  @Prop({ type: Number }) readonly sellId?: number;
 
   showDescription = false;
   get hasStatus(): any {
     if (this.status === "Completada") return `green accent-4`;
     if (this.status === "Error") return "deep-orange darken-1";
-    if (this.status === "Pendiente") return "orange";
+    if (this.status === "Pendiente") return "amber";
     else return "error";
   }
 

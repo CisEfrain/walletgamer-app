@@ -8,9 +8,9 @@
           :rank="itemList.operaciones[1].usuario.rango || 'Pollo'"
           :kingdom="itemList.item.reino"
           :faction="itemList.item.faccion"
-          :price="itemList.item.precio"
+          :price="itemList.operaciones[1].transaccione.monto"
           :product="itemList.item.tipo"
-          :available="itemList.item.cantidad"
+          :available="itemList.cantidad"
           isBuy
         />
       </div>

@@ -334,7 +334,6 @@ import PendingCard from "@/components/transactions/PendingCard.vue";
 
 import { Validate } from "vuelidate-property-decorators";
 import { required, email } from "vuelidate/lib/validators";
-import { set } from "vue/types/umd";
 // import SocketIo from "socket.io-client";
 
 @Component({
