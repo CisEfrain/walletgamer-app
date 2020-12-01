@@ -67,8 +67,18 @@ const AppState = {
       return state.data.listas.rangos;
     },
     getPayMethodList: (state: { data: any }) => {
-      const paymentMethods = Object.keys(state.data.pasarelas);
-      return paymentMethods;
+      const platformPayMethods = [];
+      for (const key in state.data.pasarelas) {
+        const element = state.data.pasarelas[key];
+        platformPayMethods.push({
+          nombre: element.nombre,
+          descripcion: element.descricion,
+          // eslint-disable-next-line @typescript-eslint/camelcase
+          id: element.id
+        });
+      }
+
+      return platformPayMethods;
     },
     getFundForm: (state: { isFundForm: boolean }) => {
       return state.isFundForm;

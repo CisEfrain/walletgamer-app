@@ -96,7 +96,7 @@
               dense
             ></v-text-field>
             <v-select
-              :items="myPayMethods"
+              :items="platformPayMethods"
               label="¿De donde quieres fondear?"
               outlined
               v-model="$v.fund.$model"
@@ -107,8 +107,7 @@
               rounded
               color="rgba(184,12,70,.6)"
               class="text-center"
-              :hint="`${fund.alias} - [${fund.nombre}]`"
-              item-text="alias"
+              item-text="nombre"
               item-value="id"
               return-object
               single-line
@@ -191,6 +190,11 @@ export default class CharacterPayForm extends Vue {
       id: item.id
     }));
     return payAliases;
+  }
+
+  get platformPayMethods(): Array<any> {
+    console.info(this.$store.getters.getPayMethodList, "GetPlatformPayMethods");
+    return this.$store.getters.getPayMethodList;
   }
 
   get form(): any {

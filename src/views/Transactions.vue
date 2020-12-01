@@ -286,7 +286,7 @@
               rounded
               color="rgba(184,12,70,.6)"
               class="text-center"
-              item-text="alias"
+              item-text="nombre"
               item-value="id"
               return-object
               single-line
