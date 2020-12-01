@@ -54,7 +54,7 @@ export default class ActionsCard extends Vue {
   font-family:$body-font-family, sans-serif !important
   border-radius: 2em
   padding: 4px 16px
-  min-width: 90%
+  min-width: 70%
   min-height: 80px
   color: #474545
   background: white
@@ -73,7 +73,9 @@ export default class ActionsCard extends Vue {
 
 .action-card
   cursor: pointer
+  width: 90%
 
 .action:hover
-  background: $bg-product-card
+  background: #d47777!important
+  color: $badge-faccion!important
 </style>

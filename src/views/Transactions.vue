@@ -136,7 +136,7 @@
       width="420"
     >
       <v-container class="px-8">
-        <h2 class="title text-center mt-12 mb-3">Solicitar desembolso</h2>
+        <h2 class="main-title text-center mt-12 mb-3">Solicitar desembolso</h2>
         <v-divider></v-divider>
         <v-row align="center" class="px-8 mt-8" justify="center">
           <v-col cols="12" md="12" align="center">
@@ -186,6 +186,16 @@
           </v-col>
         </v-row>
       </v-container>
+      <v-divider></v-divider>
+      <v-row v-if="myPayMethods.length < 1" justify="center" align="center">
+        <v-col>
+          <router-link to="/account" class="px-8">
+            <h4 class="text-center main-title">
+              Por favor debes agregar un medio de desembolso desde aquí
+            </h4>
+          </router-link>
+        </v-col>
+      </v-row>
     </v-navigation-drawer>
 
     <!-- Side form for "Transferir a amigo" -->
@@ -197,7 +207,7 @@
       width="420"
     >
       <v-container class="px-8">
-        <h2 class="title text-center mt-12 mb-3">Transferir a amigo</h2>
+        <h2 class="main-title text-center mt-12 mb-3">Transferir a amigo</h2>
         <v-divider></v-divider>
         <v-row align="center" class="px-8 mt-8" justify="center">
           <v-col cols="12" md="12" align="center">
@@ -255,7 +265,7 @@
       width="420"
     >
       <v-container class="px-8">
-        <h2 class="title text-center mt-12 mb-3">Fondear</h2>
+        <h2 class="main-title text-center mt-12 mb-3">Fondear</h2>
         <v-divider></v-divider>
         <v-row align="center" class="px-8 mt-8" justify="center">
           <v-col cols="12" md="12" align="center">
