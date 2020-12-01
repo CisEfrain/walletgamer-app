@@ -13,7 +13,11 @@
               {{ faction }}
             </v-chip>
           </v-col>
-          <v-col cols="3" md="4" sm="6">
+          <v-col v-if="isBuyCard" class="mt-2" cols="3" md="4" sm="6">
+            <h4 class="text-end">{{ available }} de oro</h4>
+            <p class="text-end">${{ formatPrice }}</p>
+          </v-col>
+          <v-col v-if="isBuyCard === false" cols="3" md="4" sm="6">
             <h4>$ {{ formatPrice }} por cada 100 de oro</h4>
             <small>Disponible: {{ formatAvailable }}</small>
           </v-col>
@@ -37,6 +41,7 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
@@ -51,13 +56,19 @@ export default class GoldItemList extends Vue {
   @Prop({ type: String }) readonly rank!: string;
   @Prop({ type: String }) readonly kingdom!: string;
   @Prop({ type: String }) readonly product!: string;
-  @Prop({ type: String }) readonly price!: string;
+  @Prop({}) readonly price!: string | any;
   @Prop({ type: Number }) readonly available!: number;
   @Prop({ type: String }) readonly faction!: string;
   @Prop({ type: Boolean, default: false }) readonly actions!: boolean;
+  @Prop({ type: Boolean, default: false }) readonly isBuy!: boolean;
+  @Prop({ type: Number }) readonly quantity!: number;
 
   get hasActions(): boolean {
     return this.actions ? true : false;
+  }
+
+  get isBuyCard(): boolean {
+    return this.isBuy ? true : false;
   }
 
   get formatPrice() {

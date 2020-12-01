@@ -24,39 +24,53 @@
 
         <div class="animated fadeIn fast" v-if="state.intrucciones">
           <v-row class="mt-4" justify="center">
-            <v-col class="instructions text-center px-4 py-4" cols="10">
-              <p>
-                {{ state.intrucciones }}
+            <v-col class="buy-instructions px-4 py-4" cols="10">
+              <p v-for="(instruction, $index) in instructions" :key="$index">
+                {{ instruction }}
               </p>
             </v-col>
           </v-row>
         </div>
       </v-col>
-
+    </v-row>
+    <v-row justify="center" v-if="state.botonContinuar">
       <v-col cols="12">
         <p class="text-center">
-          Haz clic en el siguiente botón para confirmar la recepción
+          Haz clic a continuación si haz seguido todas las instrucciones
         </p>
       </v-col>
-    </v-row>
 
-    <v-row justify="center">
       <v-btn
         type="button"
         rounded
         color="btn-gradient"
         class="button button--primary button--medium mt-4 px-6"
         @click="$store.dispatch('confirmBuyProduct', currentProduct.id)"
-        >Confirmar
+        >{{ state.botonContinuar }}
       </v-btn>
 
-      <v-btn
+      <!-- <v-btn
         rounded
         color="blue-grey darken-4"
         class="btn-dark ml-3 mt-4 px-6"
         @click="$store.dispatch('nextStep', 'error')"
         >Tengo un problema</v-btn
-      >
+      > -->
+    </v-row>
+
+    <v-row>
+      <v-col cols="12 mb-0 pb-0">
+        <h3 class="main-title">Historial de la operación</h3>
+      </v-col>
+    </v-row>
+    <v-row justify="start" class="mt-0 pt-0">
+      <v-col cols="12" v-for="item in currentProduct.historial" :key="item.id">
+        <OperationHistoryCard
+          :date="item.createdAt"
+          :type="item.estado"
+          :description="item.mensaje"
+        />
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -88,7 +102,7 @@ export default class StepThree extends Vue {
     );
   }
   public productStatus = {};
-  private state = {};
+  private state: any = {};
   private product = {};
   // GET TYPE OF PRODUCT TO SHOW IT IN 1 STEP TITLE
   get getProductType(): string {
@@ -107,6 +121,10 @@ export default class StepThree extends Vue {
     this.product = await this.currentProduct.item;
   }
 
+  get instructions(): Array<string> {
+    return this.state.intrucciones.split(/\r\n|\r|\n/);
+  }
+
   // //GET INFO FROM VENTAS/:ID TO RENDER
   private async getBuyInfoStatus(): Promise<any> {
     this.productStatus = await this.$store.getters.getBuyStatusInfo;
@@ -118,8 +136,8 @@ export default class StepThree extends Vue {
 .conditionalCard
   width:100%
 
-.instructions
- color: $card-link
+.buy-instructions
+ color: $font-main-color
  border: 1px solid $menu-items
  background-color: $card-bg
  border-radius: 15px

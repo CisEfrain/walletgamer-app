@@ -101,7 +101,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 
 import UserExpenditureItemList from "@/components/account/UserExpenditureItemList.vue";
 import { Validate } from "vuelidate-property-decorators";
@@ -122,7 +122,7 @@ export default class UserExpenditure extends Vue {
   //public expenditureList: Array<string> = [];
 
   get paymentMethods(): any {
-    return this.$store.getters.getPayMethodList;
+    return this.$store.getters.getDisbursementMethods;
   }
   private addExpenditure(): void {
     const newExpenditure = {

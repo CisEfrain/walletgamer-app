@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { GetData } from "@/services/general.service";
 const AppState = {
   state: () => ({
@@ -79,6 +80,9 @@ const AppState = {
       }
 
       return platformPayMethods;
+    },
+    getDisbursementMethods: (state: { data: any }) => {
+      return state.data.listas.medios_desembolso;
     },
     getFundForm: (state: { isFundForm: boolean }) => {
       return state.isFundForm;

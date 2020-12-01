@@ -1,19 +1,19 @@
 <template>
   <v-container>
-    <v-row class="d-flex justify-center">
+    <v-row justify="center">
       <BaseCardContainer>
-        <v-row class="px-4" justify="center">
-          <v-col cols="12" md="2">
-            <small class="text-center">{{ formatDate }}</small>
+        <v-row class="px-2" justify="center" align="center">
+          <v-col cols="12" md="2" >
+            <p class="text-center">{{ formatDate }}</p>
           </v-col>
           <v-col cols="12" md="3" class="text-left">
-            <small class="type">
+            <p class="type">
               <b>{{ type }}</b>
-            </small>
+            </p>
           </v-col>
 
           <v-col cols="12" md="7" class="d-flex justify-start align-center">
-            <small>{{ description }}</small>
+            <p>{{ description }}</p>
           </v-col>
         </v-row>
       </BaseCardContainer>

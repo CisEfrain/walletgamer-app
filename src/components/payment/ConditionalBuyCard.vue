@@ -11,6 +11,7 @@
           :price="itemList.item.precio"
           :product="itemList.item.tipo"
           :available="itemList.item.cantidad"
+          isBuy
         />
       </div>
       <div v-if="itemList.item.tipo === 'personaje'">
@@ -23,6 +24,7 @@
           :characterClass="itemList.clase"
           :price="itemList.precio"
           :level="itemList.nivel"
+          isBuy
         />
       </div>
       <div v-if="itemList.item.tipo === 'item'">
@@ -34,6 +36,7 @@
           :price="itemList.precio"
           :item="itemList.descripcion"
           :available="itemList.cantidad"
+          isBuy
         />
       </div>
     </v-col>

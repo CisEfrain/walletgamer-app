@@ -102,7 +102,8 @@ const paymentState = {
           item: data.publicacione,
           estado: data.estado,
           id: data.id,
-          operaciones: data.operaciones
+          operaciones: data.operaciones,
+          historial: data.historials
         });
         commit("setBuyData", data);
         dispatch("nextStep", data.estado.paso);
@@ -124,7 +125,8 @@ const paymentState = {
           item: data.publicacione,
           estado: data.estado,
           id: data.id,
-          operaciones: data.operaciones
+          operaciones: data.operaciones,
+          historial: data.historials
         });
         commit("setBuyData", data);
         dispatch("nextStep", data.estado.paso);
@@ -145,7 +147,8 @@ const paymentState = {
         item: data.publicacione,
         estado: data.estado,
         id: data.id,
-        operaciones: data.operaciones
+        operaciones: data.operaciones,
+        historial: data.historials
       });
       console.info(data);
       if (data && data.estado.paso) {
