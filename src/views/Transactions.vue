@@ -48,7 +48,7 @@
       <v-col cols="12">
         <v-expansion-panels v-model="panelPending" multiple flat>
           <PendingCard
-            class="animated fadeIn fast"
+            class="animated fadeIn fast px-8"
             v-for="pendingOperation in pendingOperations"
             :key="pendingOperation.id"
             :product="pendingOperation.transaccione.descripcion"

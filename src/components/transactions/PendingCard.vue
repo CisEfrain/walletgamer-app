@@ -1,6 +1,6 @@
 <template>
-  <v-row class="d-flex justify-center">
-    <v-col>
+  <v-row justify="center">
+    <v-col cols="12">
       <BaseCardContainer>
         <v-expansion-panel class="bg-transparent">
           <v-expansion-panel-header>
