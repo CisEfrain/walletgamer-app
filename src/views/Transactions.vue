@@ -298,7 +298,6 @@
               class="text-center"
               item-text="nombre"
               item-value="id"
-              return-object
               single-line
               dense
             ></v-select>
@@ -363,7 +362,7 @@ export default class Transactions extends Vue {
   @Validate({ required }) mountSendToFriend = "";
 
   //Fund
-  @Validate({ required }) fund = "";
+  @Validate({ required }) fund: any = {};
   @Validate({ required }) mountFund = "";
 
   private isFormDisbursement(): void {

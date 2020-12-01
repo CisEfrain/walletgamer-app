@@ -140,7 +140,6 @@
               class="text-center"
               item-text="nombre"
               item-value="id"
-              return-object
               single-line
               dense
             ></v-select>
@@ -182,7 +181,7 @@ export default class ItemPayForm extends Vue {
   private stripe = (window as any).Stripe(process.env.VUE_APP_STRIPE_PK);
   io: any = SocketIo;
   //Fund
-  @Validate({ required }) fund = "";
+  @Validate({ required }) fund:any = {};
   @Validate({ required }) mountFund = "";
   private drawerFund = false;
   private isFormFund(): void {
@@ -198,8 +197,8 @@ export default class ItemPayForm extends Vue {
       monto: this.mountFund,
       method: this.stripe
     });
-    this.$store.dispatch("MyDoneOperations", { size: 4, page: 0 });
-    this.$store.dispatch("MyPendingOperations", { size: 4, page: 0 });
+    // this.$store.dispatch("MyDoneOperations", { size: 4, page: 0 });
+    // this.$store.dispatch("MyPendingOperations", { size: 4, page: 0 });
   }
   get isFundDisabled(): boolean {
     return !this.fund || !this.mountFund ? true : false;

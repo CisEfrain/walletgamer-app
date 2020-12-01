@@ -73,7 +73,7 @@ const AppState = {
         const element = state.data.pasarelas[key];
         platformPayMethods.push({
           nombre: element.nombre,
-          descripcion: element.descricion,
+          descripcion: element.descripcion,
           // eslint-disable-next-line @typescript-eslint/camelcase
           id: element.id
         });

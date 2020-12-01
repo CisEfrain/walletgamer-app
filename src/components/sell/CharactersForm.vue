@@ -118,6 +118,7 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Vue } from "vue-property-decorator";
 import { Validate } from "vuelidate-property-decorators";
 import { required, minLength, maxValue } from "vuelidate/lib/validators";

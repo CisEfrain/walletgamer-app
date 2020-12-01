@@ -58,7 +58,7 @@ const accountState = {
     },
     createFound({ commit }: any, { pasarela, monto, method }: any) {
       console.log({ pasarela, monto, method });
-      pasarela = pasarela.toLowerCase();
+      console.info(pasarela, monto);
       CreateFound({ pasarela, monto })
         .then((response: any) => {
           const { id, redireccion } = response.data.data;
@@ -70,13 +70,13 @@ const accountState = {
           } else if (pasarela === "paypal" && redireccion) {
             window.open(redireccion, "_self");
             response.data.status === 200 &&
-              Vue.$toast.success(`Ha ocurrido un error, intenta nuevamente`);
+              Vue.$toast.success(`Serás redirigido al medio de pago elegido`);
           }
           commit("setNewFund", response);
         })
         .catch(error => {
           console.info(error);
-          Vue.$toast.error(`Tus datos no se han podido actualizadar`);
+          Vue.$toast.error(`Parece que algo ha salido mal, intenta nuevo`);
         });
       // method.redirectToCheckout({ sessionId: });
     },
