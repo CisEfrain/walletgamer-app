@@ -44,7 +44,7 @@
       </v-col>
     </v-row>
 
-    <v-row class="px-8" justify="center">
+    <v-row justify="center">
       <v-col cols="12">
         <v-expansion-panels v-model="panelPending" multiple flat>
           <PendingCard
@@ -58,6 +58,8 @@
             :status="pendingOperation.transaccione.estado"
             :type="pendingOperation.tipo"
             :ventas="pendingOperation.ventas"
+            :disbursement="pendingOperation.desembolso"
+            :fund="pendingOperation.fondeo"
           />
         </v-expansion-panels>
       </v-col>
@@ -96,7 +98,7 @@
       </v-col>
     </v-row>
 
-    <v-row class="px-8" justify="center">
+    <v-row justify="center">
       <v-col cols="12">
         <v-expansion-panels v-model="panel" multiple flat>
           <TransactionItemList
@@ -110,6 +112,9 @@
             :status="doneOperation.transaccione.estado"
             :type="doneOperation.tipo"
             :description="doneOperation.transaccione.descripcion"
+            :ventas="doneOperation.ventas"
+            :disbursement="doneOperation.desembolso"
+            :fund="doneOperation.fondeo"
           />
         </v-expansion-panels>
       </v-col>
@@ -329,6 +334,7 @@ import PendingCard from "@/components/transactions/PendingCard.vue";
 
 import { Validate } from "vuelidate-property-decorators";
 import { required, email } from "vuelidate/lib/validators";
+import { set } from "vue/types/umd";
 // import SocketIo from "socket.io-client";
 
 @Component({
@@ -367,15 +373,21 @@ export default class Transactions extends Vue {
 
   private isFormDisbursement(): void {
     this.drawerDisbursement = true;
-    console.info("clicked from trans", this.drawerDisbursement);
+    this.$v.$reset();
+    this.disbursement = {};
+    this.mountDisbursement = "";
   }
   private isFormTransferToFriend(): void {
     this.drawerTransferToFriend = true;
-    console.info("clicked from trans", this.drawerTransferToFriend);
+    this.$v.$reset();
+    this.sendToFriend = "";
+    this.mountSendToFriend = "";
   }
   private isFormFund(): void {
     this.drawerFund = true;
-    console.info("clicked from trans", this.drawerFund);
+    this.$v.$reset();
+    this.fund = "";
+    this.mountFund = "";
   }
 
   private handlePaginateDone(e): void {
@@ -472,9 +484,12 @@ export default class Transactions extends Vue {
       beneficiario: this.sendToFriend,
       monto: this.mountSendToFriend
     };
-    this.$store.dispatch("MyDoneOperations", { size: 4, page: 0 });
     this.$store.dispatch("TransferToFriend", transferToFriend);
-    this.$store.dispatch("MyBalance");
+    setTimeout(() => {
+      this.$store.dispatch("MyDoneOperations", { size: 4, page: 0 });
+      this.$store.dispatch("MyPendingOperations", { size: 4, page: 0 });
+      this.$store.dispatch("MyBalance");
+    }, 700);
     this.drawerTransferToFriend = false;
   }
   get isSendToFriendDisabled(): boolean {

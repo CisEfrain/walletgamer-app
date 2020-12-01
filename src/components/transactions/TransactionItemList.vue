@@ -1,19 +1,19 @@
 <template>
-  <v-row class="d-flex justify-center">
-    <v-col>
+  <v-row justify="center" class="mt-less">
+    <v-col cols="12">
       <BaseCardContainer>
         <v-expansion-panel class="bg-transparent">
           <v-expansion-panel-header>
             <v-row align="center" justify="start">
-              <v-col cols="4" md="2" sm="8" class="text-center">
+              <v-col cols="4" md="1" sm="8" class="text-center">
                 <h4>{{ formatDate }}</h4>
               </v-col>
-              <v-col cols="6" md="2" sm="4" class="">
-                <v-chip class="info">
+              <v-col cols="6" md="2" sm="4" class="text-center">
+                <v-chip color="blue lighten-5">
                   {{ type }}
                 </v-chip>
               </v-col>
-              <v-col class="text-center" cols="6" md="4" sm="8">
+              <v-col class="text-center" cols="6" md="5" sm="8">
                 <h3 class="transaction-title mt-1">{{ product }}</h3>
                 <p>
                   ID:
@@ -29,17 +29,46 @@
                 sm="12"
                 class="d-flex justify-center align-center"
               >
-                <v-chip :class="hasStatus">
+                <v-chip :color="hasStatus">
                   {{ status }}
                 </v-chip>
               </v-col>
             </v-row>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-row class="px-4" align="center" justify="space-between">
-              <v-col cols="12" md="12" sm="12">
+            <v-row align="center" justify="space-between">
+              <!-- COMPRA VENTA -->
+              <v-col cols="4" md="3" sm="6" v-if="ventas.length > 0">
+                <p><b>Estado:</b> {{ status }}</p>
+              </v-col>
+              <v-col cols="4" md="4" sm="6" v-if="ventas.length > 0">
                 <p>
-                  {{ description ? description : "Sin descripción" }}
+                  <b>Personje / Email Receptor: </b>{{ ventas[0].personaje }}
+                </p>
+              </v-col>
+              <v-col cols="4" md="2" sm="5" v-if="ventas.length > 0">
+                <p><b>Cantidad:</b> {{ ventas[0].cantidad }}</p>
+              </v-col>
+
+              <!-- FONDEO -->
+              <v-col cols="4" md="4" sm="4" v-if="fund">
+                <p>
+                  <b>Alias de medio de desembolso:</b>
+                  {{ fund.pasarela }}
+                </p>
+              </v-col>
+
+              <!-- DESEMBOLSO -->
+              <v-col cols="4" md="3" sm="6" v-if="disbursement">
+                <p>
+                  <b>Alias de medio de desembolso:</b>
+                  {{ disbursement.pasarela.alias }}
+                </p>
+              </v-col>
+              <v-col cols="4" md="4" sm="4" v-if="disbursement">
+                <p>
+                  <b>Referencia de la transferencia:</b
+                  >{{ disbursement.codigo_transferencia }}
                 </p>
               </v-col>
             </v-row>
@@ -68,12 +97,15 @@ export default class TransactionItemList extends Vue {
   @Prop({ required: true, type: String }) readonly status!: string;
   @Prop({ required: true, type: String }) readonly transaction_id!: string;
   @Prop({ type: String }) readonly description!: string;
+  @Prop({ required: false, type: Array }) readonly ventas?: string;
+  @Prop({ required: false }) readonly disbursement?: string;
+  @Prop({ required: false }) readonly fund?: string;
 
   //Computed
   get hasStatus(): any {
-    if (this.status === "Completada") return `success`;
-
-    if (this.status === "Anulada") return "error";
+    if (this.status === "Completada") return `green accent-4`;
+    if (this.status === "Error") return "deep-orange darken-1";
+    if (this.status === "Pendiente") return "orange";
     else return "warning";
   }
 
@@ -107,10 +139,13 @@ p,small,h3,h4
   border-radius: 40px
 
 .transaction-title
-  font-size: 1.3em
+  font-size: 1.2em
   color: $danger
   margin-bottom: 8px
 
 p
   margin-bottom: 0
+
+.mt-less
+ margin-top: -1.8em
 </style>

@@ -98,7 +98,10 @@ $font-weight-title: 800;
 .active-card{
   background: $card-link!important;
 }
-  
+
+.v-expansion-panel-header{
+  padding: 4px 14px!important;
+}
 
 @media (max-width: 768px){
   .responsive-card{
@@ -106,5 +109,3 @@ $font-weight-title: 800;
     justify-content: center;
   }
 }
-  
-    
