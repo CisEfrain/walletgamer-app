@@ -46,7 +46,7 @@
 
     <v-row class="px-10" justify="center">
       <v-col cols="12">
-        <v-expansion-panels v-model="panel" multiple flat>
+        <v-expansion-panels v-model="panelPending" multiple flat>
           <PendingCard
             class="animated fadeIn fast"
             v-for="pendingOperation in pendingOperations"
@@ -103,7 +103,7 @@
             class="animated fadeIn fast px-8"
             v-for="doneOperation in doneOperations"
             :key="doneOperation.id"
-            :product="doneOperation.tipo"
+            :product="doneOperation.transaccione.descripcion"
             :transaction_date="doneOperation.transaccione.createdAt"
             :transaction_id="doneOperation.transaccione.identificador"
             :cost="doneOperation.transaccione.monto"
@@ -334,6 +334,7 @@ import { required, email } from "vuelidate/lib/validators";
 })
 export default class Transactions extends Vue {
   private panel: Array<number> = [];
+  private panelPending: Array<number> = [];
   private stripe = (window as any).Stripe(process.env.VUE_APP_STRIPE_PK);
   // io: any = SocketIo;
   private drawerDisbursement = false;

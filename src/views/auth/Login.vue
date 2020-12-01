@@ -51,15 +51,14 @@
         >
           <b>Entrar</b>
         </v-btn>
-        <v-row align="center" justify="center" class="mt-4">
-          <v-col class="d-flex justify-space-around">
-            <router-link class="register-text links ml-6 pl-6" to="register">
+        <v-row align="center" justify="center" class="mt-8">
+          <v-col cols="6" md="6" sm="12">
+            <router-link class="register-text links" to="register">
               <p>Registrate aquí</p>
             </router-link>
-            <router-link
-              class="register-text links mr-6 pr-6"
-              to="recovery-password"
-            >
+          </v-col>
+          <v-col cols="6" md="6" sm="12">
+            <router-link class="register-text links" to="recovery-password">
               <p>Olvide mi contraseña</p>
             </router-link>
           </v-col>
@@ -76,6 +75,7 @@
 .register-text
   font-weight: 600
   cursor: pointer
+  font-size: .88em!important
 
 .text-field
   height: 42px

@@ -48,6 +48,8 @@
 .register-text
   font-weight: 600
   cursor: pointer
+  font-size: .88em!important
+
 
 .text-field
   height: 42px

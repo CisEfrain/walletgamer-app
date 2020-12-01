@@ -87,7 +87,7 @@
             Registrarme
           </b>
         </v-btn>
-        <div class="mt-4">
+        <div class="mt-8">
           <router-link class="register-text links" to="Login">
             <p class="register-text links">Ya tengo cuenta</p>
           </router-link>
@@ -101,6 +101,8 @@
 .register-text
   font-weight: 600
   cursor: pointer
+  font-size: .95em!important
+
 
 .text-field
   height: 42px
