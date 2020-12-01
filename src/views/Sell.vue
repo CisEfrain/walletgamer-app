@@ -101,15 +101,15 @@ export default class Sell extends Vue {
     this.currentProduct = ["Post"];
     this.page = 1;
     this.$store.commit("resetProduct");
-    this.$store.dispatch("getPosts", { size: 4, page: 0 });
+    this.$store.dispatch("getPosts", { size: 10, page: 0 });
   }
   private async deletePost(index: any, id: any): Promise<any> {
     const payload = { index, id };
     console.info("id", id, "index", index);
     this.$store.dispatch("deletePost", payload);
     setTimeout(() => {
-      this.$store.dispatch("getPosts", { size: 4, page: 0 });
-    }, 400);
+      this.$store.dispatch("getPosts", { size: 10, page: 0 });
+    }, 500);
   }
   private disablePost(post: any): void {
     console.info(post);
@@ -122,17 +122,17 @@ export default class Sell extends Vue {
   }
 
   get totalPages(): any {
-    return Math.ceil(this.$store.getters.getTotalItems / 4);
+    return Math.ceil(this.$store.getters.getTotalItems / 10);
   }
 
   created() {
-    this.$store.dispatch("getPosts", { size: 4, page: 0 });
+    this.$store.dispatch("getPosts", { size: 10, page: 0 });
   }
 
   private next(e): void {
     console.info(e);
     this.page = e;
-    this.$store.dispatch("getPosts", { size: 4, page: e - 1 });
+    this.$store.dispatch("getPosts", { size: 10, page: e - 1 });
   }
 
   get postList(): any {

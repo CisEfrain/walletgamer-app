@@ -66,11 +66,11 @@ const accountState = {
           if (pasarela === "stripe" && id) {
             method.redirectToCheckout({ sessionId: id });
             response.data.status === 200 &&
-              Vue.$toast.success(`tus datos se han actualizado`);
+              Vue.$toast.success(`Serás redirigido al medio de pago elegido`);
           } else if (pasarela === "paypal" && redireccion) {
             window.open(redireccion, "_self");
             response.data.status === 200 &&
-              Vue.$toast.success(`tus datos se han actualizado`);
+              Vue.$toast.success(`Ha ocurrido un error, intenta nuevamente`);
           }
           commit("setNewFund", response);
         })

@@ -172,7 +172,7 @@ export default class CharactersForm extends Vue {
       precio: this.price
     };
     this.$store.dispatch("addPost", newCharacterPost);
-    this.$store.dispatch("getPosts", { size: 4, page: 0 });
+    this.$store.dispatch("getPosts", { size: 10, page: 0 });
     console.log(newCharacterPost);
     this.clearForm();
   }

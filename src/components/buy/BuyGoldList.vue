@@ -93,7 +93,7 @@ export default class BuyGoldList extends Vue {
   }
 
   created() {
-    this.$store.dispatch("getGoldPosts", { size: 4, page: 0 });
+    this.$store.dispatch("getGoldPosts", { size: 10, page: 0 });
   }
 
   private buyGold(index: any, id: any, goldPost: any) {
@@ -103,13 +103,13 @@ export default class BuyGoldList extends Vue {
   }
 
   get goldPages(): number {
-    return Math.ceil(this.$store.getters.getGoldCount / 4);
+    return Math.ceil(this.$store.getters.getGoldCount / 10);
   }
 
   private handlePagination(e): void {
     console.info(e);
     this.goldPage = e;
-    this.$store.dispatch("getGoldPosts", { size: 4, page: e - 1 });
+    this.$store.dispatch("getGoldPosts", { size: 10, page: e - 1 });
   }
 
   get showFiltered(): any {

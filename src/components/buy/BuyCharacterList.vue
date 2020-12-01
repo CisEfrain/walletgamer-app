@@ -131,7 +131,7 @@ export default class BuyCharacterList extends Vue {
   public characterPage = 1;
 
   created() {
-    this.$store.dispatch("getCharacterPosts", { size: 4, page: 0 });
+    this.$store.dispatch("getCharacterPosts", { size: 10, page: 0 });
   }
 
   get postCharacterList(): Array<unknown> {
@@ -139,13 +139,13 @@ export default class BuyCharacterList extends Vue {
   }
 
   get characterPages(): number {
-    return Math.ceil(this.$store.getters.getCharacterCount / 4);
+    return Math.ceil(this.$store.getters.getCharacterCount / 10);
   }
 
   private handlePagination(e): void {
     console.info(e);
     this.characterPage = e;
-    this.$store.dispatch("getCharacterPosts", { size: 4, page: e - 1 });
+    this.$store.dispatch("getCharacterPosts", { size: 10, page: e - 1 });
   }
 
   get showFiltered(): any {

@@ -97,17 +97,17 @@ export default class BuyItemList extends Vue {
   }
 
   created() {
-    this.$store.dispatch("getItemPosts", { size: 4, page: 0 });
+    this.$store.dispatch("getItemPosts", { size: 10, page: 0 });
   }
 
   get itemPages(): number {
-    return Math.ceil(this.$store.getters.getItemCount / 4);
+    return Math.ceil(this.$store.getters.getItemCount / 10);
   }
 
   private handlePagination(e): void {
     console.info(e);
     this.itemPage = e;
-    this.$store.dispatch("getItemPosts", { size: 4, page: e - 1 });
+    this.$store.dispatch("getItemPosts", { size: 10, page: e - 1 });
   }
 
   get showFiltered(): any {
