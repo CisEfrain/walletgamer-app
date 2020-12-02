@@ -52,7 +52,7 @@ export default class ItemsItemList extends Vue {
   @Prop({ type: String }) readonly user!: string;
   @Prop({ type: String }) readonly rank!: string;
   @Prop({ type: String }) readonly item!: string;
-  @Prop({ type: String }) readonly price!: string;
+  @Prop({ type: Number }) readonly price!: number;
   @Prop({ type: Number }) readonly available!: number;
   @Prop({ type: String }) readonly faction!: string;
   @Prop({ type: Boolean, default: false }) readonly actions!: boolean;
@@ -62,7 +62,7 @@ export default class ItemsItemList extends Vue {
   }
 
   get formatPrice() {
-    const price = parseInt(this.price);
+    const price = this.price;
     return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
       price
     );

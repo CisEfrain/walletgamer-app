@@ -70,17 +70,18 @@ import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
   }
 })
 export default class PostList extends Vue {
-  @Prop({ type: String }) product: string | undefined;
-  @Prop({ type: String }) readonly level: string | undefined;
-  @Prop({ type: String }) readonly item: string | undefined;
-  @Prop({ type: String }) readonly cost: string | undefined;
-  @Prop({ type: Number }) readonly quantity: string | any;
-  @Prop({ type: String }) readonly realm: string | undefined;
-  @Prop({ type: String }) readonly faction: string | undefined;
-  @Prop({ type: Number }) readonly active: number | undefined;
-
-  public status: number | undefined = this.active;
-
+  @Prop({ type: String }) product!: string | undefined;
+  @Prop({ type: String }) readonly level!: string | undefined;
+  @Prop({ type: String }) readonly item!: string | undefined;
+  @Prop({ type: Number }) readonly cost!:  number;
+  @Prop({ type: Number }) readonly quantity!: number;
+  @Prop({ type: String }) readonly realm!: string | undefined;
+  @Prop({ type: String }) readonly faction!: string | undefined;
+  @Prop({ type: Number }) readonly active:number;
+    public status
+  created(){
+    this.status = this.active;
+  }
   private deletePost() {
     this.$emit("click");
   }
@@ -90,7 +91,7 @@ export default class PostList extends Vue {
   }
 
   get formatCurrency() {
-    const cost = parseInt(this.cost);
+    const cost = this.cost;
     return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
       cost
     );

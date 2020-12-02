@@ -53,7 +53,7 @@ export default class CharactersItemList extends Vue {
   @Prop({ type: String }) readonly kingdom!: string;
   @Prop({ type: String }) readonly characterClass!: string;
   @Prop({ type: Number }) readonly level!: number;
-  @Prop({ type: String }) readonly price!: string;
+  @Prop({ type: Number }) readonly price!: number;
   @Prop({ type: String }) readonly faction!: string;
   @Prop({ type: Boolean, default: false }) readonly actions!: boolean;
 
@@ -62,7 +62,7 @@ export default class CharactersItemList extends Vue {
   }
 
   get formatPrice() {
-    const price = parseInt(this.price);
+    const price = this.price;
     return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
       price
     );

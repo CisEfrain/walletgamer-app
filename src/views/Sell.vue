@@ -17,7 +17,7 @@
     </v-row>
 
     <div class="mt-10" justify="center" v-if="currentProduct == 'Post'">
-      <h3 class="title mb-6" v-show="postList.length > 0">Mis publicaciones</h3>
+      <h3 class="title mb-6" v-show="postList && postList.length">Mis publicaciones</h3>
       <v-expansion-panels class="container" v-model="panel" multiple flat>
         <PostList
           class="animated fadeIn fast"
@@ -35,7 +35,7 @@
           @change="disablePost(post)"
         />
 
-        <div class="text-center" v-if="totalPages > 1">
+        <div class="text-center" v-if="totalPages && totalPages > 1">
           <v-pagination
             v-model="page"
             :length="totalPages"
@@ -122,6 +122,7 @@ export default class Sell extends Vue {
   }
 
   get totalPages(): any {
+    console.log("asdasd ",this.$store.getters.getTotalItems)
     return Math.ceil(this.$store.getters.getTotalItems / 10);
   }
 
