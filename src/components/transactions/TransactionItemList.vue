@@ -72,7 +72,7 @@
               <!-- FONDEO -->
               <v-col cols="4" md="4" sm="4" v-if="fund">
                 <p>
-                  <b>Alias de medio de desembolso:</b>
+                  <b>Medio de pago:</b>
                   {{ fund.pasarela }}
                 </p>
               </v-col>

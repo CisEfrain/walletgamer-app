@@ -38,15 +38,21 @@
           <v-expansion-panel-content>
             <v-row align="center" justify="space-between">
               <!-- COMPRA VENTA -->
-              <v-col cols="4" md="3" sm="6" v-if="ventas.length > 0">
+              <v-col cols="4" md="2" sm="6" v-if="ventas.length > 0">
                 <p><b>Estado:</b> {{ status }}</p>
               </v-col>
-              <v-col cols="4" md="4" sm="6" v-if="ventas.length > 0">
+              <v-col
+                cols="4"
+                md="4"
+                sm="6"
+                class="text-center"
+                v-if="ventas.length > 0"
+              >
                 <p>
                   <b>Personje / Email Receptor: </b>{{ ventas[0].personaje }}
                 </p>
               </v-col>
-              <v-col cols="4" md="2" sm="5" v-if="ventas.length > 0">
+              <v-col cols="4" md="3" sm="5" v-if="ventas.length > 0">
                 <p>
                   <b>Cantidad:</b>
                   {{
@@ -60,7 +66,7 @@
               <!-- FONDEO -->
               <v-col cols="4" md="4" sm="4" v-if="fund">
                 <p>
-                  <b>Alias de medio de desembolso:</b>
+                  <b>Medio de pago:</b>
                   {{ fund.pasarela }}
                 </p>
               </v-col>
@@ -85,14 +91,20 @@
                 </p>
               </v-col>
 
-              <v-col cols="12" md="3" sm="7" class="text-right">
+              <v-col
+                cols="12"
+                md="3"
+                sm="7"
+                class="text-right"
+                v-if="isSellOrBuy"
+              >
                 <v-btn
                   @click="goToDetail(ventas[0].id)"
                   text
                   color="error"
                   class="mb-3"
                 >
-                  Detalles de transacción
+                  Detalles de {{ type }}
                 </v-btn>
               </v-col>
             </v-row>
@@ -155,6 +167,9 @@ export default class PendingCard extends Vue {
   }
   get formatDate(): string {
     return new Date(this.transaction_date).toLocaleDateString();
+  }
+  get isSellOrBuy(): boolean {
+    return this.type === "Venta" || this.type === "Compra";
   }
 }
 </script>
