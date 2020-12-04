@@ -49,7 +49,7 @@
                 v-if="ventas.length > 0"
               >
                 <p>
-                  <b>Personje / Email Receptor: </b>{{ ventas[0].personaje }}
+                  <b>Personaje/Email Receptor: </b>{{ ventas[0].personaje }}
                 </p>
               </v-col>
               <v-col cols="4" md="3" sm="5" v-if="ventas.length > 0">
@@ -191,7 +191,7 @@ p,small
   border-radius: 40px
 
 .transaction-title
-  font-size: 1.3em
+  font-size: 15px
   color: $danger
   margin-bottom: 8px
 
