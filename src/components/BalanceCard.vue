@@ -59,7 +59,7 @@ export default class BalanceCard extends Vue {
   box-shadow: 0px 5px 18px -12px rgba(0, 0, 0, 0.8)
 
 .balance-currency
-  font-size: 32px
+  font-size: 28px
   color: $card-link
   width: 90%
 
