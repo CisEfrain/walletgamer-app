@@ -38,25 +38,20 @@
           <v-expansion-panel-content>
             <v-row align="center" justify="space-between">
               <!-- COMPRA VENTA -->
-              <v-col cols="4" md="3" sm="6" v-if="ventas.length > 0">
+              <!-- <v-col cols="4" md="3" sm="6" v-if="ventas.length > 0">
                 <p><b>Estado:</b> {{ status }}</p>
-              </v-col>
-              <v-col
-                cols="4"
-                md="5"
-                sm="6"
-                class="text-center"
-                v-if="ventas.length > 0"
-              >
+              </v-col> -->
+
+              <v-col cols="4" md="4" sm="6" v-if="ventas.length > 0">
                 <p>
                   <b>Personaje/Email Receptor: </b>{{ ventas[0].personaje }}
                 </p>
               </v-col>
               <v-col
-                cols="4"
-                md="4"
-                sm="5"
                 class="text-right"
+                cols="4"
+                md="3"
+                sm="5"
                 v-if="ventas.length > 0"
               >
                 <p>
@@ -66,6 +61,17 @@
                       ? `${ventas[0].cantidad * 100} de oro`
                       : ventas[0].cantidad
                   }}
+                </p>
+              </v-col>
+              <v-col
+                cols="4"
+                md="3"
+                sm="5"
+                v-if="type === 'Venta' && comission != null"
+              >
+                <p>
+                  <b>Comision:</b>
+                  {{ comission.monto }}
                 </p>
               </v-col>
 

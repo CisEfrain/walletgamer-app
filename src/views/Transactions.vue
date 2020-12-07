@@ -60,6 +60,7 @@
             :ventas="pendingOperation.ventas"
             :disbursement="pendingOperation.desembolso"
             :fund="pendingOperation.fondeo"
+            :comission="pendingOperation.comisione"
           />
         </v-expansion-panels>
       </v-col>
@@ -115,6 +116,7 @@
             :ventas="doneOperation.ventas"
             :disbursement="doneOperation.desembolso"
             :fund="doneOperation.fondeo"
+            :comission="doneOperation.comisione"
           />
         </v-expansion-panels>
       </v-col>
