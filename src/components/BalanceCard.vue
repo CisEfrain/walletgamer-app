@@ -59,7 +59,7 @@ export default class BalanceCard extends Vue {
   box-shadow: 0px 5px 18px -12px rgba(0, 0, 0, 0.8)
 
 .balance-currency
-  font-size: 28px
+  font-size: 30px
   color: $card-link
   width: 90%
 
@@ -67,6 +67,6 @@ export default class BalanceCard extends Vue {
   margin-bottom: -24px
 
 .balance-height-card
-  min-height: 140px
+  min-height: 180px
   width: 90%
 </style>

@@ -11,15 +11,15 @@
       </v-col>
       <v-col cols="12" sm="12" md="3" @click="isFormDisbursement">
         <!-- <BalanceCard balance="50" actions /> -->
-        <ActionsCard actions="Nuevo desembolso" />
+        <ActionsCard icon="ICONO-DESEMBOLSO" actions="Nuevo desembolso" />
       </v-col>
       <v-col cols="12" sm="12" md="3" @click="isFormTransferToFriend">
         <!-- <BalanceCard balance="50" actions /> -->
-        <ActionsCard actions="Transferir a amigo" />
+        <ActionsCard icon="ICONO-TRANSFERENCIA" actions="Transferir a amigo" />
       </v-col>
       <v-col cols="12" sm="12" md="3" @click="isFormFund">
         <!-- <BalanceCard balance="50" actions /> -->
-        <ActionsCard actions="Fondear" />
+        <ActionsCard icon="ICONO-FONDEO" actions="Fondear" />
       </v-col>
     </v-row>
 
@@ -234,7 +234,7 @@
 
             <v-text-field
               rounded
-              label="¿A quien lo quieres enviar?"
+              label="Email de la cuenta destinataria"
               outlined
               v-model="$v.sendToFriend.$model"
               :error-messages="sendToFriendErrors"

@@ -4,7 +4,8 @@
       <v-row class="mt-3 mb-less" align="center">
         <v-col class="d-flex justify-center">
           <!-- <h2 class="balance-currency">${{ balance }}</h2> -->
-          <v-icon color="orange" x-large>mdi-currency-usd-circle</v-icon>
+          <img class="operation-icon" :src="getIcon" :alt="`${actions}`" />
+          <!-- <v-icon color="orange" x-large>mdi-currency-usd-circle</v-icon> -->
         </v-col>
       </v-row>
       <v-row class="pt-4" align="center">
@@ -40,10 +41,15 @@ import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
 })
 export default class ActionsCard extends Vue {
   @Prop({ required: true, type: String }) readonly actions!: string;
-  //@Prop({ type: Boolean, default: false }) readonly actions!: boolean;
+  @Prop({ required: true, type: String }) readonly icon: string;
 
   get hasActions(): boolean {
     return this.actions ? true : false;
+  }
+
+  get getIcon(): string {
+    const images = require.context("../assets/", false, /\.png$/);
+    return images(`./${this.icon}.png`);
   }
 }
 </script>
@@ -69,7 +75,11 @@ export default class ActionsCard extends Vue {
   margin-bottom: -24px
 
 .balance-height-card
-  min-height: 140px
+  height: 180px
+
+.operation-icon
+ width: 68%
+
 
 .action-card
   cursor: pointer
