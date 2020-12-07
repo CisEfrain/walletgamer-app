@@ -1,30 +1,14 @@
 <template>
   <v-row class="d-flex justify-center">
     <BaseCardContainer class="balance-height-card action-card action">
-      <v-row class="mt-3 mb-less" align="center">
-        <v-col class="d-flex justify-center">
-          <!-- <h2 class="balance-currency">${{ balance }}</h2> -->
+      <v-row class="mb-less" align="center">
+        <v-col class="d-flex justify-center mb-less" cols="12" md="12" sm="6">
           <img class="operation-icon" :src="getIcon" :alt="`${actions}`" />
-          <!-- <v-icon color="orange" x-large>mdi-currency-usd-circle</v-icon> -->
         </v-col>
-      </v-row>
-      <v-row class="pt-4" align="center">
-        <v-col class="text-center">
+        <v-col class="text-center" cols="12" md="12" sm="6">
           <h3 class="main-title">{{ actions }}</h3>
         </v-col>
       </v-row>
-      <!-- <v-row v-show="hasActions">
-        <v-col class="d-flex" cols="3">
-          <div>
-            <v-btn text small color="error"><b>Retirar</b></v-btn>
-          </div>
-        </v-col>
-        <v-col class="">
-          <div>
-            <v-btn text small color="error"><b>Historial de retiros</b></v-btn>
-          </div>
-        </v-col>
-      </v-row> -->
     </BaseCardContainer>
   </v-row>
 </template>
@@ -72,14 +56,13 @@ export default class ActionsCard extends Vue {
   color: $card-link
 
 .mb-less
-  margin-bottom: -24px
+  margin-bottom: -34px
 
 .balance-height-card
   height: 180px
 
 .operation-icon
- width: 68%
-
+ width: 100%
 
 .action-card
   cursor: pointer

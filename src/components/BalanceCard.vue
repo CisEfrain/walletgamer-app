@@ -1,11 +1,11 @@
 <template>
   <v-row class="d-flex justify-center">
     <BaseCardContainer class="balance-height-card">
-      <v-row class="px-6 pt-4 mb-less" align="center">
-        <h3 class="main-title">Saldo Disponible</h3>
-      </v-row>
       <v-row class="px-3 mt-3 mb-less" align="center">
-        <v-col>
+        <v-col cols="12" md="12" sm="6">
+          <h3 class="main-title">Saldo Disponible</h3>
+        </v-col>
+        <v-col cols="12" md="12" sm="6" class="text-center">
           <h2 class="balance-currency">$ {{ balance }}</h2>
         </v-col>
       </v-row>
@@ -59,7 +59,7 @@ export default class BalanceCard extends Vue {
   box-shadow: 0px 5px 18px -12px rgba(0, 0, 0, 0.8)
 
 .balance-currency
-  font-size: 30px
+  font-size: 28px
   color: $card-link
   width: 90%
 
