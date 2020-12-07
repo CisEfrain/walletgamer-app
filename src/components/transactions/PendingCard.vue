@@ -63,8 +63,8 @@
                 v-if="type === 'Venta' && comission != null"
               >
                 <p>
-                  <b>Comision:</b>
-                  {{ comission.monto }}
+                  <b>Comisión:</b>
+                  $ {{ formatedComission }}
                 </p>
               </v-col>
 
@@ -155,6 +155,11 @@ export default class PendingCard extends Vue {
   get formatedCost(): string {
     return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
       this.cost
+    );
+  }
+  get formatedComission(): string {
+    return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
+      this.comission
     );
   }
   goToDetail(id: number) {

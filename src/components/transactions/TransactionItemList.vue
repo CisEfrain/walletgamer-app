@@ -37,11 +37,6 @@
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row align="center" justify="space-between">
-              <!-- COMPRA VENTA -->
-              <!-- <v-col cols="4" md="3" sm="6" v-if="ventas.length > 0">
-                <p><b>Estado:</b> {{ status }}</p>
-              </v-col> -->
-
               <v-col cols="4" md="4" sm="6" v-if="ventas.length > 0">
                 <p>
                   <b>Personaje/Email Receptor: </b>{{ ventas[0].personaje }}
@@ -72,6 +67,17 @@
                 <p>
                   <b>Comision:</b>
                   {{ comission.monto }}
+                </p>
+              </v-col>
+              <v-col
+                cols="4"
+                md="3"
+                sm="5"
+                v-if="type === 'Venta' && comission != null"
+              >
+                <p>
+                  <b>Comisión:</b>
+                  $ {{ formatedComission }}
                 </p>
               </v-col>
 
@@ -105,6 +111,7 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
@@ -125,6 +132,7 @@ export default class TransactionItemList extends Vue {
   @Prop({ required: false, type: Array }) readonly ventas?: string;
   @Prop({ required: false }) readonly disbursement?: string;
   @Prop({ required: false }) readonly fund?: string;
+  @Prop({}) readonly comission?: any;
 
   //Computed
   get hasStatus(): any {
@@ -137,6 +145,12 @@ export default class TransactionItemList extends Vue {
   get formatedCost(): string {
     return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
       this.cost
+    );
+  }
+
+  get formatedComission(): string {
+    return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
+      this.comission
     );
   }
 
