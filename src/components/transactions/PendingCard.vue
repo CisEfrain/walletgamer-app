@@ -142,7 +142,7 @@ export default class PendingCard extends Vue {
   @Prop({ required: false }) readonly disbursement?: string;
   @Prop({ required: false }) readonly fund?: string;
   @Prop({ type: Number }) readonly sellId?: number;
-  @Prop({}) readonly comission?: any;
+  @Prop({ required: false }) readonly comission?: any;
 
   showDescription = false;
   get hasStatus(): any {
@@ -159,7 +159,7 @@ export default class PendingCard extends Vue {
   }
   get formatedComission(): string {
     return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
-      this.comission
+      this.comission.monto
     );
   }
   goToDetail(id: number) {

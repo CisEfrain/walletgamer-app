@@ -150,7 +150,7 @@ export default class TransactionItemList extends Vue {
 
   get formatedComission(): string {
     return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
-      this.comission
+      this.comission.monto
     );
   }
 
