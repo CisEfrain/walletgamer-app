@@ -4,6 +4,9 @@ import Transactions from "../views/Transactions.vue";
 import Panel from "../views/Panel.vue";
 import Payment from "@/views/Payment.vue";
 import store from "@/store/index";
+/* eslint-disable */
+import jwt_decode from "jwt-decode";
+// import {  } from "module";
 Vue.use(VueRouter);
 
 const GamerGuard = (to, from, next) => {
@@ -13,7 +16,9 @@ const GamerGuard = (to, from, next) => {
 };
 const AdminGuard = (to, from, next) => {
   const loggedIn = localStorage.getItem("jwt");
-  const { isAdmin }= store.getters.adminInfo;
+  const data = jwt_decode(loggedIn)
+  const { data: { isAdmin} } = (data as any);
+  console.log(isAdmin)
   if (!isAdmin || !loggedIn) return next("/login-admin");
   next();
 };

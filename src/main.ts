@@ -12,6 +12,7 @@ import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 Vue.use(Vuetify);
 Vue.use(Vuelidate);
+ 
 Vue.use(Toast, {
   transition: "Vue-Toastification__bounce",
   maxToasts: 10,
@@ -35,9 +36,9 @@ Vue.use(
 );
 Vue.config.productionTip = false;
 
-new Vue({
-  router,
+new Vue({  
   store,
+  router,
   vuetify,
   render: h => h(App)
 }).$mount("#app");
