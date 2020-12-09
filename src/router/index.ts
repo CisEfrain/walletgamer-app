@@ -90,6 +90,11 @@ const routes: Array<RouteConfig> = [
         path: "ventas",
         name: "AdminVentas",
         component: () => import("../views/admin/Sells.vue")
+      },
+      {
+        path: "desembolsos",
+        name: "AdminDesembolsos",
+        component: () => import("../views/admin/Disbursement.vue")
       }
     ]
   },

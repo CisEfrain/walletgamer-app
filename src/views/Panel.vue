@@ -65,6 +65,38 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+            <v-list>
+        <v-list-item>
+          <v-list-item-content class="mb-5">
+            <img class="logo-panel" src="../assets/logo.png" alt="Logo Admin" />
+          </v-list-item-content>
+        </v-list-item>
+        <router-link to="/admin/desembolsos">
+          <v-list-item link @click="resetProduct">
+
+            <v-list-item-content>
+              <v-list-item-title class="text-uppercase"
+                >Desembolsos</v-list-item-title
+              >
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
+                <router-link to="/admin/ventas">
+          <v-list-item link @click="resetProduct">
+
+            <v-list-item-content>
+              <v-list-item-title class="text-uppercase"
+                >Ventas</v-list-item-title
+              >
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
+        <v-list-item link @click="logout">
+          <v-list-item-content>
+            <v-list-item-title class="text-uppercase">Salir</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
     </v-navigation-drawer>
 
     <router-view class="bg-grey" />
