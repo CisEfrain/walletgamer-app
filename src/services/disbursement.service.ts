@@ -9,3 +9,9 @@ export const Disbursement = async (data: any):Promise<any> => {
 	const header = {headers:{ Authorization: "Bearer " + jwt }};
 	return await axios.post(`${resource}`,data, header);
 }
+
+export const AllDisbursement = async ():Promise<any> => {
+	const jwt = localStorage.getItem("jwt")
+	const header = {headers:{ Authorization: "Bearer " + jwt }};
+	return await axios.get(`${resource}`, header);
+}

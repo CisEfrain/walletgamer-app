@@ -10,9 +10,7 @@
         <Avatar />
         <router-link to="/">
           <v-list-item link @click="resetProduct">
-            <!-- <v-list-item-action>
-              <v-icon>mdi-account-details</v-icon>
-            </v-list-item-action>-->
+
             <v-list-item-content>
               <v-list-item-title class="text-uppercase"
                 >Operaciones</v-list-item-title
@@ -22,9 +20,7 @@
         </router-link>
         <router-link to="/sell">
           <v-list-item link @click="resetProduct">
-            <!-- <v-list-item-action>
-              <v-icon>mdi-shopping</v-icon>
-            </v-list-item-action>-->
+
             <v-list-item-content>
               <v-list-item-title class="text-uppercase"
                 >Vender</v-list-item-title
@@ -34,9 +30,7 @@
         </router-link>
         <router-link to="/buy">
           <v-list-item link @click="resetProduct">
-            <!-- <v-list-item-action>
-              <v-icon>mdi-account-check</v-icon>
-            </v-list-item-action>-->
+
             <v-list-item-content>
               <v-list-item-title class="text-uppercase"
                 >Comprar</v-list-item-title
@@ -44,21 +38,10 @@
             </v-list-item-content>
           </v-list-item>
         </router-link>
-        <!-- <router-link to="/wallet">
-          <v-list-item link @click="resetProduct">
-            <v-list-item-action>
-              <v-icon>mdi-store</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Mi wallet</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </router-link> -->
+
         <router-link to="/account">
           <v-list-item link @click="resetProduct">
-            <!-- <v-list-item-action>
-              <v-icon>mdi-cog</v-icon>
-            </v-list-item-action>-->
+
             <v-list-item-content>
               <v-list-item-title class="text-uppercase"
                 >Mi cuenta</v-list-item-title
@@ -68,9 +51,7 @@
         </router-link>
         <router-link to="/help">
           <v-list-item link @click="resetProduct">
-            <!-- <v-list-item-action>
-              <v-icon>mdi-cog</v-icon>
-            </v-list-item-action>-->
+
             <v-list-item-content>
               <v-list-item-title class="text-uppercase"
                 >Ayuda</v-list-item-title
@@ -79,9 +60,6 @@
           </v-list-item>
         </router-link>
         <v-list-item link @click="logout">
-          <!-- <v-list-item-action>
-            <v-icon>mdi-power-settings</v-icon>
-          </v-list-item-action>-->
           <v-list-item-content>
             <v-list-item-title class="text-uppercase">Salir</v-list-item-title>
           </v-list-item-content>
@@ -102,9 +80,7 @@
         <v-icon>mdi-menu</v-icon>
       </v-btn>
     </v-fab-transition>
-    <!-- <v-app-bar class="burger-menu-responsive" bottom app dense rounded collapse>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-    </v-app-bar> -->
+   {{$store.getters.adminInfo}}
   </v-app>
 </template>
 
@@ -120,7 +96,6 @@ import Avatar from "@/components/Avatar.vue";
 export default class Panel extends Vue {
   public drawer = null;
   public logout(): void {
-    //const userName = this.$store.state.accountState.userData.nombre;
     this.$toast.success(`Hasta la proxima`);
     localStorage.clear();
     this.$router.push("/login");

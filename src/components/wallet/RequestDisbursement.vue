@@ -70,7 +70,6 @@ private RequestDisbursement(): void {
     emailReceptor : this.receive,
   }
   this.$store.dispatch("setNewRequestDisbursementData", RequestDisbursement)
-  console.log(RequestDisbursement)
   this.clearForm()
 }
 

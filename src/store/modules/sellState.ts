@@ -26,27 +26,25 @@ const sellState = {
      * @remarks this refers to product cards in buy and sell components
      *   */
     addPost(state: any, payload: any): void {
-      console.log("Post:", payload);
+
       state.goldPost = payload;
     },
     setCharacterPosts(state: any, payload: any): void {
-      console.log("Character Post:", payload);
+
       state.characterPosts = payload;
     },
     setItemPosts(state: any, payload: any): void {
-      console.log("Item Post:", payload);
+
       state.itemPosts = payload;
     },
     setGoldPosts(state: any, payload: any): void {
-      console.log("Item Post:", payload);
+
       state.goldPosts = payload;
     },
     getPost(state: any, payload: any): void {
-      console.log("getMePost:", payload);
       state.postList = payload;
     },
     // getAllPosts(state: any, payload: any): void {
-    //   console.log("getAllPost:", payload);
     //   state.allPostList = payload;
     // },
     deletePost(state: any, payload: any): void {

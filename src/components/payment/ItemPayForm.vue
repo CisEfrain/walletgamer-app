@@ -276,7 +276,7 @@ export default class ItemPayForm extends Vue {
   }
 
   Pay() {
-    console.log(this.form);
+
     if (this.$v.$invalid) {
       this.$v.$touch;
       return;

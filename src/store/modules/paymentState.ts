@@ -22,7 +22,7 @@ const paymentState = {
      * @remarks this refers to product cards in buy and sell components
      *   */
     setStripeData(state: any, payload: any): void {
-      console.log(payload);
+
       state.stripeData = payload;
     },
     setActiveBuy(state: any, payload: any): void {
@@ -142,9 +142,7 @@ const paymentState = {
       if (!id) return false;
       const {
         data: { data }
-      } = await getSellDataByID(id).catch(err => {
-        console.log("getSellDataByID error ", err);
-      });
+      } = await getSellDataByID(id).catch(err => { console.error(err)});
       dispatch("setProductToBuy", {
         item: data.publicacione,
         estado: data.estado,

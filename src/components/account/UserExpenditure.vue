@@ -133,7 +133,7 @@ export default class UserExpenditure extends Vue {
       descripcion: this.description
     };
     this.$store.dispatch("setNewExpenditureData", newExpenditure);
-    console.log(newExpenditure);
+
     this.clearForm();
     this.$store.dispatch("getExpenditureData");
   }

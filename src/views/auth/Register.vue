@@ -142,7 +142,6 @@ export default class Register extends Vue {
       rango: "Pollo"
     };
     this.$store.dispatch("setRegister", registerData);
-    console.log(registerData);
     this.clearForm();
   }
 

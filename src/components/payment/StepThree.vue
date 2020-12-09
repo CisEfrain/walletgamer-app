@@ -114,7 +114,6 @@ export default class StepThree extends Vue {
 
   async beforeCreated() {
     await this.getBuyInfoStatus();
-    console.log("currentProduct step 3 ", this.currentProduct);
   }
   async mounted() {
     this.state = await this.currentProduct.estado;

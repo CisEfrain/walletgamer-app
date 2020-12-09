@@ -174,7 +174,7 @@ export default class CharactersForm extends Vue {
     };
     this.$store.dispatch("addPost", newCharacterPost);
     this.$store.dispatch("getPosts", { size: 10, page: 0 });
-    console.log(newCharacterPost);
+
     this.clearForm();
   }
   private clearForm(): void {

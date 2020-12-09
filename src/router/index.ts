@@ -3,12 +3,25 @@ import VueRouter, { RouteConfig } from "vue-router";
 import Transactions from "../views/Transactions.vue";
 import Panel from "../views/Panel.vue";
 import Payment from "@/views/Payment.vue";
+import store from "@/store/index";
 Vue.use(VueRouter);
 
+const GamerGuard = (to, from, next) => {
+  const loggedIn = localStorage.getItem("jwt");
+  if (!loggedIn) return next("/login");
+  next();
+};
+const AdminGuard = (to, from, next) => {
+  const loggedIn = localStorage.getItem("jwt");
+  const { isAdmin }= store.getters.adminInfo;
+  if (!isAdmin || !loggedIn) return next("/login-admin");
+  next();
+};
 const routes: Array<RouteConfig> = [
   {
     path: "/",
     component: Panel,
+    beforeEnter: GamerGuard,
     children: [
       {
         path: "/about",
@@ -59,6 +72,23 @@ const routes: Array<RouteConfig> = [
     ]
   },
   {
+    path: "/login-admin",
+    name: "LoginAdmin",
+    component: () => import("../views/admin/auth/Login.vue")
+  },
+  {
+    path: "/admin/",
+    component: Panel,
+    beforeEnter: AdminGuard,
+    children: [
+      {
+        path: "ventas",
+        name: "AdminVentas",
+        component: () => import("../views/admin/Sells.vue")
+      }
+    ]
+  },
+  {
     path: "/login",
     name: "Login",
     component: () => import("../views/auth/Login.vue")
@@ -85,18 +115,15 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
+const publicViews = [
+  "/login",
+  "/register",
+  "/recovery-password",
+  "/new-password"
+];
+const adminViews = [
+  "/admin/login"
+];
 
-router.beforeEach((to, from, next) => {
-  const publicViews = [
-    "/login",
-    "/register",
-    "/recovery-password",
-    "/new-password"
-  ];
-  const authRequired = !publicViews.includes(to.path);
-  const loggedIn = localStorage.getItem("jwt");
-  if (authRequired && !loggedIn) next("/login");
-  next();
-});
 
 export default router;

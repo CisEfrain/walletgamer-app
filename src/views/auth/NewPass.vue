@@ -105,7 +105,6 @@ export default class RecoveryPass extends Vue {
     const { token } = this.$route.query;
     if (!token) return this.$router.replace("/login");
     this.token = token;
-    console.log(this.token);
   }
 
   private sendNewPassword() {

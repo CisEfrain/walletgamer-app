@@ -57,12 +57,10 @@ const accountState = {
         });
     },
     createFound({ commit }: any, { pasarela, monto, method }: any) {
-      console.log({ pasarela, monto, method });
-      console.info(pasarela, monto);
       CreateFound({ pasarela, monto })
         .then((response: any) => {
           const { id, redireccion } = response.data.data;
-          console.log(response);
+
           if (pasarela === "stripe" && id) {
             method.redirectToCheckout({ sessionId: id });
             response.data.status === 200 &&

@@ -339,7 +339,6 @@ export default class Sellment extends Vue {
   }
 
   get isStepOneDisabled(): boolean {
-    console.log("this.$v.$invalid; ", this.$v.$invalid);
     return this.$v.$invalid;
   }
 
@@ -351,7 +350,6 @@ export default class Sellment extends Vue {
     };
   }
   private checkout(): void {
-    console.log(this.form);
     if (this.isStepOneDisabled) return;
     this.$store.dispatch("setActiveSell", this.form);
     // this.$store.dispatch("openPayModal");

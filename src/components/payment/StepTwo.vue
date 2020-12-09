@@ -110,7 +110,6 @@ export default class StepTwo extends Vue {
   }
   async beforeCreated() {
     await this.getBuyInfoStatus();
-    console.log("currentProduct step 2 ", this.currentProduct);
   }
   async mounted() {
     this.state = await this.currentProduct.estado;

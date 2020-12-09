@@ -14,7 +14,6 @@ const sellmentState = {
      * @remarks this refers to product cards in buy and sell components
      *   */
     // setStripeData(state: any, payload: any): void {
-    //   console.log(payload);
     //   state.stripeData = payload;
     // },
     setActiveSell(state: any, payload: any): void {

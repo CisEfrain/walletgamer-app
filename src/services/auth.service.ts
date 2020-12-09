@@ -19,3 +19,9 @@ export const Login = async (loginData: LoginUser) => {
   if (email == "" || pass == "") return false;
   return await axios.post(resource, loginData);
 };
+export const LoginAdmin = async (loginData: LoginUser) => {
+  const { email, pass } = loginData;
+  if (email == "" || pass == "") return false;
+  return await axios.post('/login/admin/a55b308a-c725-4d94-9884-9962f7a4253f', loginData);
+};
+ 

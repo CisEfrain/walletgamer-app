@@ -168,9 +168,6 @@ export default class Payment extends Vue {
   async beforeCreate() {
     const { id } = this.$route.query;
     if (id) this.currentId = parseInt(id.toString());
-
-    console.log("this.cur", this.currentProduct);
-    console.log("tenemos id ", this.currentId);
     const loader = this.$loading.show();
     await this.$store.dispatch("getSellDataByID", id);
     loader.hide();
@@ -186,8 +183,6 @@ export default class Payment extends Vue {
     this.currentId = id;
   }
   async reloadData() {
-    console.log("here reload init", this.currentId);
-
     if (this.currentId) {
       if (this.getCurrentStep < 4 && this.getCurrentStep > 1) {
         await this.$store.dispatch("getSellDataByID", this.currentId);

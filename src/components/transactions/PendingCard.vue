@@ -168,8 +168,7 @@ export default class PendingCard extends Vue {
   }
   created() {
     if (this.type === "Venta") {
-      console.log("this.showDescription ", this.type);
-      console.log(this.$props);
+
       this.showDescription = true;
     }
   }

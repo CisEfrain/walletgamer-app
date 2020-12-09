@@ -122,7 +122,6 @@ export default class Sell extends Vue {
   }
 
   get totalPages(): any {
-    console.log("asdasd ",this.$store.getters.getTotalItems)
     return Math.ceil(this.$store.getters.getTotalItems / 10);
   }
 

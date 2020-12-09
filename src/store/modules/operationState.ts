@@ -85,7 +85,6 @@ const operationState = {
   getters: {
     // getOperations: (state: { operations: any }) => {
     //   const res = state.operations;
-    //   console.log("my operations ", res);
     //   return res;
     // },
     getDoneOperations: (state: { doneOperation: any }) => {

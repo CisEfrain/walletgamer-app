@@ -8,7 +8,7 @@ const walletState = {
      * @remarks this refers to product cards in buy and sell components
      *   */
     setNewRequestDisbursementData(state: any, payload: any): void {
-      console.log("from walletState:",payload);
+
       state.requestDisbursementData = payload;
       console.info(state.requestDisbursementData)
     }
