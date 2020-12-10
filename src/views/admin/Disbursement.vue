@@ -26,6 +26,27 @@
               new Date(item.createdAt).toLocaleDateString()
             }}</template>
 
+            <template v-slot:item.transaccione.identificador="{ item }">
+              <v-tooltip open-on-click top color="red lighten-1">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    @click="copyId(item.transaccione.identificador)"
+                    rounded
+                    elevation="0"
+                    text
+                    v-bind="attrs"
+                    v-on="on"
+                    color="blue-grey lighten-5"
+                  >
+                    <v-icon color="red lighten-1">
+                      mdi-identifier
+                    </v-icon>
+                  </v-btn>
+                </template>
+                <span>{{ item.transaccione.identificador }}</span>
+              </v-tooltip>
+            </template>
+
             <template v-slot:item.transaccione.monto="{ item }">{{
               "$" +
                 new Intl.NumberFormat("de-DE", {
@@ -34,22 +55,12 @@
             }}</template>
 
             <template v-slot:item.transaccione.estado="{ item }">
-              <v-chip :color="getColor(item.transaccione.estado)" dark>{{
-                item.transaccione.estado
-              }}</v-chip>
-            </template>
-
-            <template v-slot:item.desembolso.codigo_transferencia="{ item }">
-              <div class="d-flex justify-center">
-                <v-btn text color="error">
-                  Notificar
-                </v-btn>
-                <v-switch
-                  v-model="item.status"
-                  :color="getStatusColor(item.desembolso.codigo_transferencia)"
-                  @change="sendNotification(item)"
-                ></v-switch>
-              </div>
+              <v-chip color="blue-grey lighten-5">
+                <v-icon :color="getColor(item.transaccione.estado)" left>
+                  mdi-information-outline
+                </v-icon>
+                  {{ item.transaccione.estado }}
+                </v-chip>
             </template>
 
             <template v-slot:item.desembolso.codigo_transferencia="{ item }">
@@ -64,17 +75,24 @@
                   @open="open"
                   @close="close"
                 >
-                  <v-chip
-                    class="ma-2"
-                    :color="
-                      getStatusColor(item.desembolso.codigo_transferencia)
-                    "
-                    outlined
-                  >
-                    <v-icon left v-show="item.desembolso.codigo_transferencia">
-                      mdi-check
+                  <v-chip class="text-center" color="blue-grey lighten-5">
+                    <v-icon
+                      :color="
+                        getStatusColor(item.desembolso.codigo_transferencia)
+                      "
+                      v-show="item.desembolso.codigo_transferencia"
+                    >
+                      mdi-check-circle-outline
                     </v-icon>
-                    {{ item.desembolso.codigo_transferencia || "Notificar" }}
+                    <v-icon
+                      :color="
+                        getStatusColor(item.desembolso.codigo_transferencia)
+                      "
+                      v-show="!item.desembolso.codigo_transferencia"
+                    >
+                      mdi-information-outline
+                    </v-icon>
+                    <!-- {{ item.desembolso.codigo_transferencia || "Notificar" }} -->
                   </v-chip>
                   <template v-slot:input>
                     <v-text-field
@@ -130,7 +148,7 @@ export default class AdminDisbursement extends Vue {
       text: "ID transacción",
       align: "center",
       sortable: false,
-      value: "transacciones_id"
+      value: "transaccione.identificador"
     },
     {
       text: "Monto",
@@ -211,15 +229,25 @@ export default class AdminDisbursement extends Vue {
     console.log("Dialog closed");
   }
 
+  private copyId(id) {
+    const el = document.createElement("textarea");
+    el.value = id;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand("copy");
+    document.body.removeChild(el);
+    console.info(id);
+  }
+
   getColor(item) {
-    if (item == "Pendiente") return "deep-orange accent-2";
-    if (item == "Completa") return "green";
+    if (item == "Pendiente") return "amber";
+    if (item == "Completa") return "green accent-3";
     else return "grey darken-1";
   }
 
   getStatusColor(item) {
-    if (item !== null) return "green accent-4";
-    else return "red";
+    if (item !== null) return "green accent-3";
+    else return "light-blue darken-3";
   }
 
   get allDisbursement(): Array<any> {

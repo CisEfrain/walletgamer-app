@@ -1,5 +1,5 @@
 import { Register } from "@/services/register.service";
-import { Login,LoginAdmin } from "@/services/auth.service";
+import { Login, LoginAdmin } from "@/services/auth.service";
 import { RecoveryPass, NewPass } from "@/services/recoveryPass.service";
 import router from "@/router";
 import Vue from "vue";
@@ -7,7 +7,7 @@ import Vue from "vue";
 const authState = {
   state: () => ({
     login: {},
-    adminLogin:{},
+    adminLogin: {},
     register: {}
   }),
   mutations: {
@@ -18,8 +18,8 @@ const authState = {
     setLogin(state: any, payload: any): void {
       state.login = payload;
     },
-    setAdminLogin(state:any,payload:any){
-      console.log('adminlogin commit ',payload)
+    setAdminLogin(state: any, payload: any) {
+      console.log("adminlogin commit ", payload);
       state.adminLogin = payload;
     },
     setRegister(state: any, payload: any): void {
@@ -44,16 +44,14 @@ const authState = {
             localStorage.setItem("jwt", jwt);
             Vue.$toast.success(`Bienvenid@ ${nombre}`);
             const isAdmin = true;
-            commit("setAdminLogin", { nombre, email, telefono,isAdmin });
-            router.push("/admin/ventas");
+            commit("setAdminLogin", { nombre, email, telefono, isAdmin });
+            router.push("/admin/");
           }
         })
         .catch(error => {
           console.info(error);
           loader.hide();
-          Vue.$toast.error(
-            "Parece que has colocado mal los datos"
-          );
+          Vue.$toast.error("Parece que has colocado mal los datos");
         });
     },
     setLogin({ commit }: any, payload: any): void {
@@ -136,10 +134,10 @@ const authState = {
         });
     }
   },
-    getters: {
-     adminInfo: (state) => {
+  getters: {
+    adminInfo: state => {
       return state.adminLogin;
     }
-    } 
+  }
 };
 export default authState;
