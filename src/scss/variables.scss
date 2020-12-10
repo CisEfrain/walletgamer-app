@@ -39,6 +39,10 @@ $font-weight-title: 800;
   width: 100%;
 }
 
+.logo-panel-admin{
+  width: 50%;
+}
+
 .logo-gamer{
   width: 15%;
 }
@@ -101,6 +105,10 @@ $font-weight-title: 800;
 
 .v-expansion-panel-header{
   padding: 4px 14px!important;
+}
+
+.v-application a {
+  color: $card-link!important;
 }
 
 @media (max-width: 768px){

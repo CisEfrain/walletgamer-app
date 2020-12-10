@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Transactions from "../views/Transactions.vue";
 import Panel from "../views/Panel.vue";
+import AdminPanel from "../views/admin/AdminPanel.vue";
 import Payment from "@/views/Payment.vue";
 import store from "@/store/index";
 /* eslint-disable */
@@ -83,11 +84,11 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: "/admin/",
-    component: Panel,
+    component: AdminPanel,
     beforeEnter: AdminGuard,
     children: [
       {
-        path: "ventas",
+        path: "/",
         name: "AdminVentas",
         component: () => import("../views/admin/Sells.vue")
       },

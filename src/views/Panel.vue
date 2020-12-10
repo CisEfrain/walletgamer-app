@@ -10,7 +10,6 @@
         <Avatar />
         <router-link to="/">
           <v-list-item link @click="resetProduct">
-
             <v-list-item-content>
               <v-list-item-title class="text-uppercase"
                 >Operaciones</v-list-item-title
@@ -20,7 +19,6 @@
         </router-link>
         <router-link to="/sell">
           <v-list-item link @click="resetProduct">
-
             <v-list-item-content>
               <v-list-item-title class="text-uppercase"
                 >Vender</v-list-item-title
@@ -30,7 +28,6 @@
         </router-link>
         <router-link to="/buy">
           <v-list-item link @click="resetProduct">
-
             <v-list-item-content>
               <v-list-item-title class="text-uppercase"
                 >Comprar</v-list-item-title
@@ -41,7 +38,6 @@
 
         <router-link to="/account">
           <v-list-item link @click="resetProduct">
-
             <v-list-item-content>
               <v-list-item-title class="text-uppercase"
                 >Mi cuenta</v-list-item-title
@@ -51,7 +47,6 @@
         </router-link>
         <router-link to="/help">
           <v-list-item link @click="resetProduct">
-
             <v-list-item-content>
               <v-list-item-title class="text-uppercase"
                 >Ayuda</v-list-item-title
@@ -65,15 +60,14 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-            <v-list>
-        <v-list-item>
+      <v-list>
+        <!-- <v-list-item>
           <v-list-item-content class="mb-5">
             <img class="logo-panel" src="../assets/logo.png" alt="Logo Admin" />
           </v-list-item-content>
         </v-list-item>
         <router-link to="/admin/desembolsos">
           <v-list-item link @click="resetProduct">
-
             <v-list-item-content>
               <v-list-item-title class="text-uppercase"
                 >Desembolsos</v-list-item-title
@@ -81,9 +75,8 @@
             </v-list-item-content>
           </v-list-item>
         </router-link>
-                <router-link to="/admin/ventas">
+        <router-link to="/admin/ventas">
           <v-list-item link @click="resetProduct">
-
             <v-list-item-content>
               <v-list-item-title class="text-uppercase"
                 >Ventas</v-list-item-title
@@ -95,7 +88,7 @@
           <v-list-item-content>
             <v-list-item-title class="text-uppercase">Salir</v-list-item-title>
           </v-list-item-content>
-        </v-list-item>
+        </v-list-item> -->
       </v-list>
     </v-navigation-drawer>
 
@@ -112,7 +105,7 @@
         <v-icon>mdi-menu</v-icon>
       </v-btn>
     </v-fab-transition>
-   {{$store.getters.adminInfo}}
+    {{ $store.getters.adminInfo }}
   </v-app>
 </template>
 

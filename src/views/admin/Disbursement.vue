@@ -1,142 +1,229 @@
-  <template>
+<template>
+  <div>
+    <template>
+      <div>
+        <v-card>
+          <v-card-title>
+            <v-row justify="space-between" align="center">
+              <v-col cols="4" md="3" sm="12">Desembolsos</v-col>
+              <v-col cols="4" md="3" sm="12">
+                <v-text-field
+                  v-model="search"
+                  append-icon="mdi-magnify"
+                  label="Filtrar"
+                  single-line
+                  hide-details
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-card-title>
+          <v-data-table
+            :headers="headers"
+            :items="allDisbursement"
+            :search="search"
+          >
+            <template v-slot:item.createdAt="{ item }">{{
+              new Date(item.createdAt).toLocaleDateString()
+            }}</template>
 
-   <v-container class="grey lighten-5">
-    <v-row no-gutters>
-      <v-col
+            <template v-slot:item.transaccione.monto="{ item }">{{
+              "$" +
+                new Intl.NumberFormat("de-DE", {
+                  minimumFractionDigits: 1
+                }).format(item.transaccione.monto)
+            }}</template>
 
-        cols="12"
-        sm="10"
-      >
+            <template v-slot:item.transaccione.estado="{ item }">
+              <v-chip :color="getColor(item.transaccione.estado)" dark>{{
+                item.transaccione.estado
+              }}</v-chip>
+            </template>
 
-    <v-data-table
-      :headers="headers"
-      :items="items"
-    >
-  <template v-slot:item.desembolso.codigo_transferencia="props">
-        <v-edit-dialog
-          :return-value.sync="props.item.codigo_transferencia"
-          @save="save(props.item.codigo_transferencia)"
-          @cancel="cancel"
-          @open="open"
-          @close="close"
-        >
-          {{ props.item.codigo_transferencia}}
-          <template v-slot:input>
-            <v-text-field
-              v-model="props.item.codigo_transferencia"
-              :rules="[max25chars]"
-              label="Edit"
-              single-line
-              counter
-            ></v-text-field>
+            <template v-slot:item.desembolso.codigo_transferencia="{ item }">
+              <div class="d-flex justify-center">
+                <v-btn text color="error">
+                  Notificar
+                </v-btn>
+                <v-switch
+                  v-model="item.status"
+                  :color="getStatusColor(item.desembolso.codigo_transferencia)"
+                  @change="sendNotification(item)"
+                ></v-switch>
+              </div>
+            </template>
+
+            <template v-slot:item.desembolso.codigo_transferencia="{ item }">
+              <div>
+                <v-edit-dialog
+                  :return-value.sync="item.desembolso.codigo_transferencia"
+                  @save="
+                    save(item.desembolso.codigo_transferencia);
+                    sendNotification(item);
+                  "
+                  @cancel="cancel"
+                  @open="open"
+                  @close="close"
+                >
+                  <v-chip
+                    class="ma-2"
+                    :color="
+                      getStatusColor(item.desembolso.codigo_transferencia)
+                    "
+                    outlined
+                  >
+                    <v-icon left v-show="item.desembolso.codigo_transferencia">
+                      mdi-check
+                    </v-icon>
+                    {{ item.desembolso.codigo_transferencia || "Notificar" }}
+                  </v-chip>
+                  <template v-slot:input>
+                    <v-text-field
+                      v-model="item.codigo_transferencia"
+                      :rules="[max25chars]"
+                      label="Codigo Transferencia"
+                      single-line
+                      counter
+                    ></v-text-field>
+                  </template>
+                </v-edit-dialog>
+              </div>
+            </template>
+          </v-data-table>
+        </v-card>
+
+        <v-snackbar v-model="snack" :timeout="3000" :color="snackColor">
+          {{ snackText }}
+
+          <template v-slot:action="{ attrs }">
+            <v-btn v-bind="attrs" text @click="snack = false">
+              Close
+            </v-btn>
           </template>
-        </v-edit-dialog>
-      </template> 
-    </v-data-table>
-
-    <v-snackbar
-      v-model="snack"
-      :timeout="3000"
-      :color="snackColor"
-    >
-      {{ snackText }}
-
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          v-bind="attrs"
-          text
-          @click="snack = false"
-        >
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
-      </v-col>
-    </v-row>
-  </v-container>
+        </v-snackbar>
+      </div>
+    </template>
+  </div>
 </template>
 
-<script>
-import { AllDisbursement } from "@/services/disbursement.service"
+<script lang="ts">
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/camelcase */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Vue } from "vue-property-decorator";
-@Component()
+@Component({})
 export default class AdminDisbursement extends Vue {
- 
-        snack= false;
-        snackColor= "";
-        snackText= "";
-        max25chars= v => v && v.length  <= 25 || "Input too long!";
-        pagination= {};
-        items= [];
-        headers= [
-          {
-            text: "FECHA",
-            align: "center",
-            sortable: false,
-            value: "desembolso.createdAt",
-          },
-          {
-            text:"ID TRANSACCION",
-            align: "center",
-            sortable: false,
-            value: "transaccione.id",
-          },
-          {
-            text:"PASARELA",
-            align: "center",
-            sortable: false,
-            value: "desembolso.pasarela.nombre",
-          },
-          {
-            text:"DESTINO",
-            align: "center",
-            sortable: false,
-            value: "desembolso.pasarela.email",
-          },
-          {
-            text:"MONTO",
-            align: "center",
-            sortable: false,
-            value: "transaccione.monto",
-          },
-          {
-            text:"REFERENCIA",
-            align: "center",
-            sortable: false,
-            value: "desembolso.codigo_transferencia",     
-          }
-        ];
-        log(data){
-            console.log("log ", data)
-        }
-      created(){
-      AllDisbursement()
-      .then(res => {
-          this.items = res.data.data.rows
-          console.log(this.items)
-      })
-      .catch(err => console.error("all disbursement ", err ))
+  public search = "";
+  snack = false;
+  snackColor = "";
+  snackText = "";
+  max25chars = v => (v && v.length <= 25) || "Input too long!";
+  pagination = {};
+  items = [];
+  headers = [
+    {
+      text: "Fecha",
+      align: "center",
+      sortable: true,
+      value: "createdAt"
+    },
+    {
+      text: "ID transacción",
+      align: "center",
+      sortable: false,
+      value: "transacciones_id"
+    },
+    {
+      text: "Monto",
+      align: "center",
+      sortable: false,
+      value: "transaccione.monto"
+    },
+    {
+      text: "Usuario",
+      align: "center",
+      sortable: false,
+      value: "desembolso.pasarela.email"
+    },
+    {
+      text: "Medio de desembolso",
+      align: "center",
+      sortable: false,
+      value: "desembolso.pasarela.nombre"
+    },
+    {
+      text: "Email Receptor",
+      align: "center",
+      sortable: false,
+      value: "desembolso.pasarela.email"
+    },
+    {
+      text: "Descripción/Detalle",
+      align: "center",
+      sortable: false,
+      value: "desembolso.pasarela.descripcion"
+    },
+    {
+      text: "Estado",
+      align: "center",
+      sortable: true,
+      value: "transaccione.estado"
+    },
+    {
+      text: "Notificar Transferencia",
+      align: "center",
+      sortable: true,
+      value: "desembolso.codigo_transferencia"
     }
-      save (reference) {
-        this.snack = true
-        this.snackColor = "success"
-        this.snackText = "Data saved"
-        this.log(reference)
-      }
-      cancel () {
-        this.snack = true;
-        this.snackColor = "error";
-        this.snackText = "Canceled";
-      }
-      open () {
-        this.snack = true;
-        this.snackColor = "info";
-        this.snackText = "Dialog opened";
-      }
-      close () {
-        console.log("Dialog closed");
-      }
-    }
+  ];
+  created() {
+    this.$store.dispatch("getAllDisbursement");
+  }
 
+  private sendNotification({ codigo_transferencia, desembolso }): void {
+    console.info({ codigo_transferencia, desembolso });
+    const payload = {
+      codigo_transferencia,
+      id: desembolso.id,
+      estado: "Completada"
+    };
+    this.$store.dispatch("updateDisbursement", payload);
+    setTimeout(() => {
+      this.$store.dispatch("getAllDisbursement");
+    }, 700);
+  }
+  private save(item) {
+    console.info(item);
+    this.snack = true;
+    this.snackColor = "success";
+    this.snackText = "Data saved";
+  }
+  private cancel() {
+    this.snack = true;
+    this.snackColor = "error";
+    this.snackText = "Canceled";
+  }
+  private open() {
+    this.snack = true;
+    this.snackColor = "info";
+    this.snackText = "Dialog opened";
+  }
+  private close() {
+    console.log("Dialog closed");
+  }
+
+  getColor(item) {
+    if (item == "Pendiente") return "deep-orange accent-2";
+    if (item == "Completa") return "green";
+    else return "grey darken-1";
+  }
+
+  getStatusColor(item) {
+    if (item !== null) return "green accent-4";
+    else return "red";
+  }
+
+  get allDisbursement(): Array<any> {
+    return this.$store.getters.getDisbursement;
+  }
+}
 </script>
