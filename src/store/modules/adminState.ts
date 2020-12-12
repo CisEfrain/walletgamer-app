@@ -38,17 +38,17 @@ const adminState = {
       }
     },
     async updateDisbursement(
-      { commit }: any,
-      { estado, codigo_transferencia, id }: any
+      { commit, dispatch }: any,
+      { codigo_transferencia, id }: any
     ) {
       try {
         const updateDisbursement = await UpdateDisbursement(id, {
-          codigo_transferencia,
-          estado
+          codigo_transferencia
         });
         console.info(updateDisbursement);
         updateDisbursement.data.status === 200 &&
           Vue.$toast.success(`Estado de desembolso actualizado`);
+        dispatch("getAllDisbursement");
       } catch (error) {
         console.info(error);
         Vue.$toast.error(`Parece que algo ha salido mal, intenta nuevo`);

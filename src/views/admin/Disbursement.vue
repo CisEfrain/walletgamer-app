@@ -1,125 +1,117 @@
 <template>
   <div>
-    <template>
-      <div>
-        <v-card>
-          <v-card-title>
-            <v-row justify="space-between" align="center">
-              <v-col cols="4" md="3" sm="12">Desembolsos</v-col>
-              <v-col cols="4" md="3" sm="12">
-                <v-text-field
-                  v-model="search"
-                  append-icon="mdi-magnify"
-                  label="Filtrar"
-                  single-line
-                  hide-details
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-card-title>
-          <v-data-table
-            :headers="headers"
-            :items="allDisbursement"
-            :search="search"
-          >
-            <template v-slot:item.createdAt="{ item }">{{
-              new Date(item.createdAt).toLocaleDateString()
-            }}</template>
+    <v-card>
+      <v-card-title>
+        <v-row justify="space-between" align="center">
+          <v-col cols="4" md="3" sm="12">Desembolsos</v-col>
+          <v-col cols="4" md="3" sm="12">
+            <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Filtrar"
+              single-line
+              hide-details
+            ></v-text-field>
+          </v-col>
+        </v-row>
+      </v-card-title>
+      <v-data-table
+        :headers="headers"
+        :items="allDisbursement"
+        :search="search"
+      >
+        <template v-slot:item.createdAt="{ item }">{{
+          new Date(item.createdAt).toLocaleDateString()
+        }}</template>
 
-            <template v-slot:item.transaccione.identificador="{ item }">
-              <v-tooltip open-on-click top color="red lighten-1">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    @click="copyId(item.transaccione.identificador)"
-                    rounded
-                    elevation="0"
-                    text
-                    v-bind="attrs"
-                    v-on="on"
-                    color="blue-grey lighten-5"
-                  >
-                    <v-icon color="red lighten-1">
-                      mdi-identifier
-                    </v-icon>
-                  </v-btn>
-                </template>
-                <span>{{ item.transaccione.identificador }}</span>
-              </v-tooltip>
+        <template v-slot:item.transaccione.identificador="{ item }">
+          <v-tooltip open-on-click top color="red lighten-1">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                @click="copyId(item.transaccione.identificador)"
+                rounded
+                elevation="0"
+                text
+                v-bind="attrs"
+                v-on="on"
+                color="blue-grey lighten-5"
+              >
+                <v-icon color="red lighten-1">
+                  mdi-identifier
+                </v-icon>
+              </v-btn>
             </template>
+            <span>{{ item.transaccione.identificador }}</span>
+          </v-tooltip>
+        </template>
 
-            <template v-slot:item.transaccione.monto="{ item }">{{
-              "$" +
-                new Intl.NumberFormat("de-DE", {
-                  minimumFractionDigits: 1
-                }).format(item.transaccione.monto)
-            }}</template>
+        <template v-slot:item.transaccione.monto="{ item }">{{
+          "$" +
+            new Intl.NumberFormat("de-DE", {
+              minimumFractionDigits: 1
+            }).format(item.transaccione.monto)
+        }}</template>
 
-            <template v-slot:item.transaccione.estado="{ item }">
-              <v-chip color="blue-grey lighten-5">
-                <v-icon :color="getColor(item.transaccione.estado)" left>
+        <template v-slot:item.transaccione.estado="{ item }">
+          <v-chip color="blue-grey lighten-5">
+            <v-icon :color="getColor(item.transaccione.estado)" left>
+              mdi-information-outline
+            </v-icon>
+            {{ item.transaccione.estado }}
+          </v-chip>
+        </template>
+
+        <template v-slot:item.desembolso.codigo_transferencia="{ item }">
+          <div>
+            <v-edit-dialog
+              :return-value.sync="item.desembolso.codigo_transferencia"
+              @save="
+                save(item.desembolso.codigo_transferencia);
+                sendNotification(item);
+              "
+              @cancel="cancel"
+              @open="open"
+              @close="close"
+            >
+              <v-chip class="text-center" color="blue-grey lighten-5">
+                <v-icon
+                  :color="getStatusColor(item.desembolso.codigo_transferencia)"
+                  v-show="item.desembolso.codigo_transferencia"
+                >
+                  mdi-check-circle-outline
+                </v-icon>
+                <v-icon
+                  :color="getStatusColor(item.desembolso.codigo_transferencia)"
+                  v-show="!item.desembolso.codigo_transferencia"
+                >
                   mdi-information-outline
                 </v-icon>
-                  {{ item.transaccione.estado }}
-                </v-chip>
-            </template>
+                <!-- {{ item.desembolso.codigo_transferencia || "Notificar" }} -->
+              </v-chip>
+              <template v-slot:input>
+                <v-text-field
+                  v-model="item.codigo_transferencia"
+                  :rules="[max25chars]"
+                  label="Codigo Transferencia"
+                  single-line
+                  counter
+                ></v-text-field>
+              </template>
+            </v-edit-dialog>
+          </div>
+        </template>
+      </v-data-table>
+    </v-card>
 
-            <template v-slot:item.desembolso.codigo_transferencia="{ item }">
-              <div>
-                <v-edit-dialog
-                  :return-value.sync="item.desembolso.codigo_transferencia"
-                  @save="
-                    save(item.desembolso.codigo_transferencia);
-                    sendNotification(item);
-                  "
-                  @cancel="cancel"
-                  @open="open"
-                  @close="close"
-                >
-                  <v-chip class="text-center" color="blue-grey lighten-5">
-                    <v-icon
-                      :color="
-                        getStatusColor(item.desembolso.codigo_transferencia)
-                      "
-                      v-show="item.desembolso.codigo_transferencia"
-                    >
-                      mdi-check-circle-outline
-                    </v-icon>
-                    <v-icon
-                      :color="
-                        getStatusColor(item.desembolso.codigo_transferencia)
-                      "
-                      v-show="!item.desembolso.codigo_transferencia"
-                    >
-                      mdi-information-outline
-                    </v-icon>
-                    <!-- {{ item.desembolso.codigo_transferencia || "Notificar" }} -->
-                  </v-chip>
-                  <template v-slot:input>
-                    <v-text-field
-                      v-model="item.codigo_transferencia"
-                      :rules="[max25chars]"
-                      label="Codigo Transferencia"
-                      single-line
-                      counter
-                    ></v-text-field>
-                  </template>
-                </v-edit-dialog>
-              </div>
-            </template>
-          </v-data-table>
-        </v-card>
+    <v-snackbar v-model="snack" :timeout="3000" :color="snackColor">
+      {{ snackText }}
 
-        <v-snackbar v-model="snack" :timeout="3000" :color="snackColor">
-          {{ snackText }}
-
-          <template v-slot:action="{ attrs }">
-            <v-btn v-bind="attrs" text @click="snack = false">
-              Close
-            </v-btn>
-          </template>
-        </v-snackbar>
-      </div>
-    </template>
+      <template v-slot:action="{ attrs }">
+        <v-btn v-bind="attrs" text @click="snack = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -201,13 +193,9 @@ export default class AdminDisbursement extends Vue {
     console.info({ codigo_transferencia, desembolso });
     const payload = {
       codigo_transferencia,
-      id: desembolso.id,
-      estado: "Completada"
+      id: desembolso.operacion_id
     };
     this.$store.dispatch("updateDisbursement", payload);
-    setTimeout(() => {
-      this.$store.dispatch("getAllDisbursement");
-    }, 700);
   }
   private save(item) {
     console.info(item);
@@ -241,7 +229,7 @@ export default class AdminDisbursement extends Vue {
 
   getColor(item) {
     if (item == "Pendiente") return "amber";
-    if (item == "Completa") return "green accent-3";
+    if (item == "Completada") return "green accent-3";
     else return "grey darken-1";
   }
 
