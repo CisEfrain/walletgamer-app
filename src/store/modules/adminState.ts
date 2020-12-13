@@ -54,15 +54,15 @@ const adminState = {
         Vue.$toast.error(`Parece que algo ha salido mal, intenta nuevo`);
       }
     },
-    getAllSells({ commit }: any): void {
-      GetAllSells()
-        .then((response: any) => {
-          console.info("get expenditure:", response.data.data);
-          commit("setExpenditureData", response.data.data);
-        })
-        .catch(error => {
-          console.info(error);
-        });
+    async getAllSells({ commit }: any): Promise<void> {
+      try {
+        const allSells = await GetAllSells();
+        console.info("from getAllSells", allSells.data.data.rows);
+        commit("setSell", allSells.data.data.rows);
+      } catch (error) {
+        console.error(error);
+        Vue.$toast.error(`No se han podido cargar los desembolsos`);
+      }
     },
     updateSell({ commit }: any, { id, data }: any): void {
       UpdateSell(id, data)
@@ -83,7 +83,7 @@ const adminState = {
     getDisbursement: (state: { disbursements: Array<any> }) => {
       return state.disbursements;
     },
-    getSell: (state: { sells: Array<any> }) => {
+    getSells: (state: { sells: Array<any> }) => {
       return state.sells;
     }
   }

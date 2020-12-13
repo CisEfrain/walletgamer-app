@@ -15,55 +15,93 @@
           </v-col>
         </v-row>
       </v-card-title>
-      <v-data-table :headers="headers" :items="desserts">
-        <template v-slot:item.name="props">
-          <v-edit-dialog
-            :return-value.sync="props.item.name"
-            @save="save"
-            @cancel="cancel"
-            @open="open"
-            @close="close"
-          >
-            {{ props.item.name }}
-            <template v-slot:input>
-              <v-text-field
-                v-model="props.item.name"
-                :rules="[max25chars]"
-                label="Edit"
-                single-line
-                counter
-              ></v-text-field>
+      <v-data-table :headers="headers" :items="allSells">
+        <template v-slot:item.createdAt="{ item }">{{
+          new Date(item.createdAt).toLocaleDateString()
+        }}</template>
+
+        <template v-slot:item.transaccione.identificador="{ item }">
+          <v-tooltip open-on-click top color="red lighten-1">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                @click="copyId(item.transaccione.identificador)"
+                rounded
+                elevation="0"
+                text
+                v-bind="attrs"
+                v-on="on"
+                color="blue-grey lighten-5"
+              >
+                <v-icon color="red lighten-1">
+                  mdi-identifier
+                </v-icon>
+              </v-btn>
             </template>
-          </v-edit-dialog>
+            <span>{{ item.transaccione.identificador }}</span>
+          </v-tooltip>
         </template>
-        <template v-slot:item.iron="props">
-          <v-edit-dialog
-            :return-value.sync="props.item.iron"
-            large
-            persistent
-            @save="save"
-            @cancel="cancel"
-            @open="open"
-            @close="close"
-          >
-            <div>{{ props.item.iron }}</div>
-            <template v-slot:input>
-              <div class="mt-4 title">
-                Update Iron
-              </div>
-              <v-text-field
-                v-model="props.item.iron"
-                :rules="[max25chars]"
-                label="Edit"
-                single-line
-                counter
-                autofocus
-              ></v-text-field>
-            </template>
-          </v-edit-dialog>
+
+
+        <template v-slot:item.transaccione.monto="{ item }">{{
+          "$" +
+            new Intl.NumberFormat("de-DE", {
+              minimumFractionDigits: 1
+            }).format(item.transaccione.monto)
+        }}</template>
+
+
+        <template v-slot:item.transaccione.estado="{ item }">
+          <v-chip color="blue-grey lighten-5">
+            <v-icon :color="getColor(item.transaccione.estado)" left>
+              mdi-information-outline
+            </v-icon>
+            {{ item.transaccione.estado }}
+          </v-chip>
+        </template>
+
+
+        <template v-slot:item.cambiar_estado="{ item }">
+          <div>
+            <v-edit-dialog
+              :return-value.sync="item.cambiar_estado"
+              @save="
+                save(item.cambiar_estado);
+                sendNotification(item);
+              "
+              @cancel="cancel"
+              @open="open"
+              @close="close"
+            >
+              <v-chip class="text-center" color="blue-grey lighten-5">
+                <v-icon
+                  :color="getStatusColor(item.cambiar_estado)"
+                  v-show="item.cambiar_estado"
+                >
+                  mdi-check-circle-outline
+                </v-icon>
+                <v-icon
+                  :color="getStatusColor(item.cambiar_estado)"
+                  v-show="!item.cambiar_estado"
+                >
+                  mdi-information-outline
+                </v-icon>
+                <!-- {{ item.cambiar_estado || "Notificar" }} -->
+              </v-chip>
+              <template v-slot:input>
+                <v-text-field
+                  v-model="item.codigo_transferencia"
+                  :rules="[max25chars]"
+                  label="Codigo Transferencia"
+                  single-line
+                  counter
+                ></v-text-field>
+              </template>
+            </v-edit-dialog>
+          </div>
         </template>
       </v-data-table>
     </v-card>
+
     <v-snackbar v-model="snack" :timeout="3000" :color="snackColor">
       {{ snackText }}
       <template v-slot:action="{ attrs }">
@@ -92,27 +130,32 @@ export default class AdminSells extends Vue {
       text: "Fecha",
       align: "center",
       sortable: true,
-      value: "fecha"
+      value: "createdAt"
     },
     {
       text: "ID transacción",
       align: "center",
       sortable: true,
-      value: "id_transaccion"
+      value: "transaccione.identificador"
     },
     {
       text: "Cantidad",
       align: "center",
       sortable: true,
-      value: "cantidad"
+      value: "ventas[0].cantidad"
     },
-    { text: "Tipo", align: "center", sortable: true, value: "tipo" },
-    { text: "Monto", align: "center", sortable: true, value: "monto" },
+    { text: "Tipo", align: "center", sortable: false, value: "tipo" },
+    {
+      text: "Monto",
+      align: "center",
+      sortable: true,
+      value: "transaccione.monto"
+    },
     {
       text: "Comisión",
       align: "center",
       sortable: true,
-      value: "comision"
+      value: "comisione.monto"
     },
     {
       text: "Comprador",
@@ -126,7 +169,12 @@ export default class AdminSells extends Vue {
       sortable: true,
       value: "vendedor"
     },
-    { text: "Estado", align: "center", sortable: true, value: "estado" },
+    {
+      text: "Estado",
+      align: "center",
+      sortable: true,
+      value: "transaccione.estado"
+    },
     {
       text: "Cambiar Estado",
       align: "center",
@@ -134,104 +182,35 @@ export default class AdminSells extends Vue {
       value: "cambiar_estado"
     }
   ];
-  desserts = [
-    {
-      fecha: "Frozen Yogurt",
-      id_transaccion: 159,
-      cantidad: 6.0,
-      tipo: 24,
-      monto: 4.0,
-      comision: "1%",
-      comprador: "1%",
-      vendedor: "1%",
-      estado: "1%",
-      cambiar_estado: "1%"
-    },
-    {
-      fecha: "Frozen Yogurt",
-      id_transaccion: 159,
-      cantidad: 6.0,
-      tipo: 24,
-      monto: 4.0,
-      comision: "1%",
-      comprador: "1%",
-      vendedor: "1%",
-      estado: "1%",
-      cambiar_estado: "1%"
-    },
-    {
-      fecha: "Frozen Yogurt",
-      id_transaccion: 159,
-      cantidad: 6.0,
-      tipo: 24,
-      monto: 4.0,
-      comision: "1%",
-      comprador: "1%",
-      vendedor: "1%",
-      estado: "1%",
-      cambiar_estado: "1%"
-    },
-    {
-      fecha: "Frozen Yogurt",
-      id_transaccion: 159,
-      cantidad: 6.0,
-      tipo: 24,
-      monto: 4.0,
-      comision: "1%",
-      comprador: "1%",
-      vendedor: "1%",
-      estado: "1%",
-      cambiar_estado: "1%"
-    },
-    {
-      fecha: "Frozen Yogurt",
-      id_transaccion: 159,
-      cantidad: 6.0,
-      tipo: 24,
-      monto: 4.0,
-      comision: "1%",
-      comprador: "1%",
-      vendedor: "1%",
-      estado: "1%",
-      cambiar_estado: "1%"
-    },
-    {
-      fecha: "Frozen Yogurt",
-      id_transaccion: 159,
-      cantidad: 6.0,
-      tipo: 24,
-      monto: 4.0,
-      comision: "1%",
-      comprador: "1%",
-      vendedor: "1%",
-      estado: "1%",
-      cambiar_estado: "1%"
-    },
-    {
-      fecha: "Frozen Yogurt",
-      id_transaccion: 159,
-      cantidad: 6.0,
-      tipo: 24,
-      monto: 4.0,
-      comision: "1%",
-      comprador: "1%",
-      vendedor: "1%",
-      estado: "1%",
-      cambiar_estado: "1%"
-    },
-    {
-      fecha: "Frozen Yogurt",
-      id_transaccion: 159,
-      cantidad: 6.0,
-      tipo: 24,
-      monto: 4.0,
-      comision: "1%",
-      comprador: "1%",
-      vendedor: "1%",
-      estado: "1%",
-      cambiar_estado: "1%"
-    }
-  ];
+
+  created() {
+    this.$store.dispatch("getAllSells");
+  }
+
+  get allSells(): Array<any> {
+    return this.$store.getters.getSells;
+  }
+
+  private copyId(id) {
+    const el = document.createElement("textarea");
+    el.value = id;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand("copy");
+    document.body.removeChild(el);
+    console.info(id);
+  }
+
+  getColor(item) {
+    if (item == "Pendiente") return "amber";
+    if (item == "Completada") return "green accent-3";
+    else return "grey darken-1";
+  }
+
+  getStatusColor(item) {
+    if (item !== null) return "green accent-3";
+    else return "light-blue darken-3";
+  }
 
   private save() {
     this.snack = true;
