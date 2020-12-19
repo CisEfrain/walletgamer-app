@@ -81,11 +81,7 @@
       </v-container>
     </v-main>
 
-    <v-navigation-drawer
-      width="240px"
-      app
-      v-model="drawer"
-    >
+    <v-navigation-drawer width="240px" app v-model="drawer">
       <v-list>
         <v-list-item>
           <v-list-item-content class="mb-5">
@@ -159,10 +155,15 @@ export default class AdminPanel extends Vue {
 .balance
   color: #00E676
 
+.v-navigation-drawer
+ display: none
+
 @media (max-width: 768px)
   .isMobile
     display: none
   .mt-less-4
     margin-top: -2em
     margin-left: -2em
+  .v-navigation-drawer
+    display: block
 </style>

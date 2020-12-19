@@ -41,14 +41,12 @@
           </v-tooltip>
         </template>
 
-
         <template v-slot:item.transaccione.monto="{ item }">{{
           "$" +
             new Intl.NumberFormat("de-DE", {
               minimumFractionDigits: 1
             }).format(item.transaccione.monto)
         }}</template>
-
 
         <template v-slot:item.transaccione.estado="{ item }">
           <v-chip color="blue-grey lighten-5">
@@ -58,7 +56,6 @@
             {{ item.transaccione.estado }}
           </v-chip>
         </template>
-
 
         <template v-slot:item.cambiar_estado="{ item }">
           <div>
