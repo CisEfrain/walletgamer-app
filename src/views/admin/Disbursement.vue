@@ -45,6 +45,7 @@
           </v-tooltip>
         </template>
 
+
         <template v-slot:item.transaccione.monto="{ item }">{{
           "$" +
             new Intl.NumberFormat("de-DE", {

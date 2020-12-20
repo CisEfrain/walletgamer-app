@@ -64,19 +64,17 @@ const adminState = {
         Vue.$toast.error(`No se han podido cargar los desembolsos`);
       }
     },
-    updateSell({ commit }: any, { id, data }: any): void {
-      UpdateSell(id, data)
-        .then((response: any) => {
-          console.info(response);
-          response.data.status === 200 &&
-            Vue.$toast.success(`metodo de pago eliminado`);
-          console.info(id);
-          commit("deleteExpenditureData", data);
-        })
-        .catch(error => {
-          console.info(error);
-          Vue.$toast.error(`No se ha podido eliminar tu metodos de pago`);
-        });
+    async updateSell({ dispatch }: any, { id, estado }: any): Promise<void> {
+      try {
+        const updateSell = await UpdateSell(id, estado);
+        console.info(updateSell);
+        updateSell.data.status === 200 &&
+          Vue.$toast.success(`Estado de la venta actualizada`);
+        dispatch("getAllSells");
+      } catch (error) {
+        console.info(error);
+        Vue.$toast.error(`Parece que algo ha salido mal, intenta nuevo`);
+      }
     }
   },
   getters: {

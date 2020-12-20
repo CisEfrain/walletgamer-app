@@ -41,9 +41,9 @@ export const GetAllSells = async ():Promise<any> => {
 	return await axios.get(sells, header);
 }
 
-export const UpdateSell = async (id: number,data: any):Promise<any> => {
-console.info(data, id)
+export const UpdateSell = async (id: number, estado: string):Promise<any> => {
+console.info(estado, id, "from updateSell service")
 const jwt = localStorage.getItem("jwt")
 const header = {headers:{ Authorization: "Bearer " + jwt }};
-return await axios.put(`${sells}/${id}`, data, header);
+return await axios.put(`${sells}/admin/${id}/${estado}`, null, header);
 }

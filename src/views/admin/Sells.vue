@@ -41,6 +41,17 @@
           </v-tooltip>
         </template>
 
+        <template v-slot:item.ventas[0].cantidad="{ item }">
+          <span v-if="item.ventas[0].publicacione.tipo === 'oro'"
+            >{{ item.ventas[0].cantidad * 100 }} de Oro</span
+          >
+          <span v-else>{{ item.ventas[0].cantidad * 100 }}</span>
+        </template>
+
+        <template v-slot:item.usuario.nombre="{ item }">{{
+          item.usuario.nombre
+        }}</template>
+
         <template v-slot:item.transaccione.monto="{ item }">{{
           "$" +
             new Intl.NumberFormat("de-DE", {
@@ -57,41 +68,34 @@
           </v-chip>
         </template>
 
-        <template v-slot:item.cambiar_estado="{ item }">
+        <template v-slot:item.ventas[0].estado="{ item }">
           <div>
             <v-edit-dialog
-              :return-value.sync="item.cambiar_estado"
-              @save="
-                save(item.cambiar_estado);
-                sendNotification(item);
-              "
+              :return-value.sync="item.ventas[0].estado"
               @cancel="cancel"
-              @open="open"
-              @close="close"
             >
               <v-chip class="text-center" color="blue-grey lighten-5">
                 <v-icon
-                  :color="getStatusColor(item.cambiar_estado)"
-                  v-show="item.cambiar_estado"
+                  :color="getStatusColor(item.ventas[0].estado)"
+                  v-show="item.ventas[0].estado === 'transaccionCompleta'"
                 >
                   mdi-check-circle-outline
                 </v-icon>
                 <v-icon
-                  :color="getStatusColor(item.cambiar_estado)"
-                  v-show="!item.cambiar_estado"
+                  :color="getStatusColor(item.ventas[0].estado)"
+                  v-show="item.ventas[0].estado !== 'transaccionCompleta'"
                 >
                   mdi-information-outline
                 </v-icon>
-                <!-- {{ item.cambiar_estado || "Notificar" }} -->
               </v-chip>
               <template v-slot:input>
-                <v-text-field
-                  v-model="item.codigo_transferencia"
-                  :rules="[max25chars]"
-                  label="Codigo Transferencia"
-                  single-line
-                  counter
-                ></v-text-field>
+                <v-select
+                  v-model="item.ventas[0].estado"
+                  :items="sellStatus"
+                  dense
+                  v-if="item.ventas[0].estado !== 'transaccionCompleta'"
+                  @change="changeSellStatus(item)"
+                ></v-select>
               </template>
             </v-edit-dialog>
           </div>
@@ -117,6 +121,13 @@ import { Component, Vue } from "vue-property-decorator";
 @Component({})
 export default class AdminSells extends Vue {
   public search = "";
+  public sellStatus: string[] = [
+    "transaccionCompleta",
+    "mediacion",
+    "canceladaStock",
+    "canceladaIncumplimiento"
+  ];
+  public sellStatusModel = "";
   snack = false;
   snackColor = "";
   snackText = "";
@@ -155,17 +166,17 @@ export default class AdminSells extends Vue {
       value: "comisione.monto"
     },
     {
-      text: "Comprador",
+      text: "Comprador/Vendedor",
       align: "center",
       sortable: true,
-      value: "comprador"
+      value: "usuario.nombre"
     },
-    {
-      text: "Vendedor",
-      align: "center",
-      sortable: true,
-      value: "vendedor"
-    },
+    // {
+    //   text: "Vendedor",
+    //   align: "center",
+    //   sortable: true,
+    //   value: "vendedor"
+    // },
     {
       text: "Estado",
       align: "center",
@@ -176,7 +187,7 @@ export default class AdminSells extends Vue {
       text: "Cambiar Estado",
       align: "center",
       sortable: true,
-      value: "cambiar_estado"
+      value: "ventas[0].estado"
     }
   ];
 
@@ -198,6 +209,14 @@ export default class AdminSells extends Vue {
     console.info(id);
   }
 
+  private changeSellStatus(item) {
+    const payload = {
+      id: item.ventas[0].id,
+      estado: item.ventas[0].estado
+    };
+    console.info(payload);
+    this.$store.dispatch("updateSell", payload);
+  }
   getColor(item) {
     if (item == "Pendiente") return "amber";
     if (item == "Completada") return "green accent-3";
@@ -205,8 +224,8 @@ export default class AdminSells extends Vue {
   }
 
   getStatusColor(item) {
-    if (item !== null) return "green accent-3";
-    else return "light-blue darken-3";
+    if (item !== "transaccionCompleta") return "amber";
+    if (item == "transaccionCompleta") return "green accent-3";
   }
 
   private save() {
