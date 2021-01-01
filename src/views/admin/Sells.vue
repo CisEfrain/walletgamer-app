@@ -20,11 +20,13 @@
           new Date(item.createdAt).toLocaleDateString()
         }}</template>
 
-        <template v-slot:item.transaccione.identificador="{ item }">
-          <v-tooltip open-on-click top color="red lighten-1">
+        <template
+          v-slot:item.operaciones[0].transaccione.identificador="{ item }"
+        >
+          <v-tooltip open-on-click top color="red darken-3">
             <template v-slot:activator="{ on, attrs }">
               <v-btn
-                @click="copyId(item.transaccione.identificador)"
+                @click="copyId(item.operaciones[0].transaccione.identificador)"
                 rounded
                 elevation="0"
                 text
@@ -37,63 +39,124 @@
                 </v-icon>
               </v-btn>
             </template>
-            <span>{{ item.transaccione.identificador }}</span>
+            <span>{{ item.operaciones[0].transaccione.identificador }}</span>
           </v-tooltip>
         </template>
 
-        <template v-slot:item.ventas[0].cantidad="{ item }">
-          <span v-if="item.ventas[0].publicacione.tipo === 'oro'"
-            >{{ item.ventas[0].cantidad * 100 }} de Oro</span
-          >
-          <span v-else>{{ item.ventas[0].cantidad * 100 }}</span>
+        <template v-slot:item.cantidad="{ item }">
+          <span v-if="item.publicacione.tipo === 'oro'">{{
+            item.cantidad * 100
+          }}</span>
+          <span v-else>{{ item.cantidad * 100 }}</span>
         </template>
 
-        <template v-slot:item.usuario.nombre="{ item }">{{
-          item.usuario.nombre
-        }}</template>
+        <template v-slot:item.operaciones[0].usuario="{ item }">
+          <v-tooltip open-on-click top color="red darken-3">
+            <template v-slot:activator="{ on, attrs }">
+              <v-chip
+                @click="copyUser(item.operaciones[0].usuario)"
+                rounded
+                elevation="0"
+                text
+                v-bind="attrs"
+                v-on="on"
+                color="blue-grey lighten-5"
+              >
+                {{ item.operaciones[0].usuario.nombre }}
+              </v-chip>
+            </template>
+            <p class="m-0 p-0">
+              <b>Usuario:</b> {{ item.operaciones[0].usuario.nombre }}
+            </p>
+            <p class="m-0 p-0">
+              <b>Correo:</b> {{ item.operaciones[0].usuario.email }}
+            </p>
+            <p class="m-0 p-0">
+              <b>Telefono</b> {{ item.operaciones[0].usuario.telefono }}
+            </p>
+          </v-tooltip>
+        </template>
 
-        <template v-slot:item.transaccione.monto="{ item }">{{
-          "$" +
-            new Intl.NumberFormat("de-DE", {
-              minimumFractionDigits: 1
-            }).format(item.transaccione.monto)
-        }}</template>
+        <template v-slot:item.operaciones[1].usuario="{ item }">
+          <v-tooltip open-on-click top color="red darken-3">
+            <template v-slot:activator="{ on, attrs }">
+              <v-chip
+                @click="copyUser(item.operaciones[1].usuario)"
+                rounded
+                elevation="0"
+                text
+                v-bind="attrs"
+                v-on="on"
+                color="blue-grey lighten-5"
+              >
+                {{ item.operaciones[1].usuario.nombre }}
+              </v-chip>
+            </template>
+            <p class="m-0 p-0">
+              <b>Usuario:</b> {{ item.operaciones[1].usuario.nombre }}
+            </p>
+            <p class="m-0 p-0">
+              <b>Correo:</b> {{ item.operaciones[1].usuario.email }}
+            </p>
+            <p class="m-0 p-0">
+              <b>Telefono</b> {{ item.operaciones[1].usuario.telefono }}
+            </p>
+          </v-tooltip>
+        </template>
 
-        <template v-slot:item.transaccione.estado="{ item }">
+        <template v-slot:item.operaciones[0].transaccione.monto="{ item }">
+          {{
+            "$ " +
+              new Intl.NumberFormat("de-DE", {
+                minimumFractionDigits: 1
+              }).format(item.operaciones[0].transaccione.monto)
+          }}
+        </template>
+
+        <template v-slot:item.operaciones[1].comisione.monto="{ item }">
+          {{
+            "$ " +
+              new Intl.NumberFormat("de-DE", {
+                minimumFractionDigits: 1
+              }).format(item.operaciones[1].comisione.monto)
+          }}
+        </template>
+
+        <template v-slot:item.operaciones[0].transaccione.estado="{ item }">
           <v-chip color="blue-grey lighten-5">
-            <v-icon :color="getColor(item.transaccione.estado)" left>
+            <v-icon
+              :color="getColor(item.operaciones[0].transaccione.estado)"
+              left
+            >
               mdi-information-outline
             </v-icon>
-            {{ item.transaccione.estado }}
+            {{ item.operaciones[0].transaccione.estado }}
           </v-chip>
         </template>
 
-        <template v-slot:item.ventas[0].estado="{ item }">
+        <template v-slot:item.estado="{ item }">
           <div>
-            <v-edit-dialog
-              :return-value.sync="item.ventas[0].estado"
-              @cancel="cancel"
-            >
+            <v-edit-dialog :return-value.sync="item.estado" @cancel="cancel">
               <v-chip class="text-center" color="blue-grey lighten-5">
                 <v-icon
-                  :color="getStatusColor(item.ventas[0].estado)"
-                  v-show="item.ventas[0].estado === 'transaccionCompleta'"
+                  :color="getStatusColor(item.estado)"
+                  v-show="item.estado === 'transaccionCompleta'"
                 >
                   mdi-check-circle-outline
                 </v-icon>
                 <v-icon
-                  :color="getStatusColor(item.ventas[0].estado)"
-                  v-show="item.ventas[0].estado !== 'transaccionCompleta'"
+                  :color="getStatusColor(item.estado)"
+                  v-show="item.estado !== 'transaccionCompleta'"
                 >
                   mdi-information-outline
                 </v-icon>
               </v-chip>
               <template v-slot:input>
                 <v-select
-                  v-model="item.ventas[0].estado"
+                  v-model="item.estado"
                   :items="sellStatus"
                   dense
-                  v-if="item.ventas[0].estado !== 'transaccionCompleta'"
+                  v-if="item.estado !== 'transaccionCompleta'"
                   @change="changeSellStatus(item)"
                 ></v-select>
               </template>
@@ -144,50 +207,55 @@ export default class AdminSells extends Vue {
       text: "ID transacción",
       align: "center",
       sortable: true,
-      value: "transaccione.identificador"
+      value: "operaciones[0].transaccione.identificador"
     },
     {
       text: "Cantidad",
       align: "center",
       sortable: true,
-      value: "ventas[0].cantidad"
+      value: "cantidad"
     },
-    { text: "Tipo", align: "center", sortable: false, value: "tipo" },
+    {
+      text: "Tipo",
+      align: "center",
+      sortable: false,
+      value: "publicacione.tipo"
+    },
     {
       text: "Monto",
       align: "center",
       sortable: true,
-      value: "transaccione.monto"
+      value: "operaciones[0].transaccione.monto"
     },
     {
       text: "Comisión",
       align: "center",
       sortable: true,
-      value: "comisione.monto"
+      value: "operaciones[1].comisione.monto"
     },
     {
-      text: "Comprador/Vendedor",
+      text: "Comprador",
       align: "center",
       sortable: true,
-      value: "usuario.nombre"
+      value: "operaciones[0].usuario"
     },
-    // {
-    //   text: "Vendedor",
-    //   align: "center",
-    //   sortable: true,
-    //   value: "vendedor"
-    // },
+    {
+      text: "Vendedor",
+      align: "center",
+      sortable: true,
+      value: "operaciones[1].usuario"
+    },
     {
       text: "Estado",
       align: "center",
       sortable: true,
-      value: "transaccione.estado"
+      value: "operaciones[0].transaccione.estado"
     },
     {
       text: "Cambiar Estado",
       align: "center",
       sortable: true,
-      value: "ventas[0].estado"
+      value: "estado"
     }
   ];
 
@@ -209,6 +277,15 @@ export default class AdminSells extends Vue {
     console.info(id);
   }
 
+  private copyUser(user) {
+    const el = document.createElement("textarea");
+    el.value = `Nombre: ${user.nombre} - Email: ${user.email} - Telefono: ${user.telefono}`;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand("copy");
+    document.body.removeChild(el);
+  }
+
   private changeSellStatus(item) {
     const payload = {
       id: item.ventas[0].id,
@@ -217,6 +294,7 @@ export default class AdminSells extends Vue {
     console.info(payload);
     this.$store.dispatch("updateSell", payload);
   }
+
   getColor(item) {
     if (item == "Pendiente") return "amber";
     if (item == "Completada") return "green accent-3";
