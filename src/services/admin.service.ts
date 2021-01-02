@@ -25,7 +25,7 @@ const sells = "ventas"
 export const GetAllDisbursements = async ():Promise<any> => {
 		const jwt = localStorage.getItem("jwt")
 		const header = {headers:{ Authorization: "Bearer " + jwt }};
-		return await axios.get(disbursements, header);
+		return await axios.get(`${disbursements}?size=500&page=0`, header);
 }
 
 export const UpdateDisbursement = async (id: number,data: any):Promise<any> => {
@@ -38,7 +38,7 @@ export const UpdateDisbursement = async (id: number,data: any):Promise<any> => {
 export const GetAllSells = async ():Promise<any> => {
 	const jwt = localStorage.getItem("jwt")
 	const header = {headers:{ Authorization: "Bearer " + jwt }};
-	return await axios.get(sells, header);
+	return await axios.get(`${sells}?size=500&page=0`, header);
 }
 
 export const UpdateSell = async (id: number, estado: string):Promise<any> => {
