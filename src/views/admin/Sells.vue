@@ -122,15 +122,15 @@
           }}
         </template>
 
-        <template v-slot:item.operaciones[0].transaccione.estado="{ item }">
+        <template v-slot:item.operaciones[1].transaccione.estado="{ item }">
           <v-chip color="blue-grey lighten-5">
             <v-icon
-              :color="getColor(item.operaciones[0].transaccione.estado)"
+              :color="getColor(item.operaciones[1].transaccione.estado)"
               left
             >
               mdi-information-outline
             </v-icon>
-            {{ item.operaciones[0].transaccione.estado }}
+            {{ item.operaciones[1].transaccione.estado }}
           </v-chip>
         </template>
 
@@ -139,14 +139,18 @@
             <v-edit-dialog :return-value.sync="item.estado" @cancel="cancel">
               <v-chip class="text-center" color="blue-grey lighten-5">
                 <v-icon
-                  :color="getStatusColor(item.estado)"
-                  v-show="item.estado === 'transaccionCompleta'"
+                  :color="getColor(item.operaciones[1].transaccione.estado)"
+                  v-show="
+                    item.operaciones[1].transaccione.estado !== 'Pendiente'
+                  "
                 >
                   mdi-check-circle-outline
                 </v-icon>
                 <v-icon
-                  :color="getStatusColor(item.estado)"
-                  v-show="item.estado !== 'transaccionCompleta'"
+                  :color="getColor(item.operaciones[1].transaccione.estado)"
+                  v-show="
+                    item.operaciones[1].transaccione.estado === 'Pendiente'
+                  "
                 >
                   mdi-information-outline
                 </v-icon>
@@ -156,7 +160,7 @@
                   v-model="item.estado"
                   :items="sellStatus"
                   dense
-                  v-if="item.estado !== 'transaccionCompleta'"
+                  v-if="item.operaciones[1].transaccione.estado === 'Pendiente'"
                   @change="changeSellStatus(item)"
                 ></v-select>
               </template>
@@ -249,7 +253,7 @@ export default class AdminSells extends Vue {
       text: "Estado",
       align: "center",
       sortable: true,
-      value: "operaciones[0].transaccione.estado"
+      value: "operaciones[1].transaccione.estado"
     },
     {
       text: "Cambiar Estado",
@@ -287,9 +291,10 @@ export default class AdminSells extends Vue {
   }
 
   private changeSellStatus(item) {
+    console.info(item.id, item.estado);
     const payload = {
-      id: item.ventas[0].id,
-      estado: item.ventas[0].estado
+      id: item.id,
+      estado: item.estado
     };
     console.info(payload);
     this.$store.dispatch("updateSell", payload);
