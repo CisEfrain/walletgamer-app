@@ -72,7 +72,7 @@
               <b>Correo:</b> {{ item.operaciones[0].usuario.email }}
             </p>
             <p class="m-0 p-0">
-              <b>Telefono</b> {{ item.operaciones[0].usuario.telefono }}
+              <b>Telefono:</b> {{ item.operaciones[0].usuario.telefono }}
             </p>
           </v-tooltip>
         </template>
@@ -99,7 +99,7 @@
               <b>Correo:</b> {{ item.operaciones[1].usuario.email }}
             </p>
             <p class="m-0 p-0">
-              <b>Telefono</b> {{ item.operaciones[1].usuario.telefono }}
+              <b>Telefono:</b> {{ item.operaciones[1].usuario.telefono }}
             </p>
           </v-tooltip>
         </template>
