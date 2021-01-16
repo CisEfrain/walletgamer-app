@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800;900&display=swap');
+
+$body-font-family: 'Maven Pro'!important;
+
+
+$background:#f3f3f3;
+$menu-items:#4C303C;
+$title:#79243A;
+$badge-faccion:#F5F5F5;
+$badg-type:#589FDE;
+$font-main-color:#707070;
+$card-bg:#FFFFFF;
+$card-link:#E4445B;
+$box-shadows:#00000029;
+$success:#3FB279;
+$warning:#F8B734;
+$danger:#E4445B;
+$bg-product-card: #BCBCBC;
+$bg-dark-gradient: linear-gradient(90deg,rgba(54, 53, 53, 1) 0%,rgba(41, 38, 38, 1) 91%);
+$button-gradient:transparent linear-gradient(90deg, #E4445B 0%, #C12755 100%) 0% 0% no-repeat padding-box;
+
+$font-weight-title: 800;
+
+.main-title{
+  color: $title;
+  font-family: $body-font-family;
+}
+
+.btn-gradient{
+  background: $button-gradient;
+  color: $background!important;
+}
+.btn-dark{
+  background: $menu-items;
+  color: $background!important;
+}
+
+.logo-panel{
+  width: 100%;
+}
+
+.logo-panel-admin{
+  width: 50%;
+}
+
+.logo-gamer{
+  width: 15%;
+}
+
+.ownerClass{
+  border: 3px solid $card-link
+}
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.fast {
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+}
+
+.product-title{
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: -14px;
+  font-weight: 800;
+  font-family: $body-font-family, sans-serif !important;
+}
+  
+
+.card-radius{
+  border-radius: 28px!important;
+  cursor: pointer!important;
+  background-color: $bg-product-card!important;
+}
+  
+
+.card-radius:hover{
+  background: #d47777!important;
+}
+  
+.active-card{
+  background: $card-link!important;
+}
+
+.v-expansion-panel-header{
+  padding: 4px 14px!important;
+}
+
+.v-application a {
+  color: $card-link!important;
+}
+
+@media (max-width: 768px){
+  .responsive-card{
+    display: flex;
+    justify-content: center;
+  }
+  .logo-panel-admin{
+    display: none;
+  }
+}
