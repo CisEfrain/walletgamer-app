@@ -105,7 +105,7 @@
         <v-icon>mdi-menu</v-icon>
       </v-btn>
     </v-fab-transition>
-    {{ $store.getters.adminInfo }}
+    <!-- {{ $store.getters.adminInfo }} -->
   </v-app>
 </template>
 

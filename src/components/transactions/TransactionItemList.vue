@@ -52,6 +52,7 @@
                 <p>
                   <b>Cantidad:</b>
                   {{
+                    ventas[0].publicacione.tipo !== null &&
                     ventas[0].publicacione.tipo === "oro"
                       ? `${ventas[0].cantidad * 100} de oro`
                       : ventas[0].cantidad
@@ -62,7 +63,7 @@
                 cols="4"
                 md="3"
                 sm="5"
-                v-if="type === 'Venta' && comission != null"
+                v-if="type === 'Venta' && comission !== null"
               >
                 <p>
                   <b>Comision:</b>
