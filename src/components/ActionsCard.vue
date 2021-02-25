@@ -62,13 +62,13 @@ export default class ActionsCard extends Vue {
   height: 180px
 
 .operation-icon
- width: 100%
+ width: 128px
 
 .action-card
   cursor: pointer
   width: 90%
 
 .action:hover
-  background: #d47777!important
+  background: #d2d2d2!important
   color: $badge-faccion!important
 </style>
