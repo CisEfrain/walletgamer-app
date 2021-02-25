@@ -70,6 +70,11 @@ const accountState = {
             response.data.status === 200 &&
               Vue.$toast.success(`Serás redirigido al medio de pago elegido`);
           }
+         else if (pasarela === "personalizado") {
+          window.open(redireccion, "_self");
+          response.data.status === 200 &&
+            Vue.$toast.success(`Seras redirigido a continuar tu orden con un asesor`);
+        }
           commit("setNewFund", response);
         })
         .catch(error => {

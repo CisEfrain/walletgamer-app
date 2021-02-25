@@ -45,7 +45,7 @@
             </v-list-item-content>
           </v-list-item>
         </router-link>
-        <router-link to="/help">
+        <!-- <router-link to="/help">
           <v-list-item link @click="resetProduct">
             <v-list-item-content>
               <v-list-item-title class="text-uppercase"
@@ -53,7 +53,7 @@
               >
             </v-list-item-content>
           </v-list-item>
-        </router-link>
+        </router-link> -->
         <v-list-item link @click="logout">
           <v-list-item-content>
             <v-list-item-title class="text-uppercase">Salir</v-list-item-title>
