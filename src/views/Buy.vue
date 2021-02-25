@@ -44,7 +44,7 @@ export default class Buy extends Vue {
   public productList: Array<string> = ["Gold", "Personaje", "Items"];
   public currentProduct = "";
 
-  public selectProduct(tab: any): void {
+  public selectProduct(tab: string): void {
     this.currentProduct = tab;
   }
 
@@ -52,7 +52,7 @@ export default class Buy extends Vue {
     //this.$store.dispatch("getAllPosts");
   }
 
-  get productListSelected(): any {
+  get productListSelected(): string {
     return this.currentProduct && `Buy${this.currentProduct}List`;
   }
 }

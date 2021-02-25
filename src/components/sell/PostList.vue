@@ -73,13 +73,13 @@ export default class PostList extends Vue {
   @Prop({ type: String }) product!: string | undefined;
   @Prop({ type: String }) readonly level!: string | undefined;
   @Prop({ type: String }) readonly item!: string | undefined;
-  @Prop({ type: Number }) readonly cost!:  number;
+  @Prop({ type: Number }) readonly cost!: number;
   @Prop({ type: Number }) readonly quantity!: number;
   @Prop({ type: String }) readonly realm!: string | undefined;
   @Prop({ type: String }) readonly faction!: string | undefined;
-  @Prop({ type: Number }) readonly active:number;
-    public status
-  created(){
+  @Prop({ type: Number }) readonly active: number;
+  public status;
+  created() {
     this.status = this.active;
   }
   private deletePost() {
@@ -122,7 +122,7 @@ export default class PostList extends Vue {
     return this.status == 1 ? true : false;
   }
 
-  get isGold(): any {
+  get isGold(): string {
     return this.product === "oro" ? "Por cada 100 de oro" : null;
   }
 

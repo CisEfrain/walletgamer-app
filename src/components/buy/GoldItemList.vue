@@ -56,7 +56,7 @@ export default class GoldItemList extends Vue {
   @Prop({ type: String }) readonly rank!: string;
   @Prop({ type: String }) readonly kingdom!: string;
   @Prop({ type: String }) readonly product!: string;
-  @Prop({}) readonly price!: string | any;
+  @Prop({ type: Number }) readonly price!: number;
   @Prop({ type: Number }) readonly available!: number;
   @Prop({ type: String }) readonly faction!: string;
   @Prop({ type: Boolean, default: false }) readonly actions!: boolean;
@@ -72,7 +72,7 @@ export default class GoldItemList extends Vue {
   }
 
   get formatPrice() {
-    const price = parseInt(this.price);
+    const price = this.price;
     return new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2 }).format(
       price
     );
