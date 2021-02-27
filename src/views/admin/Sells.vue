@@ -47,7 +47,7 @@
           <span v-if="item.publicacione.tipo === 'oro'">{{
             item.cantidad * 100
           }}</span>
-          <span v-else>{{ item.cantidad * 100 }}</span>
+          <span v-else>{{ item.cantidad }}</span>
         </template>
 
         <template v-slot:item.operaciones[0].usuario="{ item }">
