@@ -71,7 +71,7 @@ const accountState = {
               Vue.$toast.success(`Serás redirigido al medio de pago elegido`);
           }
          else if (pasarela === "personalizado") {
-          window.open(redireccion, "_self");
+          window.open(redireccion, "_blank");
           response.data.status === 200 &&
             Vue.$toast.success(`Seras redirigido a continuar tu orden con un asesor`);
         }

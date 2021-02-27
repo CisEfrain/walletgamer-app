@@ -41,7 +41,7 @@ import BuyItemsList from "@/components/buy/BuyItemList.vue";
   }
 })
 export default class Buy extends Vue {
-  public productList: Array<string> = ["Gold", "Personaje", "Items"];
+  public productList: Array<string> = ["Gold"];
   public currentProduct = "";
 
   public selectProduct(tab: string): void {

@@ -24,7 +24,7 @@
       </v-col>
     </v-row>
 
-    <div class="animated fadeIn fast" v-if="state.intrucciones">
+    <div class="animated fadeIn fast" v-if="state.instrucciones">
       <v-row class="mt-4" justify="center">
         <v-col class="buy-instructions px-4 py-4" cols="10">
           <p v-for="(instruction, $index) in instructions" :key="$index">
@@ -106,7 +106,7 @@ export default class StepTwo extends Vue {
   }
 
   get instructions(): Array<string> {
-    return this.state.intrucciones.split(/\r\n|\r|\n/);
+    return this.state.instrucciones.split(/\r\n|\r|\n/);
   }
   async beforeCreated() {
     await this.getBuyInfoStatus();

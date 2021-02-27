@@ -15,10 +15,10 @@
               </v-col>
               <v-col class="text-center" cols="6" md="5" sm="7">
                 <h3 class="transaction-title pt-6">{{ product }}</h3>
-                <p>
+                <!-- <p>
                   ID:
                   <small>{{ transaction_id }}</small>
-                </p>
+                </p> -->
               </v-col>
               <v-col class="text-center" cols="6" md="2" sm="4">
                 <h2>$ {{ formatedCost }}</h2>
@@ -41,6 +41,11 @@
               <!-- <v-col cols="4" md="2" sm="6" v-if="ventas.length > 0">
                 <p><b>Estado:</b> {{ status }}</p>
               </v-col> -->
+               <v-col cols="4" md="4" sm="4">
+                <p>
+                  <small> ID Transacción: {{ transaction_id }}</small>
+                </p>
+              </v-col>
               <v-col cols="4" md="4" sm="6" v-if="ventas.length > 0">
                 <p>
                   <b>Personaje/Email Receptor: </b>{{ ventas[0].personaje }}
@@ -67,6 +72,7 @@
                   $ {{ formatedComission }}
                 </p>
               </v-col>
+              
 
               <!-- FONDEO -->
               <v-col cols="4" md="4" sm="4" v-if="fund">

@@ -89,7 +89,7 @@ import PostList from "@/components/sell/PostList.vue";
   }
 })
 export default class Sell extends Vue {
-  public productList: Array<string> = ["Gold", "Personaje", "Items"];
+  public productList: Array<string> = ["Gold"];
   public currentProduct: Array<string> = ["Post"];
   private panel: Array<number> = [];
   public page = 1;
