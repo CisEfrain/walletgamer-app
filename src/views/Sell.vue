@@ -1,12 +1,12 @@
 <template>
   <v-container class="px-8">
-    <v-row align="center" justify="start">
+    <v-row align="center" justify="center">
       <h3 class="mt-12 mb-4 main-title text-center">
         ¿Qué te interesa vender?
       </h3>
     </v-row>
 
-    <v-row align="center" justify="start" class="mb-1 ml-1">
+    <v-row align="center" justify="center" class="mb-1 ml-1">
       <ProductCard
         class="animated fadeIn fast px-8"
         v-for="(product, $index) in productList"
@@ -17,7 +17,14 @@
     </v-row>
 
     <div class="mt-10" justify="center" v-if="currentProduct == 'Post'">
-      <h3 class="title mb-6" v-show="postList && postList.length">Mis publicaciones</h3>
+      <h3
+        class="title mb-6"
+        align="center"
+        justify="center"
+        v-show="postList && postList.length"
+      >
+        Mis publicaciones
+      </h3>
       <v-expansion-panels class="container" v-model="panel" multiple flat>
         <PostList
           class="animated fadeIn fast"
@@ -89,7 +96,7 @@ import PostList from "@/components/sell/PostList.vue";
   }
 })
 export default class Sell extends Vue {
-  public productList: Array<string> = ["Gold"];
+  public productList: Array<string> = ["Gold", "Personaje"];
   public currentProduct: Array<string> = ["Post"];
   private panel: Array<number> = [];
   public page = 1;

@@ -87,6 +87,24 @@
         ></v-text-field>
       </v-col>
     </v-row>
+    <v-row align="center" justify="center">
+      <v-col class="d-flex">
+        <v-text-field
+          label="Describe aqui las caracteristicas de tu personaje."
+          rounded
+          type="text"
+          v-model="$v.description.$model"
+          :error-messages="descriptionErrors"
+          @input="$v.description.$touch()"
+          @blur="$v.description.$touch()"
+          required
+          color="rgba(184,12,70,.6)"
+          background-color="white"
+          outlined
+          dense
+        ></v-text-field>
+      </v-col>
+    </v-row>
     <v-row class="mt-2" justify="center">
       <v-col
         class="d-flex justify-center btn-request-mt-less"
@@ -128,6 +146,7 @@ export default class CharactersForm extends Vue {
   @Validate({ required }) realm = null;
   @Validate({ required }) faction = null;
   @Validate({ required }) pjClass = null;
+  @Validate({ required }) description = null;
   @Validate({ required, maxValue: maxValue(60) }) level = null;
   @Validate({ required, minLength: minLength(1) }) price = null;
   private levelList: Array<number> = [15, 30, 45, 60];
@@ -170,7 +189,8 @@ export default class CharactersForm extends Vue {
       faccion: this.faction,
       clase: this.pjClass,
       nivel: this.level,
-      precio: this.price
+      precio: this.price,
+      descripcion: this.description
     };
     this.$store.dispatch("addPost", newCharacterPost);
     this.$store.dispatch("getPosts", { size: 10, page: 0 });
@@ -199,6 +219,12 @@ export default class CharactersForm extends Vue {
     const errors: Array<string> = [];
     if (!this.$v.realm.$dirty) return errors;
     !this.$v.realm.required && errors.push("El campo es requerido");
+    return errors;
+  }
+  get descriptionErrors(): Array<string> {
+    const errors: Array<string> = [];
+    if (!this.$v.description.$dirty) return errors;
+    !this.$v.description.required && errors.push("El campo es requerido");
     return errors;
   }
   get pjClassErrors(): Array<string> {
