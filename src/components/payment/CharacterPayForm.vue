@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 <template>
   <div>
     <v-row align="center" justify="center" class="mt-6">
@@ -130,6 +131,7 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/camelcase */
 import { Component, Vue } from "vue-property-decorator";
 import BaseCardContainer from "@/components/base/BaseCardContainer.vue";
 import { Validate } from "vuelidate-property-decorators";
@@ -172,12 +174,15 @@ export default class CharacterPayForm extends Vue {
 
   public getQuantity = 0;
 
-  private buy(): void {
+  public buy(): void {
     const buyProduct = {
-      email: this.email
+      personaje: this.email,
+      publicaciones_id: this.itemList.id,
+      cantidad: 1
     };
     console.info(buyProduct);
-    this.$store.dispatch("nextStep");
+    // this.$store.dispatch("nextStep");
+    this.$store.dispatch("setBuyProduct", buyProduct);
   }
 
   get myPayMethods(): Array<any> {
