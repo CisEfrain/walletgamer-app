@@ -1,10 +1,10 @@
 <template>
   <v-container class="px-8">
-    <v-row align="center" justify="start">
+    <v-row align="center" justify="center">
       <h3 class="mt-12 mb-4 main-title">¿Qué te interesa comprar?</h3>
     </v-row>
 
-    <v-row align="center" class="responsive-card ml-1">
+    <v-row align="center" justify="center" class="responsive-card ml-1">
       <ProductCard
         class="animated fadeIn fast px-8"
         v-for="(product, $index) in productList"
@@ -41,7 +41,7 @@ import BuyItemsList from "@/components/buy/BuyItemList.vue";
   }
 })
 export default class Buy extends Vue {
-  public productList: Array<string> = ["Gold"];
+  public productList: Array<string> = ["Gold", "Personaje"];
   public currentProduct = "";
 
   public selectProduct(tab: string): void {

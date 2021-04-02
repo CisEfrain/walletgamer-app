@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-8">
+  <v-container class="px-8">
     <v-row align="center" justify="center" class="mt-6 mb-less">
       <v-col class="d-flex" cols="3" sm="3">
         <v-select
@@ -58,21 +58,23 @@
         ></v-select>
       </v-col>
     </v-row>
-
-    <CharactersItemList
-      class="animated fadeIn fast"
-      v-for="(characterPost, $index) in showFiltered"
-      :key="characterPost.id"
-      :user="characterPost.usuario.nombre"
-      :rank="characterPost.usuario.rango || 'Pollo'"
-      :kingdom="characterPost.reino"
-      :faction="characterPost.faccion"
-      :characterClass="characterPost.clase"
-      :price="characterPost.precio"
-      :level="characterPost.nivel"
-      @click="buyCharacter($index, characterPost.id, characterPost)"
-      actions
-    />
+    <v-expansion-panels multiple flat>
+      <CharactersItemList
+        class="animated fadeIn fast mb-right"
+        v-for="(characterPost, $index) in showFiltered"
+        :key="characterPost.id"
+        :user="characterPost.usuario.nombre"
+        :rank="characterPost.usuario.rango || 'Pollo'"
+        :kingdom="characterPost.reino"
+        :faction="characterPost.faccion"
+        :characterClass="characterPost.clase"
+        :price="characterPost.precio"
+        :level="characterPost.nivel"
+        :description="characterPost.descripcion"
+        @click="buyCharacter($index, characterPost.id, characterPost)"
+        actions
+      />
+    </v-expansion-panels>
     <div class="text-center">
       <v-pagination
         v-if="characterPages > 1"
@@ -170,4 +172,7 @@ export default class BuyCharacterList extends Vue {
 <style lang="sass" scoped>
 .mb-less
   margin-bottom: -24px!important
+
+.mb-right
+  margin-right: 10px
 </style>

@@ -32,6 +32,7 @@
               <v-col cols="12" md="7" sm="12">
                 <p v-show="realm">Reino: {{ realm }}</p>
                 <p>Facción: {{ faction }}</p>
+                <p v-if="product === 'personaje'">Descripción: {{ item }}</p>
               </v-col>
               <v-col cols="12" md="5" sm="12" class="d-flex">
                 <v-row class="d-flex justify-center">
