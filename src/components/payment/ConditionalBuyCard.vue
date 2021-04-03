@@ -19,11 +19,11 @@
           :key="itemList.id"
           :user="itemList.operaciones[1].usuario.nombre"
           :rank="itemList.operaciones[1].usuario.rango || 'Pollo'"
-          :kingdom="itemList.reino"
-          :faction="itemList.faccion"
-          :characterClass="itemList.clase"
-          :price="itemList.precio"
-          :level="itemList.nivel"
+          :kingdom="itemList.item.reino"
+          :faction="itemList.item.faccion"
+          :characterClass="itemList.item.clase"
+          :price="itemList.item.precio"
+          :level="itemList.item.nivel"
           isBuy
         />
       </div>
@@ -32,10 +32,10 @@
           :key="itemList.id"
           :user="itemList.operaciones[1].usuario.nombre"
           :rank="itemList.operaciones[1].usuario.rango || 'Pollo'"
-          :faction="itemList.faccion"
-          :price="itemList.precio"
-          :item="itemList.descripcion"
-          :available="itemList.cantidad"
+          :faction="itemList.item.faccion"
+          :price="itemList.item.precio"
+          :item="itemList.item.descripcion"
+          :available="itemList.item.cantidad"
           isBuy
         />
       </div>
