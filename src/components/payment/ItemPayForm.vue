@@ -208,9 +208,9 @@ export default class ItemPayForm extends Vue {
 
   private buy(): void {
     const buyProduct = {
-      cantidad: parseInt(this.quantity),
+      cantidad: 1,
       publicaciones_id: this.itemList.id,
-      pj: this.pj
+      personaje: this.pj
     };
     console.info(buyProduct);
     this.$store.dispatch("setBuyProduct", buyProduct);
