@@ -204,6 +204,7 @@ export default class CharactersForm extends Vue {
     this.pjClass = null;
     this.level = null;
     this.price = null;
+    this.description = null;
   }
   get isDisabled(): boolean {
     return !this.realm ||

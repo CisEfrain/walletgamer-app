@@ -50,7 +50,7 @@ const AppState = {
       return state.data.publicaciones.oro;
     },
     getCharactersPostData: (state: { data: any }) => {
-      return state.data.publicaciones.personajes;
+      return state.data.publicaciones.personaje;
     },
     getItemsPostData: (state: { data: any }) => {
       return state.data.publicaciones.items;
