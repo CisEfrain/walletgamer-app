@@ -182,6 +182,7 @@ export default class GoldPayForm extends Vue {
   @Validate({ required, sameAs: sameAs("pj") }) pjConfirm = "";
   public productQuantity = this.itemList.cantidad;
   private stripe = (window as any).Stripe(process.env.VUE_APP_STRIPE_PK);
+  private dataLayer = (window as any).dataLayer;
   io: any = SocketIo;
   //Fund
   @Validate({ required }) fund: any = {};
@@ -217,6 +218,10 @@ export default class GoldPayForm extends Vue {
     };
     console.info(buyProduct);
     this.$store.dispatch("setBuyProduct", buyProduct);
+    this.dataLayer.push({
+      event: "transaccion",
+      valueTransaccion: this.totalPrice
+    });
   }
 
   get myPayMethods(): Array<any> {

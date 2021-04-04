@@ -147,6 +147,7 @@ export default class CharacterPayForm extends Vue {
   @Validate({ required, email, minLength: minLength(4) }) email = "";
   @Validate({ required, email, sameAs: sameAs("email") }) emailConfirm = "";
   private stripe = (window as any).Stripe(process.env.VUE_APP_STRIPE_PK);
+  private dataLayer = (window as any).dataLayer;
   io: any = SocketIo;
   //Fund
   @Validate({ required }) fund: any = {};
@@ -183,6 +184,10 @@ export default class CharacterPayForm extends Vue {
     console.info(buyProduct);
     // this.$store.dispatch("nextStep");
     this.$store.dispatch("setBuyProduct", buyProduct);
+    this.dataLayer.push({
+      event: "transaccion",
+      valueTransaccion: this.totalPrice
+    });
   }
 
   get myPayMethods(): Array<any> {
