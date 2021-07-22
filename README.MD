@@ -1,1 +1,26 @@
-A medida se desarrolle el proyecto se irá agregando información. 
+# WalletGamer Frontend
+
+Foobar is a Python library for dealing with word pluralization.
+
+## Demo
+
+http://app-dev.walletgamer.com/
+
+```bash
+user: jhon@walletgamer.com
+pass: 12345678
+```
+
+## Add funds to account
+
+```python
+Paypal
+user: test@prueba.es
+pass: claveparapruebas
+
+Credit Card
+4242 4242 4242 4242
+```
+
+## Diagrams / UI 
+[UI Design](https://miro.com/welcomeonboard/dWRENWRxZGtTRXdhSE02N1ZlYjhMQW9WVDdNbmJPZGlFQVRLTHlTaVBiclJ4b3RZTUtLWjg3VmZhMEJhaUdPWnwzMDc0NDU3MzQ4NzM4ODc0Mjcz)
