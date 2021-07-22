@@ -1,6 +1,6 @@
 # WalletGamer Frontend
 
-Foobar is a Python library for dealing with word pluralization.
+Web application for the exchange of virtual assets related to videogames.
 
 ## Demo
 
